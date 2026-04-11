@@ -1,0 +1,121 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/theme.json",
+    "version": 3,
+    "settings": {
+        "appearanceTools": true,
+        "useRootPaddingAwareAlignments": true,
+        "color": {
+            "palette": [
+                {
+                    "slug": "background",
+                    "color": "#ffffff",
+                    "name": "Background"
+                },
+                {
+                    "slug": "foreground",
+                    "color": "#09090b",
+                    "name": "Foreground"
+                },
+                {
+                    "slug": "primary",
+                    "color": "#18181b",
+                    "name": "Primary"
+                },
+                {
+                    "slug": "accent",
+                    "color": "#f4f4f5",
+                    "name": "Accent"
+                },
+                {
+                    "slug": "muted",
+                    "color": "#71717a",
+                    "name": "Muted"
+                }
+            ],
+            "defaultDuotone": false,
+            "defaultGradients": false,
+            "defaultPalette": false
+        },
+        "typography": {
+            "fontFamilies": [
+                {
+                    "fontFamily": "'Inter', 'Inter Variable', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+                    "slug": "inter",
+                    "name": "Inter"
+                }
+            ],
+            "defaultFontSizes": false,
+            "fluid": true,
+            "fontSizes": [
+                {
+                    "slug": "small",
+                    "size": "0.875rem",
+                    "name": "Small"
+                },
+                {
+                    "slug": "medium",
+                    "size": "1rem",
+                    "name": "Medium"
+                },
+                {
+                    "slug": "large",
+                    "size": "1.25rem",
+                    "name": "Large"
+                },
+                {
+                    "slug": "x-large",
+                    "size": "1.5rem",
+                    "name": "Extra Large"
+                }
+            ]
+        },
+        "spacing": {
+            "units": [
+                "px",
+                "rem",
+                "em",
+                "%",
+                "vw",
+                "vh"
+            ]
+        },
+        "layout": {
+            "contentSize": "768px",
+            "wideSize": "1280px"
+        },
+        "blocks": {
+            "core/paragraph": {
+                "typography": {
+                    "lineHeight": true
+                }
+            }
+        }
+    },
+    "styles": {
+        "typography": {
+            "fontFamily": "var(--wp--preset--font-family--inter)",
+            "lineHeight": "1.6"
+        },
+        "spacing": {
+            "blockGap": "1.5rem"
+        },
+        "elements": {
+            "link": {
+                "color": {
+                    "text": "var(--wp--preset--color--foreground)"
+                },
+                ":hover": {
+                    "typography": {
+                        "textDecoration": "underline"
+                    }
+                }
+            },
+            "heading": {
+                "typography": {
+                    "fontWeight": "600",
+                    "letterSpacing": "-0.025em"
+                }
+            }
+        }
+    }
+}

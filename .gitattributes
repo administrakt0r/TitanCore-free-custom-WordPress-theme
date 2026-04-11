@@ -1,0 +1,6 @@
+# Exclude development files from release archives (git archive / GitHub .zip)
+JamesBond.md    export-ignore
+jamesbond/      export-ignore
+TODO.md         export-ignore
+start-guide.md  export-ignore
+.gitattributes  export-ignore
