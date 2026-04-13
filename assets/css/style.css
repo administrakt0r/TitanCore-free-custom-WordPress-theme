@@ -778,11 +778,11 @@ nav ul {
 
 /* Typography Tracking/Line Height */
 .tracking-tight {
-    letter-spacing: -0.025em;
+    letter-spacing: 0;
 }
 
 .tracking-tighter {
-    letter-spacing: -0.05em;
+    letter-spacing: 0;
 }
 
 .leading-none {
@@ -1256,7 +1256,7 @@ nav ul {
 .prose-headings\:tracking-tight h1,
 .prose-headings\:tracking-tight h2,
 .prose-headings\:tracking-tight h3 {
-    letter-spacing: -0.025em;
+    letter-spacing: 0;
 }
 
 .prose-headings\:text-balance h1,
@@ -1266,7 +1266,7 @@ nav ul {
 }
 
 .prose-p\:tracking-tight p {
-    letter-spacing: -0.025em;
+    letter-spacing: 0;
 }
 
 .prose-p\:text-balance p {

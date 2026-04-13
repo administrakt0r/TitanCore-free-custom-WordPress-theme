@@ -8,6 +8,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function titancore_setup() {
+	// Make theme translations available.
+	load_theme_textdomain( 'titancore', get_template_directory() . '/languages' );
+
 	// Add default posts and comments RSS feed links to head.
 	add_theme_support( 'automatic-feed-links' );
 
@@ -16,7 +19,7 @@ function titancore_setup() {
 
 	// Enable support for Post Thumbnails on posts and pages.
 	add_theme_support( 'post-thumbnails' );
-    
+
     // Custom logo support
     add_theme_support( 'custom-logo', array(
         'height'               => 40,
@@ -45,6 +48,11 @@ function titancore_setup() {
 	add_theme_support( 'wp-block-styles' );
 	add_theme_support( 'editor-styles' );
 	add_theme_support( 'align-wide' );
+	add_editor_style( array( 'assets/css/style.css', 'assets/css/enhancements.css' ) );
+
+	// Modern image crops for card and hero surfaces.
+	add_image_size( 'titancore-card', 768, 432, true );
+	add_image_size( 'titancore-hero', 1600, 900, true );
 
 	// Register menu locations
 	register_nav_menus(
@@ -56,6 +64,24 @@ function titancore_setup() {
 	);
 }
 add_action( 'after_setup_theme', 'titancore_setup' );
+
+/**
+ * Register widget areas.
+ */
+function titancore_widgets_init() {
+	register_sidebar(
+		array(
+			'name'          => esc_html__( 'Footer Widgets', 'titancore' ),
+			'id'            => 'footer-widgets',
+			'description'   => esc_html__( 'Optional footer area for short links, contact details, or small blocks.', 'titancore' ),
+			'before_widget' => '<section id="%1$s" class="widget %2$s site-footer__widget">',
+			'after_widget'  => '</section>',
+			'before_title'  => '<h2 class="site-footer__widget-title">',
+			'after_title'   => '</h2>',
+		)
+	);
+}
+add_action( 'widgets_init', 'titancore_widgets_init' );
 
 /**
  * Performance: Remove unnecessary head clutter.

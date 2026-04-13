@@ -42,9 +42,9 @@ Last reconciled: 2026-03-17
 
 ## WordPress and editor integration
 - [x] Ship [`theme.json`](c:\Users\Da\Desktop\umjetnai-wp-theme-final\theme.json) with palette, typography, spacing, and layout tokens.
-- [ ] Add editor stylesheet parity so block content in the editor matches frontend prose spacing and typography.
+- [x] Add editor stylesheet parity so block content in the editor matches frontend prose spacing and typography.
 - [ ] Register block patterns for the front-page hero/trending/feature layouts used by TitanCore presets.
-- [ ] Decide whether to render the registered footer menu in [`footer.php`](c:\Users\Da\Desktop\umjetnai-wp-theme-final\footer.php) or remove the unused location from [`functions.php`](c:\Users\Da\Desktop\umjetnai-wp-theme-final\functions.php).
+- [x] Decide whether to render the registered footer menu in [`footer.php`](c:\Users\Da\Desktop\umjetnai-wp-theme-final\footer.php) or remove the unused location from [`functions.php`](c:\Users\Da\Desktop\umjetnai-wp-theme-final\functions.php).
 - [ ] Audit which Customizer options should be surfaced or mirrored in editor contexts for stronger editor/frontend parity.
 
 ## DX and testing

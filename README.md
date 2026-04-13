@@ -62,6 +62,7 @@ All SEO output automatically suppressed when a dedicated plugin is active.
 - **Front Page**: layout preset, tag limit, post limit
 - **Single Post**: Table of Contents toggle
 - **Footer**: custom footer code with safe-mode filtering
+- **Footer Widgets**: optional block/widget area above the footer credits
 
 ---
 
@@ -150,7 +151,7 @@ titancore/
 ├── page.php
 ├── search.php
 ├── single.php         # Article + sidebar with TOC
-├── style.css          # Theme header + WP menu overrides
+├── style.css          # Theme metadata header
 ├── theme.json         # Block editor tokens
 └── screenshot.png
 ```

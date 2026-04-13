@@ -10,38 +10,3 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: titancore
 Tags: blog, one-column, custom-colors, custom-logo, custom-menu, editor-style, featured-images, sticky-post, theme-options, threaded-comments, translation-ready
 */
-
-/* WordPress Nav Menu Overrides matching Tailwind classes */
-.secondary-nav li.menu-item a {
-    @apply inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-8 rounded-md px-3 text-muted-foreground;
-}
-
-header nav ul.flex li.menu-item a {
-    @apply text-sm font-medium transition-colors hover:text-foreground/80 text-foreground/60;
-}
-
-/* Pagination Styling */
-.pagination {
-    @apply flex justify-center mt-12 mb-8;
-}
-
-.pagination .nav-links {
-    @apply flex items-center space-x-2;
-}
-
-.pagination .page-numbers {
-    @apply inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 min-w-10 px-3 text-muted-foreground;
-}
-
-.pagination .page-numbers.current {
-    @apply bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground border-primary;
-}
-
-.pagination .page-numbers.dots {
-    @apply border-transparent hover:bg-transparent hover:text-muted-foreground cursor-default;
-}
-
-.pagination .next,
-.pagination .prev {
-    @apply w-auto px-4;
-}

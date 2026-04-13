@@ -4,7 +4,7 @@
  */
 
 ?>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 relative overflow-hidden border-x border-border border-b">
+<div class="tc-post-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 relative overflow-hidden border-x border-border border-b">
     <?php
     while ( have_posts() ) :
         the_post();

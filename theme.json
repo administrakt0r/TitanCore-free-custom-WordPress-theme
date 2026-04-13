@@ -113,7 +113,7 @@
             "heading": {
                 "typography": {
                     "fontWeight": "600",
-                    "letterSpacing": "-0.025em"
+                    "letterSpacing": "0"
                 }
             }
         }

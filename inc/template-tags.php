@@ -194,6 +194,22 @@ function titancore_get_image_sizes( $context = 'default' ) {
 }
 
 /**
+ * Estimate reading time for a post.
+ */
+function titancore_get_estimated_reading_time( $post_id = 0 ) {
+	$post_id = $post_id ? absint( $post_id ) : get_the_ID();
+	if ( ! $post_id ) {
+		return 1;
+	}
+
+	$content = get_post_field( 'post_content', $post_id );
+	$content = wp_strip_all_tags( strip_shortcodes( (string) $content ) );
+	$count   = str_word_count( $content );
+
+	return max( 1, (int) ceil( $count / 220 ) );
+}
+
+/**
  * Parse post content once and cache generated heading IDs + TOC structure.
  */
 function titancore_parse_toc_data( $post_id, $content ) {

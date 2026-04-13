@@ -12,7 +12,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function titancore_scripts() {
 	// Setup version using filemtime for cache busting
-	$css_file = get_template_directory() . '/assets/css/style.min.css';
+	$css_min = get_template_directory() . '/assets/css/style.min.css';
+	$css_fallback = get_template_directory() . '/assets/css/style.css';
+	$css_file = file_exists( $css_min ) ? $css_min : $css_fallback;
+	$css_uri = file_exists( $css_min )
+		? get_template_directory_uri() . '/assets/css/style.min.css'
+		: get_template_directory_uri() . '/assets/css/style.css';
 	$css_version = file_exists( $css_file ) ? filemtime( $css_file ) : false;
 
 	$enhancements_min = get_template_directory() . '/assets/css/enhancements.min.css';
@@ -21,10 +26,10 @@ function titancore_scripts() {
 	$enhancements_uri = file_exists( $enhancements_min )
 		? get_template_directory_uri() . '/assets/css/enhancements.min.css'
 		: get_template_directory_uri() . '/assets/css/enhancements.css';
-	$enhancements_version = filemtime( $enhancements_file );
+	$enhancements_version = file_exists( $enhancements_file ) ? filemtime( $enhancements_file ) : false;
 
-	// Enqueue main tailwind compiled css (minified)
-	wp_enqueue_style( 'titancore-style', get_template_directory_uri() . '/assets/css/style.min.css', array(), $css_version );
+	// Enqueue main utility CSS, preferring the minified asset when present.
+	wp_enqueue_style( 'titancore-style', $css_uri, array(), $css_version );
 	wp_enqueue_style( 'titancore-enhancements', $enhancements_uri, array( 'titancore-style' ), $enhancements_version );
 
 	// Front page preset CSS.
@@ -36,7 +41,7 @@ function titancore_scripts() {
 		$presets_uri = file_exists( $presets_min )
 			? get_template_directory_uri() . '/assets/css/frontpage-presets.min.css'
 			: get_template_directory_uri() . '/assets/css/frontpage-presets.css';
-		$presets_version = filemtime( $presets_file );
+		$presets_version = file_exists( $presets_file ) ? filemtime( $presets_file ) : false;
 		wp_enqueue_style( 'titancore-frontpage-presets', $presets_uri, array( 'titancore-enhancements' ), $presets_version );
 	}
 
@@ -54,7 +59,7 @@ function titancore_scripts() {
 		$js_uri = file_exists( $js_min )
 			? get_template_directory_uri() . '/assets/js/navigation.min.js'
 			: get_template_directory_uri() . '/assets/js/navigation.js';
-		$js_version = filemtime( $js_file );
+		$js_version = file_exists( $js_file ) ? filemtime( $js_file ) : false;
 
 		wp_enqueue_script( 'titancore-navigation', $js_uri, array(), $js_version, array(
 			'in_footer' => true,
