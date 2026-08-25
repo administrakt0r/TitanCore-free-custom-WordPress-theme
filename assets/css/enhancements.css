@@ -25,6 +25,13 @@
     scroll-margin-top: 5rem;
 }
 
+.tc-single__content h1,
+.tc-single__content h2,
+.tc-single__content h3,
+.tc-single__content h4 {
+    scroll-margin-top: 5rem;
+}
+
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
@@ -38,6 +45,7 @@ header nav ul li.current-menu-item > a,
 header nav ul li.current-menu-ancestor > a,
 header nav ul li.current_page_item > a {
     color: var(--foreground);
+    background-color: var(--accent);
 }
 
 ::selection {
@@ -448,6 +456,143 @@ header nav ul li.current_page_item > a {
 #mobile-menu.is-open {
     opacity: 1;
     transform: translateY(0);
+}
+
+#mobile-menu a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.5rem 0.75rem;
+    border-radius: calc(var(--radius) - 2px);
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+#mobile-menu a:hover,
+#mobile-menu a:focus-visible {
+    background: var(--accent);
+    color: var(--accent-foreground);
+}
+
+#mobile-menu-backdrop {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.18s ease, visibility 0.18s ease;
+}
+
+#mobile-menu-backdrop.hidden {
+    display: block !important;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* Pagination — pagination numbers are tap-target 44px + high contrast */
+.pagination,
+.nav-links--pagination,
+.tc-pagination {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.pagination .page-numbers,
+.tc-pagination .page-numbers {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--card);
+    color: var(--foreground);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.pagination .page-numbers:hover,
+.tc-pagination .page-numbers:hover {
+    background: var(--accent);
+    border-color: var(--foreground);
+}
+
+.pagination .page-numbers.current,
+.tc-pagination .page-numbers.current {
+    background: var(--primary);
+    color: var(--primary-foreground);
+    border-color: var(--primary);
+}
+
+.pagination .page-numbers:focus-visible,
+.tc-pagination .page-numbers:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+}
+
+/* TOC inside single — nicer hierarchy */
+.tc-toc ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.tc-toc a {
+    display: block;
+    padding: 0.3rem 0;
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    text-decoration: none;
+}
+
+.tc-toc a:hover {
+    color: var(--foreground);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+}
+
+/* Forms — search form consistency */
+.search-form {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.search-form label {
+    flex: 1;
+}
+
+.search-form input[type="search"] {
+    width: 100%;
+    min-height: 44px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--background);
+    padding: 0 0.9rem;
+}
+
+.search-form input[type="search"]:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+}
+
+.search-form input[type="submit"],
+.search-form button[type="submit"] {
+    min-height: 44px;
+    padding: 0 1rem;
+    border-radius: var(--radius);
+    background: var(--primary);
+    color: var(--primary-foreground);
+    border: 1px solid var(--primary);
+    font-weight: 600;
 }
 
 @media (min-width: 640px) {

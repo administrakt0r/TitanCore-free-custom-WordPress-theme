@@ -621,10 +621,6 @@ nav ul {
     color: var(--muted-foreground);
 }
 
-.text-card-foreground {
-    color: var(--card-foreground);
-}
-
 .text-accent-foreground {
     color: var(--accent-foreground);
 }
@@ -723,10 +719,6 @@ nav ul {
     border-color: var(--input);
 }
 
-.border-primary {
-    border-color: var(--primary);
-}
-
 .border-border\/40 {
     border-color: rgb(228 228 231 / 40%);
 }
@@ -815,14 +807,6 @@ nav ul {
 
 .backdrop-blur {
     backdrop-filter: blur(8px);
-}
-
-.fill-none {
-    fill: none;
-}
-
-.stroke-currentColor {
-    stroke: currentColor;
 }
 
 /* Opacity & Transforms */
@@ -1250,7 +1234,7 @@ nav ul {
 .prose-headings\:scroll-mt-8 h1,
 .prose-headings\:scroll-mt-8 h2,
 .prose-headings\:scroll-mt-8 h3 {
-    scroll-margin-top: 2rem;
+    scroll-margin-top: 5rem;
 }
 
 .prose-headings\:tracking-tight h1,
@@ -1278,8 +1262,15 @@ nav ul {
 }
 
 .prose-lg {
-    font-size: 1.125rem;
-    line-height: 1.7777778;
+    font-size: 1rem;
+    line-height: 1.75;
+}
+
+@media (min-width: 640px) {
+    .prose-lg {
+        font-size: 1.125rem;
+        line-height: 1.7777778;
+    }
 }
 
 /* WP specifics appended from the original style.css */
@@ -1307,9 +1298,14 @@ nav ul {
 }
 
 header nav ul.flex li.menu-item a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 0.75rem;
+    border-radius: calc(var(--radius) - 2px);
     font-size: 0.875rem;
     font-weight: 500;
-    transition-property: color;
+    transition-property: color, background-color;
     transition-duration: 150ms;
     color: rgba(9, 9, 11, 0.6);
 }
@@ -1319,76 +1315,11 @@ header nav ul.flex li.menu-item a {
 }
 
 header nav ul.flex li.menu-item a:hover {
+    background-color: var(--accent);
     color: rgba(9, 9, 11, 0.8);
 }
 
 .dark header nav ul.flex li.menu-item a:hover {
-    color: rgba(250, 250, 250, 0.8);
-}
-
-/* Pagination Styling */
-.pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 3rem;
-    margin-bottom: 2rem;
-}
-
-.pagination .nav-links {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.pagination .page-numbers {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    white-space: nowrap;
-    border-radius: calc(var(--radius) - 2px);
-    font-size: 0.875rem;
-    font-weight: 500;
-    transition-property: all;
-    transition-duration: 150ms;
-    border: 1px solid var(--input);
-    background-color: var(--background);
-    color: var(--muted-foreground);
-    height: 2.5rem;
-    min-width: 2.5rem;
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
-}
-
-.pagination .page-numbers:hover {
     background-color: var(--accent);
-    color: var(--accent-foreground);
-}
-
-.pagination .page-numbers.current {
-    background-color: var(--primary);
-    color: var(--primary-foreground);
-    border-color: var(--primary);
-}
-
-.pagination .page-numbers.current:hover {
-    background-color: var(--primary);
-    color: var(--primary-foreground);
-    opacity: 0.9;
-}
-
-.pagination .page-numbers.dots {
-    border-color: transparent;
-    cursor: default;
-}
-
-.pagination .page-numbers.dots:hover {
-    background-color: transparent;
-    color: var(--muted-foreground);
-}
-
-.pagination .next,
-.pagination .prev {
-    width: auto;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    color: rgba(250, 250, 250, 0.8);
 }

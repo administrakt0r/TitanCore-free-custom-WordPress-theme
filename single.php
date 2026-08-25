@@ -18,9 +18,9 @@ while ( have_posts() ) :
 
   <div class="tc-single__header space-y-4 border-b border-border relative z-10">
     <div class="max-w-7xl mx-auto flex flex-col gap-6 p-6">
-      <div class="flex flex-wrap items-center gap-3 gap-y-5 text-sm text-muted-foreground">
+      <div class="flex flex-wrap items-center gap-2.5 gap-y-3 text-sm text-muted-foreground">
 
-        <a href="<?php echo esc_url( $posts_page_url ); ?>" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-6 w-6">
+        <a href="<?php echo esc_url( $posts_page_url ); ?>" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-8 w-8 shrink-0" aria-label="<?php esc_attr_e( 'Back to all articles', 'titancore' ); ?>">
             <?php echo titancore_get_icon('arrow-left', 'w-4 h-4'); ?>
             <span class="sr-only"><?php esc_html_e( 'Back to all articles', 'titancore' ); ?></span>
         </a>
@@ -38,27 +38,19 @@ while ( have_posts() ) :
         <?php
         $tags = get_the_tags();
         if ( $tags ) : ?>
-          <div class="flex flex-wrap gap-3 text-muted-foreground">
-            <?php foreach ( $tags as $tag ) : ?>
-              <span class="h-6 w-fit px-3 text-sm font-medium bg-muted text-muted-foreground rounded-md border flex items-center justify-center">
-                <?php echo esc_html( $tag->name ); ?>
-              </span>
+          <div class="flex flex-wrap gap-2">
+            <?php foreach ( array_slice( $tags, 0, 6 ) as $tag ) : ?>
+              <a href="<?php echo esc_url( get_tag_link( $tag->term_id ) ); ?>" class="inline-flex h-7 items-center rounded-full border bg-muted px-3 text-xs font-semibold text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                #<?php echo esc_html( $tag->name ); ?>
+              </a>
             <?php endforeach; ?>
           </div>
         <?php endif; ?>
 
-        <time class="font-medium text-muted-foreground" datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>">
-            <?php echo esc_html( get_the_date() ); ?>
-        </time>
-
-        <span class="font-medium text-muted-foreground">
-            <?php
-            printf(
-                /* translators: %s: estimated reading time in minutes. */
-                esc_html__( '%s min read', 'titancore' ),
-                esc_html( number_format_i18n( $reading_time ) )
-            );
-            ?>
+        <span class="inline-flex items-center gap-2 font-medium">
+            <time datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>"><?php echo esc_html( get_the_date() ); ?></time>
+            <span aria-hidden="true" class="h-1 w-1 rounded-full bg-border"></span>
+            <span><?php printf( esc_html__( '%s min read', 'titancore' ), esc_html( number_format_i18n( $reading_time ) ) ); ?></span>
         </span>
       </div>
 
@@ -80,7 +72,7 @@ while ( have_posts() ) :
     <div class="absolute max-w-7xl mx-auto left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] lg:w-full h-full border-x border-border p-0 pointer-events-none"></div>
     <main id="main-content" tabindex="-1" class="tc-single__main w-full p-0 overflow-hidden">
       <?php if ( has_post_thumbnail() ) : ?>
-        <div class="tc-single__featured relative w-full h-[500px] overflow-hidden object-cover border border-transparent">
+        <div class="tc-single__featured relative w-full overflow-hidden border-y border-border/60 max-h-[34rem] aspect-[16/9] sm:aspect-[16/9]">
           <?php the_post_thumbnail( 'titancore-hero', array(
               'class' => 'object-cover w-full h-full absolute inset-0 text-transparent',
               'loading' => 'eager',
@@ -89,6 +81,20 @@ while ( have_posts() ) :
               'sizes' => titancore_get_image_sizes( 'single-hero' ),
           ) ); ?>
         </div>
+      <?php endif; ?>
+
+      <?php if ( get_theme_mod( 'show_toc', true ) ) : ?>
+      <div class="lg:hidden mx-6 mt-6 rounded-lg border border-border bg-card p-4">
+        <details class="group">
+          <summary class="flex cursor-pointer list-none items-center justify-between font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md px-1 py-1 -mx-1">
+            <span class="flex items-center gap-2"><?php echo titancore_get_icon('list-tree', 'w-4 h-4'); ?><?php esc_html_e( 'On this page', 'titancore' ); ?></span>
+            <span class="text-muted-foreground transition-transform group-open:rotate-180"><?php echo titancore_get_icon('chevron-down', 'w-4 h-4'); ?></span>
+          </summary>
+          <div class="mt-3 border-t border-border pt-3 text-sm">
+            <?php titancore_generate_toc(); ?>
+          </div>
+        </details>
+      </div>
       <?php endif; ?>
 
       <div class="p-6 lg:p-10">

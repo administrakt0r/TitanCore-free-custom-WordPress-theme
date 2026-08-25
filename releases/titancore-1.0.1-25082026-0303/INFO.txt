@@ -1,0 +1,13 @@
+TitanCore Release 1.0.1
+Built: 2026-08-25 01:03 UTC (25082026-0303)
+Zip: titancore-1.0.1-25082026-0303.zip (also titancore.zip)
+Source version: 1.0.1 (style.css + readme.txt Stable tag)
+WordPress: Requires at least 6.0, Tested up to 6.8, Requires PHP 8.0
+Text Domain: titancore
+License: GPLv2 or later
+
+Contents:    876155                     50 files
+SHA256: 48740a9883c59103a5fb66c44ba2fce8849faf10e43b95324759d4de99bcde21
+
+Install: WordPress Admin > Appearance > Themes > Add New > Upload Theme > select titancore.zip
+Manual: unzip into wp-content/themes/titancore/

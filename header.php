@@ -64,7 +64,7 @@ $header_controls_classes = $has_primary_menu
       
       <div class="flex items-center space-x-2 md:space-x-4">
         <?php if ( $theme_mode === 'switch' ) : ?>
-        <button id="theme-toggle" type="button" class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring hover:bg-accent hover:text-accent-foreground h-9 w-9" aria-label="<?php esc_attr_e( 'Toggle theme', 'titancore' ); ?>">
+        <button id="theme-toggle" type="button" class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background hover:bg-accent hover:text-accent-foreground h-11 w-11 shrink-0" aria-label="<?php esc_attr_e( 'Toggle theme', 'titancore' ); ?>">
             <?php echo titancore_get_icon('moon', 'h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0'); ?>
             <?php echo titancore_get_icon('sun', 'absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100'); ?>
             <span class="sr-only"><?php esc_html_e( 'Toggle theme', 'titancore' ); ?></span>
@@ -75,7 +75,7 @@ $header_controls_classes = $has_primary_menu
         <button
             id="mobile-menu-btn"
             type="button"
-            class="md:hidden inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground h-9 w-9 focus:outline-none"
+            class="md:hidden inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground h-11 w-11 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             aria-label="<?php esc_attr_e( 'Open navigation menu', 'titancore' ); ?>"
             aria-haspopup="true"
             aria-controls="mobile-menu"
@@ -84,6 +84,7 @@ $header_controls_classes = $has_primary_menu
             data-close-label="<?php echo esc_attr__( 'Close navigation menu', 'titancore' ); ?>"
         >
             <?php echo titancore_get_icon('menu', 'w-5 h-5'); ?>
+            <?php echo titancore_get_icon('x', 'w-5 h-5 hidden'); ?>
         </button>
         <?php endif; ?>
       </div>
@@ -92,19 +93,20 @@ $header_controls_classes = $has_primary_menu
 
   <?php if ( $has_primary_menu ) : ?>
   <!-- Mobile Navigation Dropdown -->
-  <div id="mobile-menu" class="hidden md:hidden border-t border-border/40 bg-background px-6 py-4" aria-hidden="true" tabindex="-1">
-    <nav class="flex flex-col space-y-4 text-sm font-medium">
+  <div id="mobile-menu" class="hidden md:hidden border-t border-border/40 bg-background px-6 py-4 shadow-lg" role="dialog" aria-modal="true" aria-label="<?php esc_attr_e( 'Mobile navigation', 'titancore' ); ?>" aria-hidden="true">
+    <nav class="flex flex-col space-y-1 text-sm font-medium" aria-label="<?php esc_attr_e( 'Primary', 'titancore' ); ?>">
       <?php
       wp_nav_menu( array(
           'theme_location' => 'primary',
           'container'      => false,
-          'menu_class'     => 'flex flex-col space-y-4 list-none m-0 p-0',
+          'menu_class'     => 'flex flex-col space-y-1 list-none m-0 p-0',
           'fallback_cb'    => false,
           'depth'          => 1,
       ) );
       ?>
     </nav>
   </div>
+  <div id="mobile-menu-backdrop" class="hidden md:hidden fixed inset-0 <?php echo get_theme_mod( 'sticky_header', true ) ? 'top-14' : 'top-0'; ?> bg-black/40 backdrop-blur-sm z-10" aria-hidden="true"></div>
   <?php endif; ?>
   <?php
   $custom_header_code = titancore_get_custom_code_output( 'header' );

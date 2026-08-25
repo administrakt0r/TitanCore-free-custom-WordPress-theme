@@ -119,7 +119,7 @@ assets/js/navigation.js     → assets/js/navigation.min.js
 
 If you edit a source file, regenerate the minified version before deploying. Cache busting uses `filemtime()`.
 
-### File Structure
+### File Structure (hygiene enforced — see `docs/FOLDER_HYGIENE.md`)
 
 ```
 titancore/
@@ -128,33 +128,54 @@ titancore/
 │   ├── fonts/inter/   # Locally hosted Inter variable font
 │   └── js/            # Navigation + theme toggle (source + minified)
 ├── inc/
-│   ├── admin.php      # Admin welcome notice
+│   ├── admin.php      # Admin welcome notice (is_admin only)
 │   ├── customizer.php # All Customizer settings and sanitizers
 │   ├── enqueue.php    # Script/style enqueuing and performance hooks
 │   ├── seo-schema.php # SEO meta, OG, schema, breadcrumbs
 │   └── template-tags.php # Helper functions, TOC, caching, icons
-├── template-parts/
+├── template-parts/    # Reusable partials only (get_template_part)
 │   ├── background-grid.php  # Dot grid overlay
 │   ├── content.php          # Post card in grid loops
 │   ├── content-none.php     # Empty state
 │   ├── front-header.php     # Home/front-page intro + tag bar
 │   └── loop-container.php   # Unified post grid + pagination
-├── 404.php
-├── archive.php
-├── comments.php
-├── footer.php
-├── front-page.php     # Three preset layouts
+├── languages/         # .pot/.po/.mo (text domain titancore)
+├── bin/
+│   └── package.sh     # Release packager (./bin/package.sh X.Y.Z --publish)
+├── releases/          # Versioned builds — see releases/README.md
+│   └── titancore-X.Y.Z-dmY-Hi/
+│       ├── titancore.zip                      # installable
+│       ├── titancore-X.Y.Z-dmY-Hi.zip         # timestamped archive
+│       ├── CHANGELOG.md                       # version slice
+│       ├── checksums.txt
+│       └── INFO.txt
+├── docs/
+│   ├── FOLDER_HYGIENE.md  # what lives where, what not to move
+│   └── AI_CODER_GUIDE.md  # playbook for AI/human contributors
+├── 404.php / archive.php / comments.php / footer.php / front-page.php
+├── header.php / home.php / index.php / page.php / search.php / single.php
+│   # ^ hierarchy templates MUST stay in root (WP resolves only there)
 ├── functions.php      # Theme setup and includes
-├── header.php
-├── home.php
-├── index.php
-├── page.php
-├── search.php
-├── single.php         # Article + sidebar with TOC
-├── style.css          # Theme metadata header
+├── style.css          # Theme metadata header ONLY (no styles)
 ├── theme.json         # Block editor tokens
-└── screenshot.png
+├── readme.txt         # WP.org readme (Stable tag == Version)
+├── CHANGELOG.md       # Keep a Changelog source of truth
+├── RELEASING.md       # Version bump + packaging guide
+└── screenshot.png     # 1200×900
 ```
+
+> **Do not move** hierarchy templates (`404.php`, `archive.php`, `single.php`, etc.) into `template-parts/` or `templates/` — WordPress will not find them. See `docs/FOLDER_HYGIENE.md`.
+
+### Releases & Versioning
+
+TitanCore uses **SemVer** (`X.Y.Z`). Version lives in 4 places that must match: `style.css` `Version:` + `readme.txt` `Stable tag:` + `CHANGELOG.md` `## [X.Y.Z]` + `readme.txt` `== Changelog ==`.
+
+- **Changelog:** `CHANGELOG.md` (source) mirrors `readme.txt` for WordPress.org.
+- **Publishing:** never hand-zip. Run `./bin/package.sh 1.1.0 --publish` — it lints PHP, checks headers, and creates `releases/titancore-1.1.0-dmY-Hi/` with `titancore.zip` + `CHANGELOG.md` + `checksums.txt`.
+- **Naming:** `titancore-versionnumber-dmY-Hm.zip` e.g. `titancore-1.1.0-25082026-1430.zip` (folder and timestamped zip share stamp).
+- **History:** `releases/` is append-only — each version is a new folder, never overwrite.
+
+Full steps: see `RELEASING.md`.
 
 ---
 

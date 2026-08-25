@@ -25,9 +25,12 @@ get_header(); ?>
     <?php if ( have_posts() ) : ?>
         <?php get_template_part( 'template-parts/loop', 'container' ); ?>
     <?php else : ?>
-        <div class="py-20 text-center flex flex-col items-center justify-center space-y-4">
+        <div class="py-16 text-center flex flex-col items-center justify-center space-y-4 px-6 border-x border-b border-border bg-card/50">
+            <span class="inline-flex h-11 w-11 items-center justify-center rounded-full bg-muted border border-border text-muted-foreground"><?php echo titancore_get_icon('inbox', 'w-5 h-5'); ?></span>
             <h2 class="text-2xl font-medium tracking-tighter"><?php esc_html_e( 'No posts found', 'titancore' ); ?></h2>
-            <p class="text-muted-foreground"><?php esc_html_e( 'It seems we can&rsquo;t find what you&rsquo;re looking for.', 'titancore' ); ?></p>
+            <p class="text-muted-foreground max-w-md text-balance"><?php esc_html_e( 'It seems we can\'t find what you\'re looking for. Try a search or browse recent articles.', 'titancore' ); ?></p>
+            <div class="w-full max-w-sm pt-2"><?php get_search_form(); ?></div>
+            <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="inline-flex h-11 items-center rounded-lg bg-primary px-6 text-sm font-medium text-primary-foreground hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><?php esc_html_e( 'Browse all articles', 'titancore' ); ?></a>
         </div>
     <?php endif; ?>
   </div>

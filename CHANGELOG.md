@@ -1,0 +1,39 @@
+# Changelog
+
+All notable changes to TitanCore are documented here. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and [Semantic Versioning](https://semver.org/).
+
+This file is the source of truth. `readme.txt` `== Changelog ==` must stay in sync (WordPress.org reads it).
+
+## [1.0.1] - 2026-08-25
+### Fixed
+- Accessibility: desktop primary nav links now meet 44×44px tap target (`assets/css/style.css`), active state uses `var(--accent)` background (`assets/css/enhancements.css`) for clearer affordance beyond color change.
+- Accessibility: all decorative SVG icons now carry `aria-hidden="true" focusable="false"` (`inc/template-tags.php`) to eliminate screen-reader noise (pagination, theme toggle, menu, empty states).
+- Mobile menu backdrop now fades via `opacity`+`visibility` (`assets/css/enhancements.css`, `header.php`) instead of instant `display:none`; sticky-aware offset (`top-14` when sticky, `top-0` otherwise) fixes misaligned overlay when `sticky_header` is disabled.
+
+### Changed
+- Typography: `.prose-lg` is responsive — `1rem` on mobile with `1.125rem` from `640px` (`assets/css/style.css`), improving readability and line-length on small screens.
+
+## [1.0.0] - 2026-06-22
+### Added
+- Initial release.
+- Three front-page presets: Modern Blog, News Portal, Magazine (`front-page.php` with dedicated `WP_Query` per preset).
+- Dark mode: system-aware (`prefers-color-scheme`) with manual toggle and Customizer `theme_color_mode` (light / dark / switch).
+- Built-in SEO fallbacks: meta description, robots, canonical, Open Graph, Twitter Cards, JSON-LD (`WebSite` + `SearchAction`, `Organization`, `Article`, `BreadcrumbList`), `noindex` on search/404. Auto-suppressed when Yoast / Rank Math / SEOPress / AIOSEO detected (`inc/seo-schema.php`).
+- Performance: emoji removal, conditional block-library loading, deferred `navigation.js` (`strategy: defer`), `fetchpriority`/`loading`/`sizes` on images, locally hosted Inter variable font, Font Awesome blocking, jQuery kept registered (opt-out via `titancore_disable_frontend_jquery`).
+- Customizer: sticky header, `primary_color`/`accent_color`/`page_background_color_*`/`page_foreground_color_*`, `grid_pattern_color`/`grid_pattern_opacity`, `frontpage_preset`/`tag_limit`/`home_post_limit`, `show_toc`, `custom_header_code`/`custom_footer_code` with safe-mode `wp_kses` + `unfiltered_html` gating.
+- Accessibility: skip link to `<main id="main-content">`, focus trapping, ARIA, keyboard mobile menu, `prefers-reduced-motion`.
+- Editor parity: `theme.json` palette/typography/spacing/layout tokens + `add_editor_style`.
+
+### Notes
+- WordPress 6.0+, PHP 8.0+, text domain `titancore`, license GPLv2+.
+- Minified assets shipped alongside sources (`assets/css/*.min.css`, `assets/js/navigation.min.js`) with `filemtime()` busting.
+
+---
+
+## How to add a new version
+
+1. Bump `Version:` in `style.css` and `Stable tag:` in `readme.txt` (must match).
+2. Add a new `## [X.Y.Z] - YYYY-MM-DD` section above (newest on top).
+3. Mirror the same bullets under `readme.txt` `== Changelog ==` (`= X.Y.Z =`).
+4. Run `./bin/package.sh X.Y.Z --publish` — creates `releases/titancore-X.Y.Z-dmY-Hi/` with `titancore.zip` + `CHANGELOG.md` + `checksums.txt`.
+5. Test zip via Appearance > Themes > Upload or `wp-env` (see `RELEASING.md`).

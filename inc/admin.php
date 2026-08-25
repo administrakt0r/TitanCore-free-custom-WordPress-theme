@@ -56,12 +56,14 @@ function titancore_welcome_notice() {
         </div>
     </div>
     <script>
-    jQuery(document).ready(function($) {
-        $(document).on('click', '#titancore-welcome .notice-dismiss', function() {
-            $.post(ajaxurl, {
-                action: 'titancore_dismiss_welcome',
-                nonce: '<?php echo wp_create_nonce("dismiss_welcome"); ?>'
-            });
+    document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("click", function(e) {
+            var dismiss = e.target.closest("#titancore-welcome .notice-dismiss");
+            if (!dismiss) return;
+            var body = new FormData();
+            body.append("action", "titancore_dismiss_welcome");
+            body.append("nonce", "<?php echo esc_js( wp_create_nonce( 'dismiss_welcome' ) ); ?>");
+            navigator.sendBeacon(ajaxurl, body);
         });
     });
     </script>
@@ -70,8 +72,11 @@ function titancore_welcome_notice() {
 add_action( 'admin_notices', 'titancore_welcome_notice' );
 
 function titancore_dismiss_welcome_callback() {
+    if ( ! current_user_can( 'switch_themes' ) ) {
+        wp_send_json_error();
+    }
     check_ajax_referer( 'dismiss_welcome', 'nonce' );
     update_option( 'titancore_welcome_dismissed', wp_get_theme()->get( 'Version' ) );
-    wp_die();
+    wp_send_json_success();
 }
 add_action( 'wp_ajax_titancore_dismiss_welcome', 'titancore_dismiss_welcome_callback' );

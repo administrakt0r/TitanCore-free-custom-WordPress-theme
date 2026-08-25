@@ -429,8 +429,9 @@ function titancore_get_custom_code_output( $slot ) {
 }
 
 /**
- * Sanitize float for opacity settings
+ * Sanitize float for opacity settings.
+ * Clamps to the 0–1 range expected by the grid opacity control.
  */
 function titancore_sanitize_float( $input ) {
-    return floatval( $input );
+    return max( 0.0, min( 1.0, floatval( $input ) ) );
 }

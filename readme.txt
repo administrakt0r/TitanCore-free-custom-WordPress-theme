@@ -2,7 +2,7 @@
 Contributors: administraktor
 Requires at least: 6.0
 Tested up to: 6.8
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -55,6 +55,11 @@ Yes. TitanCore outputs fallback meta descriptions, Open Graph tags, canonical UR
 No. TitanCore's frontend JavaScript is vanilla ES6. jQuery remains registered for plugin compatibility but the theme itself does not load it.
 
 == Changelog ==
+
+= 1.0.1 =
+* Fixed: desktop nav 44×44px tap target and visible active state (a11y).
+* Fixed: decorative icons now aria-hidden, backdrop fades with sticky-aware offset.
+* Changed: prose-lg responsive — 1rem on mobile, 1.125rem from 640px.
 
 = 1.0.0 =
 * Initial release.

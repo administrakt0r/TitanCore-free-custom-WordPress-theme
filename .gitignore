@@ -10,3 +10,33 @@
 .codex/agents/build-fixer.toml
 .codex
 .codex/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.log
+*.map
+*.tmp
+.vscode/
+.idea/
+
+# wp-env (shared with news-titan, do not commit local env)
+.wp-env/
+docker-compose.override.yml
+
+# Dependencies (theme is zero-build; if you experiment locally, don't commit)
+node_modules/
+vendor/
+
+# Release artifacts: keep releases/ tracked for history (do not ignore).
+# Uncomment next line only if you prefer GitHub Releases over git-tracked zips:
+# releases/*.zip
+
+# Temp packaging
+*.zip
+!releases/**/*.zip
+AGENTPROMPT.md
+workprompt.md
+CUSTODIAN.md
+CUSTODIAN_LOG.md
+AGENTS.md
