@@ -18,14 +18,14 @@ Last reconciled: 2026-03-17
 ## UI/UX
 - [x] Bring [`index.php`](c:\Users\Da\Desktop\umjetnai-wp-theme-final\index.php) onto the shared loop-container/content-none flow used by archive/search templates.
 - [x] Consolidate the shared home/front intro header into [`template-parts/front-header.php`](c:\Users\Da\Desktop\umjetnai-wp-theme-final\template-parts\front-header.php).
-- [ ] Introduce a more consistent card visual system across the `blog`, `news`, and `magazine` presets.
+- [x] Introduce a more consistent card visual system across the `blog`, `news`, and `magazine` presets. (v1.0.2 — shared card tokens, hover/focus elevation, focus-visible outlines; `assets/css/frontpage-presets.css`)
 - [ ] Improve empty/search states with curated recovery links or content suggestions.
 - [ ] Strengthen mobile menu open-state affordance and active-link indication without breaking the current visual language.
 - [ ] Add a richer single-post side rail or related content module that does not crowd reading flow.
 
 ## Accessibility
 - [x] Point the skip link at semantic `<main id="main-content">` targets across the public templates.
-- [ ] Add active-section highlighting for the single-post TOC using `IntersectionObserver`.
+- [x] Add active-section highlighting for the single-post TOC using `IntersectionObserver`. (v1.0.2 — `.is-active` + `aria-current` in sidebar and mobile TOC; `assets/js/navigation.js`, `assets/css/enhancements.css`)
 - [ ] Add automated contrast guardrails for Customizer color selections.
 - [x] Improve mobile navigation focus management and focus return in [`header.php`](c:\Users\Da\Desktop\umjetnai-wp-theme-final\header.php) and [`assets/js/navigation.js`](c:\Users\Da\Desktop\umjetnai-wp-theme-final\assets\js\navigation.js); reduced-motion transitions were already covered globally in [`assets/css/enhancements.css`](c:\Users\Da\Desktop\umjetnai-wp-theme-final\assets\css\enhancements.css).
 - [ ] Normalize comment form labels and validation feedback for better assistive-technology clarity.
@@ -35,8 +35,8 @@ Last reconciled: 2026-03-17
 - [x] Provide fallback `WebSite` plus `SearchAction` schema in [`inc/seo-schema.php`](c:\Users\Da\Desktop\umjetnai-wp-theme-final\inc\seo-schema.php).
 - [x] Provide fallback front-page `Organization` schema with optional custom logo image.
 - [x] Suppress TitanCore's single-post `Article` schema when a dedicated SEO plugin is active to avoid duplicate structured data.
-- [ ] Extend canonical handling to remaining archive/search/date contexts and confirm paginated archive behavior.
-- [ ] Add a default OG image fallback plus richer Organization/Publisher social profile support.
+- [x] Extend canonical handling to remaining archive/search/date contexts and confirm paginated archive behavior.
+- [x] Add a default OG image fallback plus richer Organization/Publisher social profile support. (v1.0.2 — `titancore_get_og_image_url()` chain + Customizer "SEO & Social" `sameAs` profiles)
 - [ ] Expand breadcrumb/schema handling for hierarchical pages and custom taxonomy archives.
 - [ ] Add optional per-post reading-time metadata and expose it in schema/meta output.
 
