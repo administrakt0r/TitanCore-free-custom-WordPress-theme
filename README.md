@@ -1,200 +1,94 @@
 # TitanCore WordPress Theme
 
-Ultra-fast, clean-coded WordPress theme for blogs and magazines. Dark mode, three front-page presets, built-in SEO, and zero bloat.
+Ultra-fast, clean-coded WordPress theme for blogs and magazines. Dark mode, three front-page presets, built-in SEO, and zero bloat. No AI-generated slop, no bloated dependencies — just clean PHP, minimal CSS, and vanilla JavaScript.
 
-![TitanCore Screenshot](screenshot.png)
-
----
-
-## Why TitanCore
-
-Most WordPress themes ship megabytes of CSS frameworks, icon fonts, jQuery plugins, and page-builder overhead. TitanCore ships **none of that**. Every line is hand-written, every asset is justified, and the result is a theme that loads near-instantly for readers while staying dead-simple to manage.
-
-No AI-generated slop. No bloated dependencies. Just clean PHP, minimal CSS, and vanilla JavaScript.
-
----
+![TitanCore Screenshot](themeversions/current/titancore/screenshot.png)
 
 ## Features
 
-### Performance
-- Zero jQuery on the frontend (stays registered for plugin compat)
-- No Font Awesome — inline SVG icons only (Lucide, ISC License)
-- WordPress emoji scripts removed (~15 KB saved per page)
-- Block library CSS loaded only when blocks are present
-- Navigation JS deferred with `strategy: defer`
-- Proper `fetchpriority`, `loading`, and `sizes` attributes on every image
-- Locally hosted Inter variable font with optional preload
-- Separate core block asset loading enabled
-- Font Awesome auto-blocked from plugin injection
+- **Performance** — zero jQuery on the frontend, inline SVG icons only (Lucide), emoji scripts removed, block CSS only when blocks are present, deferred navigation JS, proper `fetchpriority`/`loading`/`sizes` on images, locally hosted Inter variable font.
+- **Dark mode** — system-preference aware, manual toggle with localStorage, force light/dark via Customizer, full palette per mode.
+- **Three front-page presets** — Modern Blog, News Portal, Magazine; one Customizer dropdown, dedicated `WP_Query` per preset.
+- **Built-in SEO with plugin suppression** — meta, Open Graph, JSON-LD schema, breadcrumbs; auto-suppressed when Yoast, Rank Math, SEOPress, or AIOSEO is active.
+- **Accessibility** — 44×44px tap targets, skip links, focus-visible rings, `prefers-reduced-motion`, WCAG-AA contrast defaults.
+- **Table of Contents**, sticky header, custom header/footer code with sanitization, translation-ready (`titancore`), `theme.json` editor parity.
+- **Requirements** — WordPress 6.0+, PHP 8.0+, GPLv2 or later.
 
-### Dark Mode
-- System-preference aware (respects `prefers-color-scheme`)
-- Manual toggle with localStorage persistence
-- Force light-only or dark-only via Customizer
-- Full colour palette configurable per mode
+## Repository layout
 
-### Front-Page Presets
-Switch between three layouts with one Customizer dropdown:
-- **Modern Blog** — responsive card grid
-- **News Portal** — hero article + trending sidebar + grid
-- **Magazine** — featured duo + article list
-
-### Built-in SEO
-When no dedicated SEO plugin is detected (Yoast, Rank Math, SEOPress, AIOSEO):
-- Meta description fallbacks for all page types
-- Open Graph + Twitter Card meta tags
-- Canonical URLs with `rel="prev"` / `rel="next"` pagination
-- JSON-LD: `WebSite` + `SearchAction`, `Organization`, `Article`, `BreadcrumbList`
-- `noindex` on search results and 404 pages
-
-All SEO output automatically suppressed when a dedicated plugin is active.
-
-### Accessibility
-- Skip-to-content link
-- Full keyboard navigation with focus management
-- ARIA attributes on mobile menu, toggles, and navigation
-- `prefers-reduced-motion` support (animations disabled)
-- Semantic HTML5 throughout
-
-### Customizer Options
-- **Header**: sticky toggle, logo vs text title, custom header code
-- **Colours**: primary, accent, light/dark background and foreground, grid pattern colour and opacity
-- **Front Page**: layout preset, tag limit, post limit
-- **Single Post**: Table of Contents toggle
-- **Footer**: custom footer code with safe-mode filtering
-- **Footer Widgets**: optional block/widget area above the footer credits
-
----
-
-## Installation
-
-### From WordPress Admin
-1. Go to **Appearance → Themes → Add New → Upload Theme**
-2. Upload the `.zip` file and click **Install Now**
-3. Click **Activate**
-
-### Manual
-1. Extract the theme folder to `wp-content/themes/titancore/`
-2. Activate from **Appearance → Themes**
-
-### After Activation
-- Set up menus at **Appearance → Menus** (Primary, Secondary, Footer)
-- Configure the theme at **Appearance → Customize**
-- Under **Settings → Reading**, set homepage to "Your latest posts" for the preset layouts
-
----
-
-## Menus
-
-| Location | Purpose |
-|---|---|
-| **Primary** | Top navigation bar |
-| **Secondary** | Tag/category pills below the front-page header |
-| **Footer** | Footer navigation links |
-
----
-
-## Developer Notes
-
-### Filters
-
-| Filter | Default | Description |
-|---|---|---|
-| `titancore_disable_frontend_jquery` | `false` | Set to `true` to fully deregister jQuery on the frontend |
-| `titancore_block_fontawesome_assets` | `true` | Set to `false` to allow Font Awesome from plugins |
-| `titancore_preload_main_font` | `false` | Set to `true` to preload the Inter variable font |
-| `titancore_should_keep_core_block_assets` | varies | Override block library CSS loading logic |
-| `titancore_custom_code_allowed_tags` | array | Customise allowed HTML for header/footer code injection |
-
-### Asset Build
-
-TitanCore ships both source and minified assets. WordPress loads the `.min` versions:
+The repo root is **orchestration only** — WordPress never loads anything from it. The installable theme lives in version folders:
 
 ```
-assets/css/style.css        → assets/css/style.min.css
-assets/css/enhancements.css → assets/css/enhancements.min.css
-assets/css/frontpage-presets.css → assets/css/frontpage-presets.min.css
-assets/js/navigation.js     → assets/js/navigation.min.js
+themeversions/
+  current -> v1.0.1-titancore        # symlink, what wp-env loads (machine-local)
+  v1.0.1-titancore/
+    titancore/                       # THEME ROOT — the actual theme source
+    vX.Y.Z-titancore.zip             # created by bin/package.sh --publish
+    changelog.md
+
+AGENTARDS/     # Agenticus prompt family (AI autonomous sessions) + CUSTODIAN_LOG.md
+bin/           # up.sh, down.sh, verify.sh, use-version.sh, package.sh
+docs/          # FOLDER_HYGIENE.md, AI_CODER_GUIDE.md
+releases/      # legacy timestamped release history (append-only)
+.wp-env.json   # local env config (port 8889, theme mapping)
 ```
 
-If you edit a source file, regenerate the minified version before deploying. Cache busting uses `filemtime()`.
+## Local development (wp-env + Docker)
 
-### File Structure (hygiene enforced — see `docs/FOLDER_HYGIENE.md`)
+Prerequisites: Docker Engine (`curl -fsSL https://get.docker.com | sh`) and wp-env (`npm -g install @wordpress/env`).
 
-```
-titancore/
-├── assets/
-│   ├── css/           # Theme stylesheets (source + minified)
-│   ├── fonts/inter/   # Locally hosted Inter variable font
-│   └── js/            # Navigation + theme toggle (source + minified)
-├── inc/
-│   ├── admin.php      # Admin welcome notice (is_admin only)
-│   ├── customizer.php # All Customizer settings and sanitizers
-│   ├── enqueue.php    # Script/style enqueuing and performance hooks
-│   ├── seo-schema.php # SEO meta, OG, schema, breadcrumbs
-│   └── template-tags.php # Helper functions, TOC, caching, icons
-├── template-parts/    # Reusable partials only (get_template_part)
-│   ├── background-grid.php  # Dot grid overlay
-│   ├── content.php          # Post card in grid loops
-│   ├── content-none.php     # Empty state
-│   ├── front-header.php     # Home/front-page intro + tag bar
-│   └── loop-container.php   # Unified post grid + pagination
-├── languages/         # .pot/.po/.mo (text domain titancore)
-├── bin/
-│   └── package.sh     # Release packager (./bin/package.sh X.Y.Z --publish)
-├── releases/          # Versioned builds — see releases/README.md
-│   └── titancore-X.Y.Z-dmY-Hi/
-│       ├── titancore.zip                      # installable
-│       ├── titancore-X.Y.Z-dmY-Hi.zip         # timestamped archive
-│       ├── CHANGELOG.md                       # version slice
-│       ├── checksums.txt
-│       └── INFO.txt
-├── docs/
-│   ├── FOLDER_HYGIENE.md  # what lives where, what not to move
-│   └── AI_CODER_GUIDE.md  # playbook for AI/human contributors
-├── 404.php / archive.php / comments.php / footer.php / front-page.php
-├── header.php / home.php / index.php / page.php / search.php / single.php
-│   # ^ hierarchy templates MUST stay in root (WP resolves only there)
-├── functions.php      # Theme setup and includes
-├── style.css          # Theme metadata header ONLY (no styles)
-├── theme.json         # Block editor tokens
-├── readme.txt         # WP.org readme (Stable tag == Version)
-├── CHANGELOG.md       # Keep a Changelog source of truth
-├── RELEASING.md       # Version bump + packaging guide
-└── screenshot.png     # 1200×900
+```bash
+./bin/up.sh                  # start  -> http://localhost:8889  (admin: /wp-admin, default admin/password)
+./bin/down.sh                # stop (containers kept for fast restart)
+./bin/verify.sh              # MANDATORY post-edit verification
+./bin/use-version.sh X.Y.Z   # point the env at another version, then restart
+wp-env destroy               # full reset, then ./bin/up.sh again
 ```
 
-> **Do not move** hierarchy templates (`404.php`, `archive.php`, `single.php`, etc.) into `template-parts/` or `templates/` — WordPress will not find them. See `docs/FOLDER_HYGIENE.md`.
+The environment is isolated in this repo (port 8889). The theme is mounted live from `themeversions/current/titancore` — edit and refresh, no sync step. wp-cli: `wp-env run cli wp ... --allow-root`.
 
-### Releases & Versioning
+### Testing
 
-TitanCore uses **SemVer** (`X.Y.Z`). Version lives in 4 places that must match: `style.css` `Version:` + `readme.txt` `Stable tag:` + `CHANGELOG.md` `## [X.Y.Z]` + `readme.txt` `== Changelog ==`.
+`./bin/verify.sh` runs the mandatory sequence and exits 0 only when everything is clean:
 
-- **Changelog:** `CHANGELOG.md` (source) mirrors `readme.txt` for WordPress.org.
-- **Publishing:** never hand-zip. Run `./bin/package.sh 1.1.0 --publish` — it lints PHP, checks headers, and creates `releases/titancore-1.1.0-dmY-Hi/` with `titancore.zip` + `CHANGELOG.md` + `checksums.txt`.
-- **Naming:** `titancore-versionnumber-dmY-Hm.zip` e.g. `titancore-1.1.0-25082026-1430.zip` (folder and timestamped zip share stamp).
-- **History:** `releases/` is append-only — each version is a new folder, never overwrite.
+1. PHP syntax check over the whole theme source (`php -l`)
+2. Theme activation via wp-cli
+3. `debug.log` cleared, then front page + Customizer + Widgets admin loaded (HTTP 200/302)
+4. `debug.log` asserted empty
 
-Full steps: see `RELEASING.md`.
+Run it after **any** edit session. See `AGENTS.md` for the full contract.
 
----
+## Versioning & releases
 
-## Requirements
+- Versions are SemVer and must match in 4 places: `style.css` `Version:`, `readme.txt` `Stable tag:`, `CHANGELOG.md` `## [X.Y.Z]`, `readme.txt == Changelog ==`.
+- New version = new folder: copy `themeversions/vOLD-titancore` to `themeversions/vX.Y.Z-titancore`, bump the files, then:
 
-- WordPress 6.0+
-- PHP 8.0+
+```bash
+./bin/package.sh X.Y.Z --publish
+```
 
----
+This validates (required files, style.css header, text domain, PHP lint, minified assets) and creates both `releases/titancore-X.Y.Z-dmY-Hi/` (legacy history) and the canonical `themeversions/vX.Y.Z-titancore/` with `vX.Y.Z-titancore.zip` + `changelog.md`. Every zip contains a single top-level `titancore/` folder and is install-tested via `./bin/up.sh` + `wp theme install .../vX.Y.Z-titancore.zip --activate`.
 
-## Credits
+Full procedure: `RELEASING.md`. Changelog: `CHANGELOG.md` (Keep a Changelog, append-only).
 
-- **Theme by** [administraktor.com](https://administraktor.com)
-- **Font:** [Inter](https://rsms.me/inter/) by Rasmus Andersson — SIL Open Font License 1.1
-- **Icons:** [Lucide](https://lucide.dev/) — ISC License
-- **Hosting partner:** [WPinEU.com](https://wpineu.com) — WordPress Hosting in Europe
+## GitHub contents
 
----
+`.gitignore` is a **whitelist** — only `themeversions/`, `README.md`, and `CHANGELOG.md` are tracked. Prompts, docs, scripts, local env, and release history stay local. If this repo previously tracked other files, run once:
 
-## License
+```bash
+git rm -r --cached . && git add . && git commit -m "chore: whitelist tracking (themeversions only)"
+```
 
-TitanCore is licensed under the [GNU General Public License v2 or later](http://www.gnu.org/licenses/gpl-2.0.html).
+## AI agent workflows
+
+The `AGENTARDS/` prompt family governs autonomous AI sessions: copy a prompt into your agent and it works under strict rules (evidence before changes, mandatory verification, never commits, version-first releases).
+
+- `AGENTARDS/AGENTICUS-MAXIMUS.md` — general autonomous development
+- `AGENTARDS/AGENTICUS-PURGATORIUS.md` — dead-code cleanup (deletion license only)
+- `AGENTARDS/AGENTICUS-DOCUS.md` — prompt maintenance
+- `AGENTARDS/AGENTICUS-LOGICUS.md` — project memory
+- `AGENTARDS/README.md` — index and rules
+
+## License & credits
+
+GPLv2 or later. Inter font (SIL OFL 1.1), Lucide icons (ISC), Tailwind-inspired utility CSS. By [administraktor.com](https://administraktor.com).

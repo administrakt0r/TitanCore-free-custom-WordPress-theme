@@ -1,20 +1,6 @@
-# Exclude development files from release archives (git archive / GitHub .zip)
-# These files are NOT shipped inside titancore.zip (see bin/package.sh EXCLUDES)
-
-AGENTPROMPT.md    export-ignore
-AGENTS.md         export-ignore
-CUSTODIAN.md      export-ignore
-CUSTODIAN_LOG.md  export-ignore
-TODO.md           export-ignore
-start-guide.md    export-ignore
-RELEASING.md      export-ignore
-CHANGELOG.md      export-ignore
-docs/             export-ignore
-bin/              export-ignore
-releases/         export-ignore
-.gitattributes    export-ignore
-.gitignore        export-ignore
-JamesBond.md      export-ignore
-jamesbond/        export-ignore
-.omx/             export-ignore
-.codex/           export-ignore
+# Normalize line endings; mark binaries.
+* text=auto
+*.png binary
+*.woff2 binary
+*.zip binary
+*.mo binary

@@ -17,7 +17,8 @@ docs/FOLDER_HYGIENE.md # where files live
 RELEASING.md           # version bump + packaging
 CHANGELOG.md           # what shipped
 TODO.md                # approved backlog
-CUSTODIAN.md / CUSTODIAN_LOG.md  # what was removed, don't re-add
+AGENTARDS/CUSTODIAN_LOG.md         # what was removed, don't re-add
+AGENTARDS/README.md                # Agenticus prompt family (full protocols)
 ```
 
 Then read the file(s) you will touch. Never edit without reading.
@@ -26,8 +27,8 @@ Then read the file(s) you will touch. Never edit without reading.
 
 | Task | Use | Scope limit |
 |------|-----|-------------|
-| Dead code / unused CSS/JS | `CUSTODIAN.md` prompt | 2 related removals per run, log each |
-| Bug / a11y / perf / small fix | `AGENTPROMPT.md` | 2 related edits in same area |
+| Dead code / unused CSS/JS | `AGENTARDS/AGENTICUS-PURGATORIUS.md` | One cleanup campaign per session, evidence-based, log each |
+| Bug / a11y / perf / small fix | `AGENTARDS/AGENTICUS-MAXIMUS.md` | One primary task per session, version + release on success |
 | New feature / preset / option | This guide + `RELEASING.md` | One feature, doc + changelog + version bump |
 | Release | `RELEASING.md` + `bin/package.sh` | Script creates `releases/` folder |
 
@@ -40,13 +41,13 @@ Then read the file(s) you will touch. Never edit without reading.
 - [ ] i18n: `__('string','titancore')`, `esc_html__`, etc. Never hard-code user-facing English without domain.
 - [ ] Prefix: `titancore_` for functions/filters, `titancore-` for handles where WP allows.
 - [ ] No namespaces (global scope by design).
-- [ ] Hook into `after_setup_theme` / `init` at correct priority; check `CUSTODIAN.md` Tier 3 before adding new `add_action`/`add_filter`.
+- [ ] Hook into `after_setup_theme` / `init` at correct priority; check the hook inventory in `AGENTARDS/AGENTICUS-PURGATORIUS.md` before adding new `add_action`/`add_filter`.
 
 ### Customizer
 
 - [ ] Add `add_setting` + `add_control` + `add_section` in `inc/customizer.php` with sanitizer.
 - [ ] If color → wire into `titancore_generate_theme_variables_css()` in `inc/enqueue.php` (grep setting ID there).
-- [ ] If toggle → gate template output (`header.php`, `single.php`, `template-parts/*`, `front-page.php`) — document mapping in `AGENTPROMPT.md` table.
+- [ ] If toggle → gate template output (`header.php`, `single.php`, `template-parts/*`, `front-page.php`) — document mapping in the `AGENTARDS/AGENTICUS-LOGICUS.md` settings map.
 - [ ] Update `docs/FOLDER_HYGIENE.md` if setting affects load order.
 
 ### CSS
@@ -92,19 +93,12 @@ After ANY edit:
 
 1. Grep pass 1: exact name of every changed function/hook/setting/class/handle.
 2. Grep pass 2: related names, aliases, setting IDs, CSS classes.
-3. Run `AGENTS.md` sequence (from `news-titan` — shared wp-env):
-   ```bash
-   find ... -name "*.php" -exec php -l {} \;
-   su wpuser -c "wp-env run cli wp theme activate TitanCore-free-custom-WordPress-theme --allow-root"
-   su wpuser -c "wp-env run cli bash -- -c 'truncate -s 0 wp-content/debug.log' --allow-root"
-   curl -s http://localhost:8888 >/dev/null; curl -s http://localhost:8888/wp-admin/customize.php >/dev/null; curl -s http://localhost:8888/wp-admin/widgets.php >/dev/null
-   su wpuser -c "wp-env run cli bash -- -c 'cat wp-content/debug.log 2>/dev/null' --allow-root"
-   ```
-   All steps must be silent. Fix before reporting done.
+3. Run `./bin/verify.sh` (own wp-env instance in this repo, port 8889 — see `AGENTS.md`).
+   Exit code 0 = all checks clean. Fix anything it reports before reporting done.
 
 ## 8. AI-specific gotchas
 
-- Don't re-add anything listed in `CUSTODIAN_LOG.md` or `AGENTS.md` removed-features.
+- Don't re-add anything listed in `AGENTARDS/CUSTODIAN_LOG.md`.
 - `theme_color_mode` controls both JS load (`inc/enqueue.php`) and body class (`header.php`) — check both when touching dark mode.
 - `titancore_should_keep_core_block_assets` filter — verify before modifying block CSS loading.
 - `fontawesome` is blocked by default — opt-out is via `titancore_block_fontawesome_assets` filter, not by enqueueing it.
@@ -114,5 +108,5 @@ After ANY edit:
 ## 9. When stuck
 
 - Check `TODO.md` for the approved backlog — prefer those tasks.
-- Open `CUSTODIAN.md` for the safe-removal proof checklist.
+- Open `AGENTARDS/AGENTICUS-PURGATORIUS.md` for the safe-removal proof checklist.
 - Ask the human before: changing requirements (WP/PHP), adding tooling, or renaming prefixes.
