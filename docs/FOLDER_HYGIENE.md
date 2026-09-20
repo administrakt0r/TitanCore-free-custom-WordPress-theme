@@ -36,7 +36,7 @@ Rule: if WordPress calls it via `get_template_part()` — it belongs in `templat
 ```
 TitanCore-free-custom-WordPress-theme/   # repo root (orchestration)
 ├── themeversions/                        # versioned theme sources (canonical deliverable)
-│   ├── current -> v1.0.1-titancore       # symlink, what wp-env loads (not committed)
+│   ├── current -> v1.0.4-titancore       # symlink, what wp-env loads (not committed)
 │   └── vX.Y.Z-titancore/
 │       ├── titancore/                    # THEME ROOT (= folder inside the zip)
 │       │   ├── assets/css/...            # style.css → enhancements.css → frontpage-presets.css (+ .min)

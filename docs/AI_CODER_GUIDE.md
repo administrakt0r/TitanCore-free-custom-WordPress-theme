@@ -28,7 +28,9 @@ Then read the file(s) you will touch. Never edit without reading.
 | Task | Use | Scope limit |
 |------|-----|-------------|
 | Dead code / unused CSS/JS | `AGENTARDS/AGENTICUS-PURGATORIUS.md` | One cleanup campaign per session, evidence-based, log each |
-| Bug / a11y / perf / small fix | `AGENTARDS/AGENTICUS-MAXIMUS.md` | One primary task per session, version + release on success |
+| Bug / a11y / small fix | `AGENTARDS/AGENTICUS-MAXIMUS.md` | One primary task per session, version + release on success |
+| UI/UX, contrast, visual & interaction polish | `AGENTARDS/AGENTICUS-AESTHETICUS.md` | One vertical slice, established visual language only, no new features/settings |
+| Performance optimization | `AGENTARDS/AGENTICUS-OPTIMIZATICUS.md` | One measured bottleneck, mandatory before/after evidence, no behavior change |
 | New feature / preset / option | This guide + `RELEASING.md` | One feature, doc + changelog + version bump |
 | Release | `RELEASING.md` + `bin/package.sh` | Script creates `releases/` folder |
 

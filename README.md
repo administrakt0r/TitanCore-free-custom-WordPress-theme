@@ -20,8 +20,8 @@ The repo root is **orchestration only** — WordPress never loads anything from 
 
 ```
 themeversions/
-  current -> v1.0.1-titancore        # symlink, what wp-env loads (machine-local)
-  v1.0.1-titancore/
+  current -> v1.0.4-titancore        # symlink, what wp-env loads (machine-local)
+  v1.0.4-titancore/
     titancore/                       # THEME ROOT — the actual theme source
     vX.Y.Z-titancore.zip             # created by bin/package.sh --publish
     changelog.md
@@ -85,6 +85,8 @@ The `AGENTARDS/` prompt family governs autonomous AI sessions: copy a prompt int
 
 - `AGENTARDS/AGENTICUS-MAXIMUS.md` — general autonomous development
 - `AGENTARDS/AGENTICUS-PURGATORIUS.md` — dead-code cleanup (deletion license only)
+- `AGENTARDS/AGENTICUS-AESTHETICUS.md` — visual/interaction design polish (one vertical slice)
+- `AGENTARDS/AGENTICUS-OPTIMIZATICUS.md` — measured performance optimization
 - `AGENTARDS/AGENTICUS-DOCUS.md` — prompt maintenance
 - `AGENTARDS/AGENTICUS-LOGICUS.md` — project memory
 - `AGENTARDS/README.md` — index and rules

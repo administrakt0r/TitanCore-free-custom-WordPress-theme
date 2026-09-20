@@ -4,6 +4,16 @@ All notable changes to TitanCore are documented here. Format follows [Keep a Cha
 
 This file is the source of truth. `readme.txt` `== Changelog ==` must stay in sync (WordPress.org reads it).
 
+## [1.0.4] - 2026-08-30
+### Removed
+- `comments.php`: dead `'class'` argument to `wp_list_comments()` (WordPress core accepts no such argument) and dead `peer-disabled:*` utility classes on the comment textarea label (no element with the required `peer` class exists anywhere). Comment item rendering re-proved with a live test comment.
+- `assets/css/style.css`: three static color rules made unreachable by the always-attached dynamic inline stylesheet (`titancore_generate_theme_variables_css()` re-declares `.bg-background/95`, `.border-border/40` and `.hover:bg-primary/90` later in the cascade from Customizer values, the hover rule with `!important`): statics and their `.dark` variants removed. Head order and rule presence verified in live HTML.
+- `assets/js/navigation.js`: `[data-lucide]` selector fragment removed from the menu icon `querySelectorAll` (no markup emits that attribute).
+
+## [1.0.3] - 2026-08-30
+### Removed
+- Dead CSS: 41 unused utility blocks in `assets/css/style.css` (spacing, sizing, positioning, typography, color, state and responsive variants no template, partial, script or rendered view can emit) and dead selector groups in `assets/css/enhancements.css` (`.tc-pagination`/`.nav-links--pagination` members of the pagination rules plus `.sm:items-center`/`.sm:justify-between`). Class-token output verified identical across front page (all three presets), archive, search, 404 and single views; minified CSS regenerated.
+
 ## [1.0.2] - 2026-08-30
 ### Added
 - Default Open Graph image fallback: a new `titancore_get_og_image_url()` helper resolves `og:image`/`twitter:image` for every view via the chain featured image (singular views) → Customizer "Default Open Graph Image" → 512px site icon — previously archive views and posts without a thumbnail emitted no image tags at all. Filterable via `titancore_og_image_url` (`inc/seo-schema.php`).
