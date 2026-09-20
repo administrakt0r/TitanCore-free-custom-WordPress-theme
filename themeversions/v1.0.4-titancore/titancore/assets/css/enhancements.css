@@ -41,11 +41,18 @@ select:focus-visible {
     outline-offset: 2px;
 }
 
+header nav ul li > a {
+    padding: 0.35rem 0.6rem;
+    border-radius: calc(var(--radius) - 2px);
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
 header nav ul li.current-menu-item > a,
 header nav ul li.current-menu-ancestor > a,
 header nav ul li.current_page_item > a {
     color: var(--foreground);
     background-color: var(--accent);
+    font-weight: 600;
 }
 
 ::selection {
@@ -471,6 +478,16 @@ header nav ul li.current_page_item > a {
 #mobile-menu a:focus-visible {
     background: var(--accent);
     color: var(--accent-foreground);
+}
+
+#mobile-menu li.current-menu-item > a,
+#mobile-menu li.current-menu-ancestor > a,
+#mobile-menu li.current_page_item > a {
+    background: var(--accent);
+    color: var(--accent-foreground);
+    font-weight: 600;
+    border-left: 3px solid var(--primary);
+    padding-left: calc(0.75rem - 3px);
 }
 
 #mobile-menu-backdrop {
