@@ -909,12 +909,6 @@ nav ul {
     transform: scale(1);
 }
 
-/* Special masking / grids from HTML */
-.\[mask-image\:linear-gradient\(to_top\,transparent_25\%\,black_95\%\)\] {
-    mask-image: linear-gradient(to top, transparent 25%, black 95%);
-    -webkit-mask-image: linear-gradient(to top, transparent 25%, black 95%);
-}
-
 /* Pseudo elements */
 .before\:absolute::before {
     content: "";

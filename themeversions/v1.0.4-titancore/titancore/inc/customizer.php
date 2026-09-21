@@ -156,35 +156,6 @@ function titancore_customize_register( $wp_customize ) {
         'section'     => 'theme_colors',
     ) ) );
 
-    // Grid Pattern Color
-    $wp_customize->add_setting( 'grid_pattern_color', array(
-        'default'           => '#6b7280',
-        'sanitize_callback' => 'sanitize_hex_color',
-    ) );
-
-    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'grid_pattern_color', array(
-        'label'    => __( 'Grid Pattern Color', 'titancore' ),
-        'section'  => 'theme_colors',
-    ) ) );
-
-    // Grid Pattern Opacity
-    $wp_customize->add_setting( 'grid_pattern_opacity', array(
-        'default'           => 0.4,
-        'sanitize_callback' => 'titancore_sanitize_float',
-    ) );
-    
-    $wp_customize->add_control( 'grid_pattern_opacity', array(
-        'label'       => __( 'Grid Pattern Opacity', 'titancore' ),
-        'description' => __( 'Values from 0.0 (invisible) to 1.0 (solid).', 'titancore' ),
-        'section'     => 'theme_colors',
-        'type'        => 'number',
-        'input_attrs' => array(
-            'min'  => 0,
-            'max'  => 1,
-            'step' => 0.05,
-        ),
-    ) );
-
     // Single Post Options Section
 	$wp_customize->add_section( 'post_options', array(
 		'title'    => __( 'Single Post Options', 'titancore' ),
@@ -468,12 +439,4 @@ function titancore_get_custom_code_output( $slot ) {
     }
 
     return wp_kses( $code, titancore_get_custom_code_allowed_tags( $slot ) );
-}
-
-/**
- * Sanitize float for opacity settings.
- * Clamps to the 0–1 range expected by the grid opacity control.
- */
-function titancore_sanitize_float( $input ) {
-    return max( 0.0, min( 1.0, floatval( $input ) ) );
 }
