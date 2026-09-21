@@ -52,20 +52,40 @@ $render_pagination = static function ( $query ) use ( $paged, $pagination_base )
 	<div class="max-w-7xl mx-auto w-full px-6 lg:px-0 mt-6 box-border">
 		<?php if ( 'news' === $preset ) : ?>
 			<?php
-			$headline_query = new WP_Query(
-				array_merge(
-					$base_query_args,
-					array(
-						'posts_per_page' => 5,
-						'no_found_rows'  => true,
-					)
-				)
-			);
+			$headline_cache_key = sprintf( 'titancore_frontpage_news_ids_v%s', titancore_get_cache_version() );
+			$headline_post_ids  = get_transient( $headline_cache_key );
 
-			$headline_posts = is_array( $headline_query->posts ) ? $headline_query->posts : array();
-			$hero_post = $headline_posts[0] ?? null;
+			if ( false === $headline_post_ids || ! is_array( $headline_post_ids ) ) {
+				$headline_query = new WP_Query(
+					array_merge(
+						$base_query_args,
+						array(
+							'posts_per_page' => 5,
+							'no_found_rows'  => true,
+							'fields'         => 'ids',
+						)
+					)
+				);
+				$headline_post_ids = is_array( $headline_query->posts ) ? $headline_query->posts : array();
+				set_transient( $headline_cache_key, $headline_post_ids, 6 * HOUR_IN_SECONDS );
+			}
+
+			if ( ! empty( $headline_post_ids ) ) {
+				$headline_posts = get_posts(
+					array(
+						'post__in'            => $headline_post_ids,
+						'orderby'             => 'post__in',
+						'posts_per_page'      => count( $headline_post_ids ),
+						'ignore_sticky_posts' => true,
+					)
+				);
+			} else {
+				$headline_posts = array();
+			}
+
+			$hero_post      = $headline_posts[0] ?? null;
 			$trending_posts = array_slice( $headline_posts, 1, 4 );
-			$excluded_ids = array_map( 'absint', wp_list_pluck( $headline_posts, 'ID' ) );
+			$excluded_ids   = array_map( 'absint', wp_list_pluck( $headline_posts, 'ID' ) );
 
 			$grid_query = new WP_Query(
 				array_merge(
@@ -205,15 +225,40 @@ $render_pagination = static function ( $query ) use ( $paged, $pagination_base )
 
 		<?php elseif ( 'magazine' === $preset ) : ?>
 			<?php
-			$featured_query = new WP_Query(
-				array_merge(
-					$base_query_args,
-					array(
-						'posts_per_page' => 2,
-						'no_found_rows'  => true,
+			$magazine_cache_key = sprintf( 'titancore_frontpage_mag_ids_v%s', titancore_get_cache_version() );
+			$featured_post_ids  = get_transient( $magazine_cache_key );
+
+			if ( false === $featured_post_ids || ! is_array( $featured_post_ids ) ) {
+				$featured_ids_query = new WP_Query(
+					array_merge(
+						$base_query_args,
+						array(
+							'posts_per_page' => 2,
+							'no_found_rows'  => true,
+							'fields'         => 'ids',
+						)
 					)
-				)
-			);
+				);
+				$featured_post_ids = is_array( $featured_ids_query->posts ) ? $featured_ids_query->posts : array();
+				set_transient( $magazine_cache_key, $featured_post_ids, 6 * HOUR_IN_SECONDS );
+			}
+
+			if ( ! empty( $featured_post_ids ) ) {
+				$featured_query = new WP_Query(
+					array_merge(
+						$base_query_args,
+						array(
+							'post__in'            => $featured_post_ids,
+							'orderby'             => 'post__in',
+							'posts_per_page'      => count( $featured_post_ids ),
+							'no_found_rows'       => true,
+							'ignore_sticky_posts' => true,
+						)
+					)
+				);
+			} else {
+				$featured_query = new WP_Query( array( 'post__in' => array( 0 ) ) );
+			}
 
 			$featured_ids = array_map( 'absint', wp_list_pluck( $featured_query->posts, 'ID' ) );
 
