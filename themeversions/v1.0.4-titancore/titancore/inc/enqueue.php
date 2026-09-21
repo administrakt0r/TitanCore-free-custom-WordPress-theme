@@ -118,7 +118,9 @@ function titancore_optimize_frontend_core_assets() {
 	}
 
 	// Not needed for most frontends and often flagged as unused JS.
-	wp_dequeue_script( 'wp-embed' );
+	if ( apply_filters( 'titancore_disable_wp_embed', true ) ) {
+		wp_dequeue_script( 'wp-embed' );
+	}
 
 	// TitanCore itself does not need frontend jQuery, but plugins often still do.
 	// Keep it registered by default and make full removal an explicit opt-in.
