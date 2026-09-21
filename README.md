@@ -79,17 +79,6 @@ Full procedure: `RELEASING.md`. Changelog: `CHANGELOG.md` (Keep a Changelog, app
 git rm -r --cached . && git add . && git commit -m "chore: whitelist tracking (themeversions only)"
 ```
 
-## AI agent workflows
-
-The `AGENTARDS/` prompt family governs autonomous AI sessions: copy a prompt into your agent and it works under strict rules (evidence before changes, mandatory verification, never commits, version-first releases).
-
-- `AGENTARDS/AGENTICUS-MAXIMUS.md` — general autonomous development
-- `AGENTARDS/AGENTICUS-PURGATORIUS.md` — dead-code cleanup (deletion license only)
-- `AGENTARDS/AGENTICUS-AESTHETICUS.md` — visual/interaction design polish (one vertical slice)
-- `AGENTARDS/AGENTICUS-OPTIMIZATICUS.md` — measured performance optimization
-- `AGENTARDS/AGENTICUS-DOCUS.md` — prompt maintenance
-- `AGENTARDS/AGENTICUS-LOGICUS.md` — project memory
-- `AGENTARDS/README.md` — index and rules
 
 ## License & credits
 
