@@ -454,6 +454,11 @@ header nav ul li.current_page_item > a {
     color: var(--foreground);
 }
 
+#mobile-menu-btn[aria-expanded="true"] {
+    background-color: var(--accent);
+    color: var(--accent-foreground);
+}
+
 #mobile-menu {
     opacity: 0;
     transform: translateY(-6px);

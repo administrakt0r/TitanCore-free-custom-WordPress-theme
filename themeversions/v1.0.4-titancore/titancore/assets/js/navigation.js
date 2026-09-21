@@ -90,6 +90,18 @@ document.addEventListener("DOMContentLoaded", () => {
         headings.forEach((heading) => observer.observe(heading));
     };
 
+    const initActiveMenuAttributes = () => {
+        const currentLinks = document.querySelectorAll(
+            "header nav li.current-menu-item > a, header nav li.current_page_item > a, #mobile-menu li.current-menu-item > a, #mobile-menu li.current_page_item > a"
+        );
+        currentLinks.forEach((link) => {
+            if (!link.hasAttribute("aria-current")) {
+                link.setAttribute("aria-current", "page");
+            }
+        });
+    };
+
+    initActiveMenuAttributes();
     initTocHighlighting();
 
     if (!hasMobileMenu) {
