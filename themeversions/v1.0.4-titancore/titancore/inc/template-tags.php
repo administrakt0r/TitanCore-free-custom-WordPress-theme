@@ -202,11 +202,23 @@ function titancore_get_estimated_reading_time( $post_id = 0 ) {
 		return 1;
 	}
 
+	static $runtime_cache = array();
+	if ( isset( $runtime_cache[ $post_id ] ) ) {
+		return $runtime_cache[ $post_id ];
+	}
+
 	$content = get_post_field( 'post_content', $post_id );
 	$content = wp_strip_all_tags( strip_shortcodes( (string) $content ) );
 	$count   = str_word_count( $content );
 
-	return max( 1, (int) ceil( $count / 220 ) );
+	if ( 0 === $count && '' !== trim( $content ) ) {
+		$count = (int) ceil( mb_strlen( $content, 'UTF-8' ) / 3 );
+	}
+
+	$reading_time = max( 1, (int) ceil( $count / 220 ) );
+	$runtime_cache[ $post_id ] = $reading_time;
+
+	return $reading_time;
 }
 
 /**
