@@ -4,6 +4,12 @@ All notable changes to TitanCore are documented here. Format follows [Keep a Cha
 
 This file is the source of truth. `readme.txt` `== Changelog ==` must stay in sync (WordPress.org reads it).
 
+## [1.0.5] - 2026-09-22
+### Changed
+- Navigation: Enhanced mobile navigation toggle button open-state affordance (`[aria-expanded="true"]`) with outline ring styling.
+- Navigation: Expanded active navigation link rules for `current-menu-parent`, `current-menu-ancestor`, `current_page_parent`, and `current_page_ancestor` with accurate `aria-current="true"` attributes in both desktop header nav and mobile dropdown menu (`assets/css/enhancements.css`, `assets/js/navigation.js`).
+- Comments: Normalized comment form inputs (`#author`, `#email`, `#url`, `#comment`) and submit button touch targets (44px min-height) with consistent focus ring outlines (`comments.php`).
+
 ## [1.0.4] - 2026-08-30
 ### Removed
 - `comments.php`: dead `'class'` argument to `wp_list_comments()` (WordPress core accepts no such argument) and dead `peer-disabled:*` utility classes on the comment textarea label (no element with the required `peer` class exists anywhere). Comment item rendering re-proved with a live test comment.
