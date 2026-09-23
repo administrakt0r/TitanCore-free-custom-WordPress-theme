@@ -4,6 +4,12 @@ All notable changes to TitanCore are documented here. Format follows [Keep a Cha
 
 This file is the source of truth. `readme.txt` `== Changelog ==` must stay in sync (WordPress.org reads it).
 
+## [1.0.5] - 2026-09-23
+### Changed
+- `comments.php`: Added explicit required fields notice, enhanced form label hierarchy, and enforced 44px minimum touch targets with focus-visible outline rings across comment form inputs and submit button for improved accessibility.
+- `assets/css/enhancements.css`: Refined comment card borders, avatar rounding, metadata typography, and reply link hover states for better visual hierarchy and reading flow.
+- `assets/js/navigation.js`: Polished mobile navigation backdrop transitions, open-state affordances, and active link indication.
+
 ## [1.0.4] - 2026-08-30
 ### Removed
 - `comments.php`: dead `'class'` argument to `wp_list_comments()` (WordPress core accepts no such argument) and dead `peer-disabled:*` utility classes on the comment textarea label (no element with the required `peer` class exists anywhere). Comment item rendering re-proved with a live test comment.
