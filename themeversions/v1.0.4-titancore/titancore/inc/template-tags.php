@@ -194,7 +194,7 @@ function titancore_get_image_sizes( $context = 'default' ) {
 }
 
 /**
- * Estimate reading time for a post.
+ * Estimate reading time for a post with runtime caching and multibyte text fallback.
  */
 function titancore_get_estimated_reading_time( $post_id = 0 ) {
 	$post_id = $post_id ? absint( $post_id ) : get_the_ID();
@@ -202,11 +202,24 @@ function titancore_get_estimated_reading_time( $post_id = 0 ) {
 		return 1;
 	}
 
+	static $runtime_cache = array();
+	if ( isset( $runtime_cache[ $post_id ] ) ) {
+		return $runtime_cache[ $post_id ];
+	}
+
 	$content = get_post_field( 'post_content', $post_id );
 	$content = wp_strip_all_tags( strip_shortcodes( (string) $content ) );
 	$count   = str_word_count( $content );
 
-	return max( 1, (int) ceil( $count / 220 ) );
+	if ( 0 === $count && '' !== trim( $content ) ) {
+		$char_count = function_exists( 'mb_strlen' ) ? mb_strlen( $content ) : strlen( $content );
+		$count      = (int) ceil( $char_count / 5 );
+	}
+
+	$reading_time              = max( 1, (int) ceil( $count / 220 ) );
+	$runtime_cache[ $post_id ] = $reading_time;
+
+	return $reading_time;
 }
 
 /**
