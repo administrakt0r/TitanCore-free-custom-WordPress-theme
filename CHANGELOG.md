@@ -4,6 +4,12 @@ All notable changes to TitanCore are documented here. Format follows [Keep a Cha
 
 This file is the source of truth. `readme.txt` `== Changelog ==` must stay in sync (WordPress.org reads it).
 
+## [1.0.6] - 2026-09-24
+### Added
+- `inc/template-tags.php`: Added `titancore_get_related_posts()` helper with transient query caching and automatic invalidation on term/post changes.
+- `single.php`: Enriched single-post view with a "Related Reading" side rail module in the desktop sidebar and a 3-column "Related Articles" grid section prior to comments.
+- `assets/css/enhancements.css`: Added styles for related content cards, side rail modules, hover elevation, dark mode token support, and focus-visible accessibility.
+
 ## [1.0.5] - 2026-09-23
 ### Changed
 - `comments.php`: Added explicit required fields notice, enhanced form label hierarchy, and enforced 44px minimum touch targets with focus-visible outline rings across comment form inputs and submit button for improved accessibility.
