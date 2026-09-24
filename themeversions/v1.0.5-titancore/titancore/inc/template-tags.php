@@ -58,14 +58,22 @@ add_action( 'delete_term', 'titancore_bump_cache_version' );
 function titancore_get_top_tags( $limit = 5 ) {
 	$limit = absint( $limit );
 
-	$cache_key = sprintf(
+	static $runtime_cache = array();
+
+	$cache_version = titancore_get_cache_version();
+	$cache_key     = sprintf(
 		'titancore_top_tags_%1$d_v%2$s',
 		$limit,
-		titancore_get_cache_version()
+		$cache_version
 	);
+
+	if ( isset( $runtime_cache[ $cache_key ] ) ) {
+		return $runtime_cache[ $cache_key ];
+	}
 
 	$cached_tags = get_transient( $cache_key );
 	if ( false !== $cached_tags && is_array( $cached_tags ) ) {
+		$runtime_cache[ $cache_key ] = $cached_tags;
 		return $cached_tags;
 	}
 
@@ -84,6 +92,7 @@ function titancore_get_top_tags( $limit = 5 ) {
 	}
 
 	set_transient( $cache_key, $tags, 6 * HOUR_IN_SECONDS );
+	$runtime_cache[ $cache_key ] = $tags;
 	return $tags;
 }
 
@@ -91,20 +100,30 @@ function titancore_get_top_tags( $limit = 5 ) {
  * Cache published post count used in home/front tag headers.
  */
 function titancore_get_published_posts_count() {
-	$cache_key = sprintf(
+	static $runtime_cache = array();
+
+	$cache_version = titancore_get_cache_version();
+	$cache_key     = sprintf(
 		'titancore_published_count_v%s',
-		titancore_get_cache_version()
+		$cache_version
 	);
+
+	if ( isset( $runtime_cache[ $cache_key ] ) ) {
+		return $runtime_cache[ $cache_key ];
+	}
 
 	$cached_count = get_transient( $cache_key );
 	if ( false !== $cached_count ) {
-		return absint( $cached_count );
+		$count                       = absint( $cached_count );
+		$runtime_cache[ $cache_key ] = $count;
+		return $count;
 	}
 
 	$counts = wp_count_posts( 'post' );
 	$count  = isset( $counts->publish ) ? absint( $counts->publish ) : 0;
 
 	set_transient( $cache_key, $count, HOUR_IN_SECONDS );
+	$runtime_cache[ $cache_key ] = $count;
 	return $count;
 }
 
@@ -202,11 +221,20 @@ function titancore_get_estimated_reading_time( $post_id = 0 ) {
 		return 1;
 	}
 
+	static $runtime_cache = array();
+
+	if ( isset( $runtime_cache[ $post_id ] ) ) {
+		return $runtime_cache[ $post_id ];
+	}
+
 	$content = get_post_field( 'post_content', $post_id );
 	$content = wp_strip_all_tags( strip_shortcodes( (string) $content ) );
 	$count   = str_word_count( $content );
 
-	return max( 1, (int) ceil( $count / 220 ) );
+	$reading_time              = max( 1, (int) ceil( $count / 220 ) );
+	$runtime_cache[ $post_id ] = $reading_time;
+
+	return $reading_time;
 }
 
 /**
