@@ -1,0 +1,119 @@
+=== TitanCore WordPress Theme ===
+Contributors: administraktor
+Requires at least: 6.0
+Tested up to: 6.8
+Stable tag: 1.0.8
+Requires PHP: 8.0
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
+Ultra-fast, clean-coded WordPress theme for blogs and magazines. Dark mode, three front-page presets, built-in SEO, and zero bloat.
+
+== Description ==
+
+TitanCore is a performance-first WordPress theme built for bloggers, publishers, and anyone who wants their content to load near-instantly.
+
+**Key Features:**
+
+* **Three front-page presets** — Modern Blog grid, News Portal (hero + trending sidebar), and Magazine layout. Switch instantly via the Customizer.
+* **Dark mode** — System-aware toggle with manual override. Visitors get the mode they prefer, or you can force light-only or dark-only.
+* **Built-in SEO** — Fallback meta descriptions, Open Graph, Twitter Cards, canonical URLs, breadcrumbs with JSON-LD, and Article/Organization schema. Automatically suppressed when a dedicated SEO plugin is active.
+* **Performance optimised** — No jQuery dependency, no Font Awesome, no emoji scripts, conditional block-library loading, deferred navigation JS, proper `fetchpriority`/`loading`/`sizes` on images, and locally hosted Inter variable font.
+* **Fully translatable** — Every user-facing string uses the `titancore` text domain.
+* **Accessible** — Skip link, focus management, ARIA attributes, keyboard-navigable mobile menu, `prefers-reduced-motion` support.
+* **Customizer controls** — Sticky header, colour palette (light + dark), grid pattern overlay, front-page preset, TOC toggle, post/tag limits, custom header/footer code injection with safe-mode filtering.
+* **Clean code** — Hand-written PHP with proper escaping, no build step required for deployment.
+
+== Installation ==
+
+1. In your admin panel, go to Appearance > Themes and click the Add New button.
+2. Click Upload Theme and Choose File, then select the theme's .zip file. Click Install Now.
+3. Click Activate to use your new theme right away.
+4. Head to Appearance > Customize to configure header, colours, and front-page layout.
+5. Set up your menus at Appearance > Menus (Primary, Secondary, Footer).
+
+== Frequently Asked Questions ==
+
+= Does this theme support dark mode? =
+
+Yes. Out of the box, TitanCore respects the visitor's system preference and provides a toggle button. You can also force light-only or dark-only via the Customizer.
+
+= How do I change the front-page layout? =
+
+Go to Appearance > Customize > Front Page Options and choose between Modern Blog, News Portal, or Magazine.
+
+= How do I change the logo? =
+
+Go to Appearance > Customize > Site Identity. You can also toggle between logo image and styled text title under Header Options.
+
+= Does this theme work without an SEO plugin? =
+
+Yes. TitanCore outputs fallback meta descriptions, Open Graph tags, canonical URLs, and structured data. When a dedicated SEO plugin (Yoast, Rank Math, SEOPress, AIOSEO) is detected, TitanCore's SEO output is automatically suppressed to avoid duplicates.
+
+= Does this theme need jQuery? =
+
+No. TitanCore's frontend JavaScript is vanilla ES6. jQuery remains registered for plugin compatibility but the theme itself does not load it.
+
+== Changelog ==
+
+= 1.0.8 =
+* Performance: Optimized front-page preset query cache misses in News and Magazine layouts to eliminate redundant secondary post queries when populating transient cache.
+
+= 1.0.7 =
+* UI/UX: Implemented clean search SVG icon in template tags and updated searchform submit button.
+* UI/UX: Enhanced single-post navigation cards with directional arrows, hover elevation, and focus-visible outline rings.
+* UI/UX: Refined search and comment form input hover states, focus rings, and transition effects in enhancements.css.
+
+= 1.0.6 =
+* UI/UX: Enriched single-post layout with a Related Reading side rail module and a 3-column Related Articles grid section before comments.
+* Performance: Added `titancore_get_related_posts()` helper with transient caching and automatic version invalidation.
+* UI/UX: Refined related content card tokens, borders, hover elevation, and focus-visible accessibility.
+
+= 1.0.5 =
+* UI/UX: Added explicit required fields notice, enhanced form label hierarchy, and enforced 44px minimum touch targets with focus-visible outline rings across comment form inputs and buttons.
+* UI/UX: Refined comment list card borders, avatar rounding, metadata contrast, and reply link hover states for clean reading flow and assistive-technology clarity.
+* UI/UX: Polished mobile navigation backdrop transitions, open-state affordances, and active link indication.
+
+= 1.0.4 =
+* Removed: dead `'class'` argument from `wp_list_comments()` (WordPress core accepts no such argument) and dead `peer-disabled:*` classes from the comment textarea label.
+* Removed: three unreachable static color rules from style.css (`.bg-background/95`, `.border-border/40`, `.hover:bg-primary/90` plus dark variants) — the theme's dynamic inline stylesheet always re-declares them later in the cascade from Customizer values.
+* Removed: `[data-lucide]` selector fragment from navigation.js (no markup emits that attribute).
+
+= 1.0.3 =
+* Removed: 41 dead CSS utility blocks from style.css (spacing, sizing, positioning, typography, color, state and responsive variants no template, partial, script or rendered view can emit).
+* Removed: dead `.tc-pagination`/`.nav-links--pagination` selector groups from the pagination rules and unused `.sm:items-center`/`.sm:justify-between` blocks from enhancements.css.
+* Verified: rendered markup class output identical across front page (all three presets), archive, search, 404 and single views; minified CSS regenerated in sync.
+
+= 1.0.2 =
+* Added: default Open Graph image fallback chain (featured image → Customizer default → Site Icon) so archive views and thumbnail-less posts emit og:image/twitter:image too, filterable via `titancore_og_image_url`.
+* Added: social profiles (Facebook, X/Twitter, Instagram, YouTube, LinkedIn) in the new Customizer "SEO & Social" section, emitted as sameAs in the Organization JSON-LD.
+* Added: active-section highlighting for the single-post Table of Contents (IntersectionObserver marks the heading in view with aria-current, in both sidebar and mobile TOC).
+* Added: consistent card visual system across the three front-page presets (shared radius/padding/shadow tokens, hover + keyboard focus elevation, focus-visible outlines for card links).
+* Changed: navigation.js additionally loads on singular views with the TOC enabled so highlighting works without a primary menu or color-mode switcher.
+* Fixed: canonical URLs now cover date archives (day/month/year) and custom post type archives, which previously had none.
+* Fixed: paginated archive URLs (front page, posts page, term/author/date/post-type archives) now emit self-referencing canonicals instead of pointing every page at page 1, so paginated content is no longer hidden from search engines.
+* Fixed: singular pages (posts, pages, split posts) no longer emit a duplicate canonical tag; WordPress core's own canonical is used there.
+* Fixed: BreadcrumbList JSON-LD no longer duplicates schema when a dedicated SEO plugin is active; the visible breadcrumb navigation always renders.
+* Changed: search results and 404 pages intentionally emit no canonical (they remain noindex); rel prev/next is skipped on those noindexed contexts.
+
+= 1.0.1 =
+* Fixed: desktop nav 44×44px tap target and visible active state (a11y).
+* Fixed: decorative icons now aria-hidden, backdrop fades with sticky-aware offset.
+* Changed: prose-lg responsive — 1rem on mobile, 1.125rem from 640px.
+
+= 1.0.0 =
+* Initial release.
+* Three front-page presets: Blog, News, Magazine.
+* Dark mode with system-aware toggle.
+* Built-in SEO fallbacks (meta, OG, schema, breadcrumbs).
+* Performance: emoji removal, block-library conditional loading, deferred JS.
+* Customizer: colours, sticky header, grid pattern, TOC, code injection.
+* Accessible mobile menu with focus trapping and Escape key support.
+
+== Credits ==
+
+* Theme by [administraktor.com](https://administraktor.com).
+* Font: [Inter](https://rsms.me/inter/) by Rasmus Andersson, licensed under the SIL Open Font License 1.1.
+* Hosting partner: [WPinEU.com](https://wpineu.com) — WordPress Hosting in Europe.
+* Built with utility-class CSS inspired by Tailwind UI patterns.
+* Icons: Lucide (ISC License).

@@ -13,7 +13,7 @@ Last reconciled: 2026-03-17
 - [x] Remove globally forced eager/high-priority loading from the custom logo filter so only real LCP images opt into it.
 - [ ] Add optional modern image format workflow (WebP/AVIF generation plus fallback strategy).
 - [ ] Audit whether `wp-embed` and core block asset stripping need finer-grained opt-outs for plugin-heavy or block-heavy sites.
-- [ ] Review front-page queries for safe caching and any low-risk metadata/query optimizations that do not break pagination or editorial ordering.
+- [x] Review front-page queries for safe caching and any low-risk metadata/query optimizations that do not break pagination or editorial ordering.
 
 ## UI/UX
 - [x] Bring [`index.php`](c:\Users\Da\Desktop\umjetnai-wp-theme-final\index.php) onto the shared loop-container/content-none flow used by archive/search templates.

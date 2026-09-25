@@ -4,6 +4,10 @@ All notable changes to TitanCore are documented here. Format follows [Keep a Cha
 
 This file is the source of truth. `readme.txt` `== Changelog ==` must stay in sync (WordPress.org reads it).
 
+## [1.0.8] - 2026-09-25
+### Changed
+- `front-page.php`: Optimized front-page preset query cache misses in News and Magazine layouts to fetch full post objects directly on transient cache miss, eliminating secondary `get_posts()` and duplicate queries.
+
 ## [1.0.7] - 2026-09-25
 ### Changed
 - `inc/template-tags.php`: Added clean `search` magnifying glass SVG icon helper and updated `searchform.php` submit button icon.
