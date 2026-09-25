@@ -4,6 +4,12 @@ All notable changes to TitanCore are documented here. Format follows [Keep a Cha
 
 This file is the source of truth. `readme.txt` `== Changelog ==` must stay in sync (WordPress.org reads it).
 
+## [1.0.7] - 2026-09-25
+### Changed
+- `inc/template-tags.php`: Added clean `search` magnifying glass SVG icon helper and updated `searchform.php` submit button icon.
+- `single.php`: Enhanced post navigation links with directional arrows (`← Previous`, `Next →`), card hover elevation, border highlights, and focus-visible outlines.
+- `assets/css/enhancements.css`: Refined search form and comment input hover states, focus ring offsets, and smooth transitions; regenerated minified asset `enhancements.min.css`.
+
 ## [1.0.6] - 2026-09-24
 ### Added
 - `inc/template-tags.php`: Added `titancore_get_related_posts()` helper with transient query caching and automatic invalidation on term/post changes.
