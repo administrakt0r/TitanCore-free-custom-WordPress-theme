@@ -678,6 +678,7 @@ header nav ul li.current_page_item > a {
     border: 1px solid var(--border);
     border-radius: var(--radius);
     background: var(--background);
+    color: var(--foreground);
     padding: 0 0.9rem;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
@@ -693,14 +694,17 @@ header nav ul li.current_page_item > a {
 
 .search-form input[type="submit"],
 .search-form button[type="submit"] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     min-height: 44px;
-    padding: 0 1rem;
+    padding: 0 1.25rem;
     border-radius: var(--radius);
     background: var(--primary);
     color: var(--primary-foreground);
     border: 1px solid var(--primary);
     font-weight: 600;
-    transition: background-color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+    transition: background-color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
 }
 
 .search-form input[type="submit"]:hover,
@@ -708,6 +712,7 @@ header nav ul li.current_page_item > a {
     background: color-mix(in srgb, var(--primary) 90%, black);
     border-color: color-mix(in srgb, var(--primary) 90%, black);
     cursor: pointer;
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--foreground) 10%, transparent);
 }
 
 .comment-form input[type="text"],
