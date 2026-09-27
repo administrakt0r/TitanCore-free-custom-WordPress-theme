@@ -4,6 +4,11 @@ All notable changes to TitanCore are documented here. Format follows [Keep a Cha
 
 This file is the source of truth. `readme.txt` `== Changelog ==` must stay in sync (WordPress.org reads it).
 
+## [1.0.9] - 2026-09-27
+### Changed
+- `search.php`, `archive.php`, `template-parts/content-none.php`: Consolidated empty state UI across search and archive views with unified recovery options, popular topic category shortcuts, recent article suggestions, and search-contextualized icons.
+- `assets/css/enhancements.css`: Refined search result and empty state typography, hover elevation, micro-interactions, and focus-visible accessibility.
+
 ## [1.0.8] - 2026-09-26
 ### Changed
 - `inc/template-tags.php`: Added static in-memory per-request runtime caching to `titancore_get_estimated_reading_time()`, `titancore_get_top_tags()`, and `titancore_get_published_posts_count()`, plus multibyte character fallback calculation for non-Latin script content.
