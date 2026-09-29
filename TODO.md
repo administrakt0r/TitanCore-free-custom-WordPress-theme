@@ -19,7 +19,7 @@ Last reconciled: 2026-03-17
 - [x] Bring [`index.php`](c:\Users\Da\Desktop\umjetnai-wp-theme-final\index.php) onto the shared loop-container/content-none flow used by archive/search templates.
 - [x] Consolidate the shared home/front intro header into [`template-parts/front-header.php`](c:\Users\Da\Desktop\umjetnai-wp-theme-final\template-parts\front-header.php).
 - [x] Introduce a more consistent card visual system across the `blog`, `news`, and `magazine` presets. (v1.0.2 — shared card tokens, hover/focus elevation, focus-visible outlines; `assets/css/frontpage-presets.css`)
-- [ ] Improve empty/search states with curated recovery links or content suggestions.
+- [x] Improve empty/search states with curated recovery links or content suggestions. (v1.0.9 — standardized `content-none.php` across templates, popular topic chips with post counts, recovery search guidance, recent article cards with hover elevation; `assets/css/enhancements.css`)
 - [ ] Strengthen mobile menu open-state affordance and active-link indication without breaking the current visual language.
 - [ ] Add a richer single-post side rail or related content module that does not crowd reading flow.
 
