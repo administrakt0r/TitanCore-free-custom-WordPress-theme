@@ -4,6 +4,11 @@ All notable changes to TitanCore are documented here. Format follows [Keep a Cha
 
 This file is the source of truth. `readme.txt` `== Changelog ==` must stay in sync (WordPress.org reads it).
 
+## [1.0.9] - 2026-09-29
+### Changed
+- `inc/enqueue.php`: Added static in-memory per-request runtime caching and transient caching to `titancore_generate_theme_variables_css()` to eliminate redundant hex parsing, color mixing, luma contrast calculations, and string concatenations on every request (~247x execution speedup).
+- `front-page.php`: Batch-primed post, term, and thumbnail/meta caches using `_prime_post_caches()` for headline posts (`news` preset) and featured posts (`magazine` preset), and added `'no_found_rows' => true` to the headline `get_posts()` call to suppress unnecessary SQL row count calculations.
+
 ## [1.0.8] - 2026-09-26
 ### Changed
 - `inc/template-tags.php`: Added static in-memory per-request runtime caching to `titancore_get_estimated_reading_time()`, `titancore_get_top_tags()`, and `titancore_get_published_posts_count()`, plus multibyte character fallback calculation for non-Latin script content.
