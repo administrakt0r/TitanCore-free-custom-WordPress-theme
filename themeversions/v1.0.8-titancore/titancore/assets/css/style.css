@@ -297,10 +297,6 @@ textarea {
     height: 3.5rem;
 }
 
-.min-h-\[80px\] {
-    min-height: 80px;
-}
-
 .min-h-\[200px\] {
     min-height: 200px;
 }
