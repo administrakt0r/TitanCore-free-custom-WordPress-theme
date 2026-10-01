@@ -240,6 +240,7 @@ function titancore_get_related_posts( $post_id = 0, $limit = 3 ) {
 		'post__not_in'        => array( $post_id ),
 		'ignore_sticky_posts' => true,
 		'no_found_rows'       => true,
+		'fields'              => 'ids',
 	);
 
 	if ( ! empty( $categories ) ) {
@@ -249,7 +250,7 @@ function titancore_get_related_posts( $post_id = 0, $limit = 3 ) {
 	}
 
 	$query             = new WP_Query( $args );
-	$related_post_ids  = wp_list_pluck( $query->posts, 'ID' );
+	$related_post_ids  = is_array( $query->posts ) ? array_map( 'absint', $query->posts ) : array();
 
 	if ( count( $related_post_ids ) < $limit ) {
 		$fallback_args = array(
@@ -259,9 +260,10 @@ function titancore_get_related_posts( $post_id = 0, $limit = 3 ) {
 			'post__not_in'        => array_merge( array( $post_id ), $related_post_ids ),
 			'ignore_sticky_posts' => true,
 			'no_found_rows'       => true,
+			'fields'              => 'ids',
 		);
 		$fallback_query    = new WP_Query( $fallback_args );
-		$fallback_ids      = wp_list_pluck( $fallback_query->posts, 'ID' );
+		$fallback_ids      = is_array( $fallback_query->posts ) ? array_map( 'absint', $fallback_query->posts ) : array();
 		$related_post_ids  = array_merge( $related_post_ids, $fallback_ids );
 	}
 
