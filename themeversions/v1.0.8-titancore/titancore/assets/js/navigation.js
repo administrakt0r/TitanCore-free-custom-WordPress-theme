@@ -99,6 +99,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 link.setAttribute("aria-current", "page");
             }
         });
+
+        const ancestorLinks = document.querySelectorAll(
+            "header nav li.current-menu-ancestor > a, #mobile-menu li.current-menu-ancestor > a"
+        );
+        ancestorLinks.forEach((link) => {
+            if (!link.hasAttribute("aria-current")) {
+                link.setAttribute("aria-current", "location");
+            }
+        });
     };
 
     initActiveMenuAttributes();
