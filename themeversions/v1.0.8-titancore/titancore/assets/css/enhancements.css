@@ -44,7 +44,13 @@ select:focus-visible {
 header nav ul li > a {
     padding: 0.35rem 0.6rem;
     border-radius: calc(var(--radius) - 2px);
-    transition: background-color 0.15s ease, color 0.15s ease;
+    transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+
+header nav ul li > a:hover,
+header nav ul li > a:focus-visible {
+    color: var(--foreground);
+    background-color: var(--accent);
 }
 
 header nav ul li.current-menu-item > a,
@@ -53,6 +59,7 @@ header nav ul li.current_page_item > a {
     color: var(--foreground);
     background-color: var(--accent);
     font-weight: 600;
+    box-shadow: inset 0 -2px 0 0 var(--primary);
 }
 
 ::selection {
@@ -537,12 +544,18 @@ header nav ul li.current_page_item > a {
 #mobile-menu-btn[aria-expanded="true"] {
     background-color: var(--accent);
     color: var(--accent-foreground);
+    box-shadow: inset 0 0 0 1px var(--border);
+}
+
+#mobile-menu-btn svg {
+    transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 #mobile-menu {
     opacity: 0;
     transform: translateY(-6px);
     transition: opacity 0.18s ease, transform 0.18s ease;
+    box-shadow: 0 12px 30px -10px color-mix(in srgb, var(--foreground) 10%, transparent);
 }
 
 #mobile-menu.is-open {
@@ -556,7 +569,7 @@ header nav ul li.current_page_item > a {
     min-height: 44px;
     padding: 0.5rem 0.75rem;
     border-radius: calc(var(--radius) - 2px);
-    transition: background-color 0.15s ease, color 0.15s ease;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
 
 #mobile-menu a:hover,
@@ -568,8 +581,8 @@ header nav ul li.current_page_item > a {
 #mobile-menu li.current-menu-item > a,
 #mobile-menu li.current-menu-ancestor > a,
 #mobile-menu li.current_page_item > a {
-    background: var(--accent);
-    color: var(--accent-foreground);
+    background: color-mix(in srgb, var(--accent) 90%, var(--primary) 10%);
+    color: var(--foreground);
     font-weight: 600;
     border-left: 3px solid var(--primary);
     padding-left: calc(0.75rem - 3px);
