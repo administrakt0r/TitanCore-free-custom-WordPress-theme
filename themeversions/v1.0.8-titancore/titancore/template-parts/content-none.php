@@ -10,8 +10,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 $is_search_query = is_search();
 $search_query    = get_search_query();
 ?>
-<section class="py-12 md:py-16 text-center flex flex-col items-center justify-center border-x border-b border-border bg-card/50 px-6 space-y-6">
-	<span class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-muted border border-border text-muted-foreground" aria-hidden="true"><?php echo titancore_get_icon( 'inbox', 'w-6 h-6' ); ?></span>
+<section class="tc-empty-state py-12 md:py-16 text-center flex flex-col items-center justify-center border-x border-b border-border bg-card/50 px-6 space-y-6">
+	<span class="inline-flex h-14 w-14 items-center justify-center rounded-full bg-muted border border-border/80 text-muted-foreground shadow-sm" aria-hidden="true"><?php echo titancore_get_icon( $is_search_query ? 'search-x' : 'inbox', 'w-7 h-7' ); ?></span>
 
 	<div class="space-y-2 max-w-md">
 		<h2 class="text-2xl md:text-3xl font-bold tracking-tight"><?php echo $is_search_query ? esc_html__( 'No results found', 'titancore' ) : esc_html__( 'Nothing found', 'titancore' ); ?></h2>
@@ -62,7 +62,7 @@ $search_query    = get_search_query();
 			<h3 class="text-xs font-semibold uppercase tracking-wider text-muted-foreground text-center mb-4"><?php esc_html_e( 'Recent Articles', 'titancore' ); ?></h3>
 			<div class="grid sm:grid-cols-3 gap-3">
 				<?php while ( $recent_query->have_posts() ) : $recent_query->the_post(); ?>
-					<a href="<?php the_permalink(); ?>" class="group block rounded-lg border border-border bg-card p-4 hover:bg-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+					<a href="<?php the_permalink(); ?>" class="tc-empty-state__card group block rounded-lg border border-border bg-card p-4 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
 						<span class="block text-sm font-semibold leading-snug group-hover:text-foreground line-clamp-2"><?php the_title(); ?></span>
 						<span class="block text-xs text-muted-foreground mt-2"><?php echo esc_html( get_the_date() ); ?></span>
 					</a>
