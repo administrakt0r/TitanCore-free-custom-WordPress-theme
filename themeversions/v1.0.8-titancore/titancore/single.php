@@ -15,8 +15,6 @@ while ( have_posts() ) :
 ?>
 
 <div class="tc-single min-h-screen bg-background relative">
-  <?php get_template_part( 'template-parts/background', 'grid' ); ?>
-
   <div class="tc-single__header space-y-4 border-b border-border relative z-10">
     <div class="max-w-7xl mx-auto flex flex-col gap-6 p-6">
       <div class="flex flex-wrap items-center gap-2.5 gap-y-3 text-sm text-muted-foreground">

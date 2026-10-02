@@ -10,8 +10,6 @@
 get_header(); ?>
 
 <main id="main-content" tabindex="-1" class="min-h-screen bg-background relative">
-	<?php get_template_part( 'template-parts/background', 'grid' ); ?>
-
 	<div class="p-6 border-b border-border flex flex-col gap-6 min-h-[200px] justify-center relative z-10">
 		<div class="max-w-7xl mx-auto w-full">
 			<div class="flex flex-col gap-2">
