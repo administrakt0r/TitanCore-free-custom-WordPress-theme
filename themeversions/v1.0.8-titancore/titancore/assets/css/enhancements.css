@@ -724,6 +724,19 @@ header nav ul li.current_page_item > a {
     border-color: color-mix(in srgb, var(--border) 60%, var(--foreground));
 }
 
+/* Empty State Recovery Modules */
+.tc-empty-state__card {
+    transition: background-color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.tc-empty-state__card:hover,
+.tc-empty-state__card:focus-visible {
+    background-color: color-mix(in srgb, var(--card) 92%, var(--accent));
+    border-color: color-mix(in srgb, var(--border) 50%, var(--foreground));
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--foreground) 6%, transparent);
+    transform: translateY(-1px);
+}
+
 @media (min-width: 640px) {
     .sm\:flex-row {
         flex-direction: row;
