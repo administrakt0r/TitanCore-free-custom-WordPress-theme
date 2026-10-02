@@ -6,7 +6,6 @@
 get_header(); ?>
 
 <main id="main-content" tabindex="-1" class="min-h-screen bg-background relative">
-  <?php get_template_part( 'template-parts/background', 'grid' ); ?>
   <?php get_template_part( 'template-parts/front', 'header' ); ?>
 
   <div class="max-w-7xl mx-auto w-full px-6 lg:px-0">

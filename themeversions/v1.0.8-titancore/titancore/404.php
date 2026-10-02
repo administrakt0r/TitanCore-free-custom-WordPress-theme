@@ -6,7 +6,6 @@
 get_header(); ?>
 
 <main id="main-content" tabindex="-1" class="min-h-[70vh] bg-background flex flex-col items-center justify-center w-full z-10 relative px-6 py-16">
-  <?php get_template_part( 'template-parts/background', 'grid' ); ?>
   <div class="text-center flex flex-col gap-5 max-w-md mx-auto relative z-10">
     <span class="mx-auto inline-flex h-12 w-12 items-center justify-center rounded-full bg-muted text-muted-foreground border border-border"><?php echo titancore_get_icon('file-question', 'w-6 h-6'); ?></span>
     <h1 class="text-7xl md:text-8xl font-mono font-bold tracking-tighter text-primary">404</h1>
