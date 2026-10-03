@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const initActiveMenuAttributes = () => {
         const currentLinks = document.querySelectorAll(
-            "header nav li.current-menu-item > a, header nav li.current_page_item > a, #mobile-menu li.current-menu-item > a, #mobile-menu li.current_page_item > a"
+            "header nav li.current-menu-item > a, header nav li.current-menu-ancestor > a, header nav li.current_page_item > a, #mobile-menu li.current-menu-item > a, #mobile-menu li.current-menu-ancestor > a, #mobile-menu li.current_page_item > a"
         );
         currentLinks.forEach((link) => {
             if (!link.hasAttribute("aria-current")) {
