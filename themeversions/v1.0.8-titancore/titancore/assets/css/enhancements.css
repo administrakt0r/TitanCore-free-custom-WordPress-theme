@@ -537,6 +537,7 @@ header nav ul li.current_page_item > a {
 #mobile-menu-btn[aria-expanded="true"] {
     background-color: var(--accent);
     color: var(--accent-foreground);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--foreground) 15%, transparent);
 }
 
 #mobile-menu {
@@ -570,7 +571,7 @@ header nav ul li.current_page_item > a {
 #mobile-menu li.current_page_item > a {
     background: var(--accent);
     color: var(--accent-foreground);
-    font-weight: 600;
+    font-weight: 700;
     border-left: 3px solid var(--primary);
     padding-left: calc(0.75rem - 3px);
 }
