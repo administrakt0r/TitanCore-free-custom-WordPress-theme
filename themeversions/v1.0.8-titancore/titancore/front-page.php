@@ -77,6 +77,7 @@ $render_pagination = static function ( $query ) use ( $paged, $pagination_base )
 						'orderby'             => 'post__in',
 						'posts_per_page'      => count( $headline_post_ids ),
 						'ignore_sticky_posts' => true,
+						'no_found_rows'       => true,
 					)
 				);
 			} else {
@@ -257,7 +258,7 @@ $render_pagination = static function ( $query ) use ( $paged, $pagination_base )
 					)
 				);
 			} else {
-				$featured_query = new WP_Query( array( 'post__in' => array( 0 ) ) );
+				$featured_query = new WP_Query( array( 'post__in' => array( 0 ), 'no_found_rows' => true ) );
 			}
 
 			$featured_ids = array_map( 'absint', wp_list_pluck( $featured_query->posts, 'ID' ) );
