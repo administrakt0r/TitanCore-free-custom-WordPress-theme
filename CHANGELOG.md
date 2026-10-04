@@ -4,6 +4,11 @@ All notable changes to TitanCore are documented here. Format follows [Keep a Cha
 
 This file is the source of truth. `readme.txt` `== Changelog ==` must stay in sync (WordPress.org reads it).
 
+## [1.0.9] - 2026-10-04
+### Changed
+- `inc/template-tags.php`: Capped main query `posts_per_page` to 1 and disabled term/meta cache priming on `is_front_page()` since custom front-page presets render dedicated query instances.
+- `front-page.php`: Added `no_found_rows` and cache-priming disables for empty dummy queries in `magazine` preset, and omitted empty `post__not_in` parameters in `news` and `magazine` grid queries.
+
 ## [1.0.8] - 2026-09-26
 ### Changed
 - `inc/template-tags.php`: Added static in-memory per-request runtime caching to `titancore_get_estimated_reading_time()`, `titancore_get_top_tags()`, and `titancore_get_published_posts_count()`, plus multibyte character fallback calculation for non-Latin script content.
