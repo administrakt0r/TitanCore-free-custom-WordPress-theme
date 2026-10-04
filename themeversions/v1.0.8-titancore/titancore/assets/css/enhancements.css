@@ -710,10 +710,19 @@ header nav ul li.current_page_item > a {
     cursor: pointer;
 }
 
+.comment-form label {
+    color: var(--foreground);
+    font-weight: 600;
+}
+
 .comment-form input[type="text"],
 .comment-form input[type="email"],
 .comment-form input[type="url"],
 .comment-form textarea {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--background);
+    color: var(--foreground);
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
@@ -722,6 +731,23 @@ header nav ul li.current_page_item > a {
 .comment-form input[type="url"]:hover,
 .comment-form textarea:hover {
     border-color: color-mix(in srgb, var(--border) 60%, var(--foreground));
+}
+
+.comment-form input[type="text"]:focus-visible,
+.comment-form input[type="email"]:focus-visible,
+.comment-form input[type="url"]:focus-visible,
+.comment-form textarea:focus-visible {
+    border-color: var(--ring);
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+}
+
+.comment-form .submit {
+    transition: background-color 0.15s ease, opacity 0.15s ease;
+}
+
+.comment-form .submit:hover {
+    background-color: color-mix(in srgb, var(--primary) 90%, black);
 }
 
 @media (min-width: 640px) {
