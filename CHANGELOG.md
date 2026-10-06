@@ -4,6 +4,11 @@ All notable changes to TitanCore are documented here. Format follows [Keep a Cha
 
 This file is the source of truth. `readme.txt` `== Changelog ==` must stay in sync (WordPress.org reads it).
 
+## [1.0.9] - 2026-09-27
+### Changed
+- `inc/template-tags.php`: Optimized `titancore_get_related_posts()` queries with `'fields' => 'ids'`, `'update_post_term_cache' => false`, and `'update_post_meta_cache' => false` to eliminate unneeded `WP_Post` object hydration and term/meta cache database queries.
+- `front-page.php`: Added `'update_post_term_cache' => false` and `'update_post_meta_cache' => false` to ID queries in `news` (`$headline_query`) and `magazine` (`$featured_ids_query`) presets to bypass redundant database query execution on transient cache misses.
+
 ## [1.0.8] - 2026-09-26
 ### Changed
 - `inc/template-tags.php`: Added static in-memory per-request runtime caching to `titancore_get_estimated_reading_time()`, `titancore_get_top_tags()`, and `titancore_get_published_posts_count()`, plus multibyte character fallback calculation for non-Latin script content.
