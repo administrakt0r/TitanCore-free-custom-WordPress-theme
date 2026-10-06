@@ -13,7 +13,7 @@ Last reconciled: 2026-03-17
 - [x] Remove globally forced eager/high-priority loading from the custom logo filter so only real LCP images opt into it.
 - [ ] Add optional modern image format workflow (WebP/AVIF generation plus fallback strategy).
 - [ ] Audit whether `wp-embed` and core block asset stripping need finer-grained opt-outs for plugin-heavy or block-heavy sites.
-- [ ] Review front-page queries for safe caching and any low-risk metadata/query optimizations that do not break pagination or editorial ordering.
+- [x] Review front-page queries for safe caching and any low-risk metadata/query optimizations that do not break pagination or editorial ordering. (v1.0.9 — ID query term/meta cache bypass in front-page presets and related posts)
 
 ## UI/UX
 - [x] Bring [`index.php`](c:\Users\Da\Desktop\umjetnai-wp-theme-final\index.php) onto the shared loop-container/content-none flow used by archive/search templates.
@@ -60,7 +60,7 @@ Last reconciled: 2026-03-17
 - [ ] Document the new `titancore_disable_frontend_jquery` compatibility/performance filter for integrators.
 
 ## Future product and content improvements
-- [ ] Add a related-posts module with lightweight query caching.
+- [x] Add a related-posts module with lightweight query caching. (v1.0.6/v1.0.9 — titancore_get_related_posts with transient caching and ID-only query optimization)
 - [ ] Enhance the author card with an archive link and optional social/profile fields.
 - [ ] Add newsletter or CTA insertion points on archive and single templates.
 - [ ] Add optional popular tags/category shortcuts to empty states and archive headers.
