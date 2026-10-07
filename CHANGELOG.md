@@ -4,6 +4,13 @@ All notable changes to TitanCore are documented here. Format follows [Keep a Cha
 
 This file is the source of truth. `readme.txt` `== Changelog ==` must stay in sync (WordPress.org reads it).
 
+## [1.0.9] - 2026-09-28
+### Changed
+- `inc/template-tags.php`: Added static in-memory per-request runtime caching to `titancore_get_related_posts()` and `titancore_get_posts_page_url()` to eliminate duplicate option/transient DB queries per request.
+- `inc/seo-schema.php`: Added static in-memory per-request runtime caching to `titancore_has_external_seo_plugin()` and `titancore_get_og_image_url()`.
+- `inc/enqueue.php`: Added static in-memory per-request runtime caching to `titancore_generate_theme_variables_css()`.
+- `front-page.php`: Added `no_found_rows` query optimization to news and magazine preset secondary queries and avoided DB queries on empty post arrays.
+
 ## [1.0.8] - 2026-09-26
 ### Changed
 - `inc/template-tags.php`: Added static in-memory per-request runtime caching to `titancore_get_estimated_reading_time()`, `titancore_get_top_tags()`, and `titancore_get_published_posts_count()`, plus multibyte character fallback calculation for non-Latin script content.
