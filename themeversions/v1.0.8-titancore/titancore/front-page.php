@@ -77,6 +77,7 @@ $render_pagination = static function ( $query ) use ( $paged, $pagination_base )
 						'orderby'             => 'post__in',
 						'posts_per_page'      => count( $headline_post_ids ),
 						'ignore_sticky_posts' => true,
+						'no_found_rows'       => true,
 					)
 				);
 			} else {
