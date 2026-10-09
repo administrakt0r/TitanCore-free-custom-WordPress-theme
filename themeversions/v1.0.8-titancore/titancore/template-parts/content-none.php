@@ -7,19 +7,35 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$is_search_query = is_search();
-$search_query    = get_search_query();
+$is_search_query  = is_search();
+$is_archive_query = is_archive();
+$search_query     = get_search_query();
+$icon_name        = $is_search_query ? 'search-x' : 'inbox';
 ?>
 <section class="py-12 md:py-16 text-center flex flex-col items-center justify-center border-x border-b border-border bg-card/50 px-6 space-y-6">
-	<span class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-muted border border-border text-muted-foreground" aria-hidden="true"><?php echo titancore_get_icon( 'inbox', 'w-6 h-6' ); ?></span>
+	<span class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-muted border border-border text-muted-foreground shadow-sm" aria-hidden="true">
+		<?php echo titancore_get_icon( $icon_name, 'w-6 h-6' ); ?>
+	</span>
 
 	<div class="space-y-2 max-w-md">
-		<h2 class="text-2xl md:text-3xl font-bold tracking-tight"><?php echo $is_search_query ? esc_html__( 'No results found', 'titancore' ) : esc_html__( 'Nothing found', 'titancore' ); ?></h2>
+		<h2 class="text-2xl md:text-3xl font-bold tracking-tight">
+			<?php
+			if ( $is_search_query ) {
+				esc_html_e( 'No results found', 'titancore' );
+			} elseif ( $is_archive_query ) {
+				esc_html_e( 'No posts in this archive', 'titancore' );
+			} else {
+				esc_html_e( 'Nothing found', 'titancore' );
+			}
+			?>
+		</h2>
 		<p class="text-muted-foreground text-sm md:text-base leading-relaxed text-balance">
 			<?php
 			if ( $is_search_query && ! empty( $search_query ) ) {
 				/* translators: %s: Search term */
-				printf( esc_html__( 'Sorry, we couldn\'t find any results matching "%s". Try adjusting your search term or explore popular topics below.', 'titancore' ), esc_html( $search_query ) );
+				printf( esc_html__( 'Sorry, we couldn\'t find any results matching "%s". Try adjusting your search query or explore popular topics below.', 'titancore' ), esc_html( $search_query ) );
+			} elseif ( $is_archive_query ) {
+				esc_html_e( 'There are currently no published articles in this archive. Try searching or browse recent posts.', 'titancore' );
 			} else {
 				esc_html_e( 'There are no posts matching your request. Try searching or browse our recent articles.', 'titancore' );
 			}
@@ -43,8 +59,9 @@ $search_query    = get_search_query();
 			<span class="block text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3"><?php esc_html_e( 'Popular Topics', 'titancore' ); ?></span>
 			<div class="flex flex-wrap items-center justify-center gap-2">
 				<?php foreach ( $categories as $category ) : ?>
-					<a href="<?php echo esc_url( get_category_link( $category->term_id ) ); ?>" class="tc-post-card__term hover:border-foreground transition-colors">
+					<a href="<?php echo esc_url( get_category_link( $category->term_id ) ); ?>" class="tc-post-card__term hover:border-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
 						<?php echo esc_html( $category->name ); ?>
+						<span class="ml-1.5 opacity-60 text-[10px] font-mono">(<?php echo esc_html( absint( $category->count ) ); ?>)</span>
 					</a>
 				<?php endforeach; ?>
 			</div>
@@ -72,7 +89,7 @@ $search_query    = get_search_query();
 	<?php endif; ?>
 
 	<div class="pt-2">
-		<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="inline-flex h-10 items-center justify-center rounded-lg bg-primary px-5 text-sm font-medium text-primary-foreground hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+		<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="inline-flex h-10 items-center justify-center rounded-lg bg-primary px-5 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
 			<?php esc_html_e( 'Back to Home', 'titancore' ); ?>
 		</a>
 	</div>
