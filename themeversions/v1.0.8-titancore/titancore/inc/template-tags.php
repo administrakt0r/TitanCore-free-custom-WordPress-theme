@@ -31,8 +31,14 @@ add_action( 'pre_get_posts', 'titancore_modify_home_query' );
  * Keep a version suffix for transient keys so cache flush can be O(1).
  */
 function titancore_get_cache_version() {
-	$version = get_option( 'titancore_cache_version', '1' );
-	return preg_replace( '/[^0-9]/', '', (string) $version );
+	static $runtime_cache = null;
+	if ( null !== $runtime_cache ) {
+		return $runtime_cache;
+	}
+
+	$version       = get_option( 'titancore_cache_version', '1' );
+	$runtime_cache = preg_replace( '/[^0-9]/', '', (string) $version );
+	return $runtime_cache;
 }
 
 /**
@@ -127,15 +133,22 @@ function titancore_get_published_posts_count() {
  * Get a reliable URL for the posts index page.
  */
 function titancore_get_posts_page_url() {
+	static $runtime_cache = null;
+	if ( null !== $runtime_cache ) {
+		return $runtime_cache;
+	}
+
 	$posts_page_id = absint( get_option( 'page_for_posts' ) );
 	if ( $posts_page_id > 0 ) {
 		$url = get_permalink( $posts_page_id );
 		if ( $url ) {
-			return $url;
+			$runtime_cache = $url;
+			return $runtime_cache;
 		}
 	}
 
-	return home_url( '/' );
+	$runtime_cache = home_url( '/' );
+	return $runtime_cache;
 }
 
 /**
@@ -218,6 +231,13 @@ function titancore_get_related_posts( $post_id = 0, $limit = 3 ) {
 	}
 
 	$limit     = max( 1, absint( $limit ) );
+
+	static $runtime_cache = array();
+	$runtime_id = $post_id . '_' . $limit;
+	if ( isset( $runtime_cache[ $runtime_id ] ) ) {
+		return $runtime_cache[ $runtime_id ];
+	}
+
 	$cache_key = sprintf(
 		'titancore_related_%1$d_%2$d_v%3$s',
 		$post_id,
@@ -227,6 +247,7 @@ function titancore_get_related_posts( $post_id = 0, $limit = 3 ) {
 
 	$cached = get_transient( $cache_key );
 	if ( false !== $cached && is_array( $cached ) ) {
+		$runtime_cache[ $runtime_id ] = $cached;
 		return $cached;
 	}
 
@@ -269,6 +290,7 @@ function titancore_get_related_posts( $post_id = 0, $limit = 3 ) {
 	}
 
 	set_transient( $cache_key, $related_post_ids, 6 * HOUR_IN_SECONDS );
+	$runtime_cache[ $runtime_id ] = $related_post_ids;
 	return $related_post_ids;
 }
 

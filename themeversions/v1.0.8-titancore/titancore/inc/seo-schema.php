@@ -200,6 +200,11 @@ add_action( 'wp_head', 'titancore_output_canonical', 1 );
  * is available. Filterable via `titancore_og_image_url`.
  */
 function titancore_get_og_image_url() {
+    static $runtime_cache = null;
+    if ( null !== $runtime_cache ) {
+        return $runtime_cache;
+    }
+
     $image_url = '';
 
     if ( is_singular() ) {
@@ -217,7 +222,8 @@ function titancore_get_og_image_url() {
         $image_url = get_site_icon_url( 512 );
     }
 
-    return apply_filters( 'titancore_og_image_url', is_string( $image_url ) ? $image_url : '' );
+    $runtime_cache = apply_filters( 'titancore_og_image_url', is_string( $image_url ) ? $image_url : '' );
+    return $runtime_cache;
 }
 
 /**
