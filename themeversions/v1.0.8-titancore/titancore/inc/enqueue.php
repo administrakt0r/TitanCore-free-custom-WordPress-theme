@@ -209,12 +209,25 @@ add_action( 'wp_print_scripts', 'titancore_block_fontawesome_assets', 999 );
  * Called via wp_add_inline_style to avoid render-blocking inline <style> in HTML.
  */
 function titancore_generate_theme_variables_css() {
+	static $runtime_cache = null;
+	if ( null !== $runtime_cache ) {
+		return $runtime_cache;
+	}
+
 	$primary_color    = sanitize_hex_color( get_theme_mod( 'primary_color', '#18181b' ) ) ?: '#18181b';
 	$accent_color     = sanitize_hex_color( get_theme_mod( 'accent_color', '#f4f4f5' ) ) ?: '#f4f4f5';
 	$light_background = sanitize_hex_color( get_theme_mod( 'page_background_color_light', '#ffffff' ) ) ?: '#ffffff';
 	$light_foreground = sanitize_hex_color( get_theme_mod( 'page_foreground_color_light', '#09090b' ) ) ?: '#09090b';
 	$dark_background  = sanitize_hex_color( get_theme_mod( 'page_background_color_dark', '#09090b' ) ) ?: '#09090b';
 	$dark_foreground  = sanitize_hex_color( get_theme_mod( 'page_foreground_color_dark', '#fafafa' ) ) ?: '#fafafa';
+
+	$cache_key = 'tc_css_vars_' . md5( $primary_color . $accent_color . $light_background . $light_foreground . $dark_background . $dark_foreground );
+	$cached    = get_transient( $cache_key );
+
+	if ( false !== $cached && is_string( $cached ) ) {
+		$runtime_cache = $cached;
+		return $runtime_cache;
+	}
 
 	$primary_foreground = titancore_get_contrast_text_color( $primary_color );
 	$accent_foreground  = titancore_get_contrast_text_color( $accent_color );
@@ -288,6 +301,9 @@ function titancore_generate_theme_variables_css() {
 	$css .= '.dark header nav ul.flex li.menu-item a{color:' . $dark_nav . '}';
 	$css .= 'header nav ul.flex li.menu-item a:hover{color:' . $light_nav_h . '}';
 	$css .= '.dark header nav ul.flex li.menu-item a:hover{color:' . $dark_nav_h . '}';
+
+	set_transient( $cache_key, $css, DAY_IN_SECONDS );
+	$runtime_cache = $css;
 
 	return $css;
 }
