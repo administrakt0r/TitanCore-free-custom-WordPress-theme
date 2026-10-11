@@ -13,22 +13,22 @@ Last reconciled: 2026-03-17
 - [x] Remove globally forced eager/high-priority loading from the custom logo filter so only real LCP images opt into it.
 - [ ] Add optional modern image format workflow (WebP/AVIF generation plus fallback strategy).
 - [ ] Audit whether `wp-embed` and core block asset stripping need finer-grained opt-outs for plugin-heavy or block-heavy sites.
-- [ ] Review front-page queries for safe caching and any low-risk metadata/query optimizations that do not break pagination or editorial ordering.
+- [x] Review front-page queries for safe caching and any low-risk metadata/query optimizations that do not break pagination or editorial ordering. (v1.0.9: dynamic CSS variable transient cache, no_found_rows on non-paginated queries)
 
 ## UI/UX
 - [x] Bring [`index.php`](c:\Users\Da\Desktop\umjetnai-wp-theme-final\index.php) onto the shared loop-container/content-none flow used by archive/search templates.
 - [x] Consolidate the shared home/front intro header into [`template-parts/front-header.php`](c:\Users\Da\Desktop\umjetnai-wp-theme-final\template-parts\front-header.php).
 - [x] Introduce a more consistent card visual system across the `blog`, `news`, and `magazine` presets. (v1.0.2 — shared card tokens, hover/focus elevation, focus-visible outlines; `assets/css/frontpage-presets.css`)
-- [ ] Improve empty/search states with curated recovery links or content suggestions.
-- [ ] Strengthen mobile menu open-state affordance and active-link indication without breaking the current visual language.
-- [ ] Add a richer single-post side rail or related content module that does not crowd reading flow.
+- [x] Improve empty/search states with curated recovery links or content suggestions. (v1.0.9: standardized into `content-none.php` with popular topic pills and contextual icons)
+- [x] Strengthen mobile menu open-state affordance and active-link indication without breaking the current visual language. (v1.0.9: button inset ring, smooth cubic-bezier drawer transitions, aria-current active links)
+- [x] Add a richer single-post side rail or related content module that does not crowd reading flow. (v1.0.6; query optimized with `fields => ids` in v1.0.9)
 
 ## Accessibility
 - [x] Point the skip link at semantic `<main id="main-content">` targets across the public templates.
 - [x] Add active-section highlighting for the single-post TOC using `IntersectionObserver`. (v1.0.2 — `.is-active` + `aria-current` in sidebar and mobile TOC; `assets/js/navigation.js`, `assets/css/enhancements.css`)
 - [ ] Add automated contrast guardrails for Customizer color selections.
 - [x] Improve mobile navigation focus management and focus return in [`header.php`](c:\Users\Da\Desktop\umjetnai-wp-theme-final\header.php) and [`assets/js/navigation.js`](c:\Users\Da\Desktop\umjetnai-wp-theme-final\assets\js\navigation.js); reduced-motion transitions were already covered globally in [`assets/css/enhancements.css`](c:\Users\Da\Desktop\umjetnai-wp-theme-final\assets\css\enhancements.css).
-- [ ] Normalize comment form labels and validation feedback for better assistive-technology clarity.
+- [x] Normalize comment form labels and validation feedback for better assistive-technology clarity. (v1.0.9: aria-describedby linking required fields note, responsive reply header wrap)
 
 ## SEO and metadata
 - [x] Provide fallback meta description, robots, canonical, and Open Graph/Twitter tags when no dedicated SEO plugin is active.
@@ -60,7 +60,7 @@ Last reconciled: 2026-03-17
 - [ ] Document the new `titancore_disable_frontend_jquery` compatibility/performance filter for integrators.
 
 ## Future product and content improvements
-- [ ] Add a related-posts module with lightweight query caching.
+- [x] Add a related-posts module with lightweight query caching. (v1.0.6, query optimized with fields => ids in v1.0.9)
 - [ ] Enhance the author card with an archive link and optional social/profile fields.
 - [ ] Add newsletter or CTA insertion points on archive and single templates.
-- [ ] Add optional popular tags/category shortcuts to empty states and archive headers.
+- [x] Add optional popular tags/category shortcuts to empty states and archive headers. (v1.0.9: popular categories with post count in content-none.php)
