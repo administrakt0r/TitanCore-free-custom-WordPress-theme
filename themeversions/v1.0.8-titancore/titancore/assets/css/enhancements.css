@@ -542,7 +542,8 @@ header nav ul li.current_page_item > a {
 #mobile-menu {
     opacity: 0;
     transform: translateY(-6px);
-    transition: opacity 0.18s ease, transform 0.18s ease;
+    transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 10px 25px -5px color-mix(in srgb, var(--foreground) 10%, transparent), 0 8px 10px -6px color-mix(in srgb, var(--foreground) 10%, transparent);
 }
 
 #mobile-menu.is-open {
@@ -556,7 +557,9 @@ header nav ul li.current_page_item > a {
     min-height: 44px;
     padding: 0.5rem 0.75rem;
     border-radius: calc(var(--radius) - 2px);
-    transition: background-color 0.15s ease, color 0.15s ease;
+    color: var(--foreground);
+    font-weight: 500;
+    transition: background-color 0.15s ease, color 0.15s ease, padding-left 0.15s ease;
 }
 
 #mobile-menu a:hover,
@@ -578,7 +581,7 @@ header nav ul li.current_page_item > a {
 #mobile-menu-backdrop {
     opacity: 1;
     visibility: visible;
-    transition: opacity 0.18s ease, visibility 0.18s ease;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
 }
 
 #mobile-menu-backdrop.hidden {
