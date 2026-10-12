@@ -454,7 +454,7 @@ header nav ul li.current_page_item > a {
     font-size: 0.8125rem;
     font-weight: 600;
     text-decoration: none;
-    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .comment-reply-link:hover,
@@ -465,6 +465,7 @@ header nav ul li.current_page_item > a {
     border-color: var(--foreground);
     color: var(--accent-foreground);
     text-decoration: none;
+    box-shadow: 0 1px 4px color-mix(in srgb, var(--foreground) 8%, transparent);
 }
 
 .site-footer {
@@ -666,23 +667,28 @@ header nav ul li.current_page_item > a {
 
 .tc-toc a {
     display: block;
-    padding: 0.3rem 0;
+    padding: 0.3rem 0.5rem;
+    border-left: 2px solid transparent;
+    border-radius: 0 calc(var(--radius) - 4px) calc(var(--radius) - 4px) 0;
     color: var(--muted-foreground);
     font-size: 0.875rem;
     line-height: 1.5;
     text-decoration: none;
+    transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
 }
 
 .tc-toc a:hover {
     color: var(--foreground);
-    text-decoration: underline;
-    text-underline-offset: 0.15em;
+    background: var(--accent);
+    text-decoration: none;
 }
 
 /* Current section in view (set by navigation.js via IntersectionObserver) */
 .tc-toc a.is-active {
     color: var(--foreground);
     font-weight: 600;
+    border-left-color: var(--primary);
+    background: color-mix(in srgb, var(--accent) 60%, transparent);
 }
 
 /* Forms — search form & comment inputs consistency */
@@ -745,6 +751,14 @@ header nav ul li.current_page_item > a {
 .comment-form input[type="url"]:hover,
 .comment-form textarea:hover {
     border-color: color-mix(in srgb, var(--border) 60%, var(--foreground));
+}
+
+.comment-form input[type="text"]:focus-visible,
+.comment-form input[type="email"]:focus-visible,
+.comment-form input[type="url"]:focus-visible,
+.comment-form textarea:focus-visible {
+    border-color: var(--ring);
+    box-shadow: 0 0 0 1px var(--ring);
 }
 
 @media (min-width: 640px) {
