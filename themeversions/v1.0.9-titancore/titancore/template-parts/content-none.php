@@ -48,12 +48,7 @@ $icon_name        = $is_search_query ? 'search-x' : 'inbox';
 	</div>
 
 	<?php
-	$categories = get_categories( array(
-		'number'     => 6,
-		'orderby'    => 'count',
-		'order'      => 'DESC',
-		'hide_empty' => true,
-	) );
+	$categories = titancore_get_popular_categories( 6 );
 	if ( ! empty( $categories ) ) : ?>
 		<div class="pt-2 w-full max-w-md">
 			<span class="block text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3"><?php esc_html_e( 'Popular Topics', 'titancore' ); ?></span>
@@ -70,9 +65,11 @@ $icon_name        = $is_search_query ? 'search-x' : 'inbox';
 
 	<?php
 	$recent_query = new WP_Query( array(
-		'posts_per_page'      => 3,
-		'ignore_sticky_posts' => true,
-		'no_found_rows'       => true,
+		'posts_per_page'         => 3,
+		'ignore_sticky_posts'    => true,
+		'no_found_rows'          => true,
+		'update_post_meta_cache' => false,
+		'update_post_term_cache' => false,
 	) );
 	if ( $recent_query->have_posts() ) : ?>
 		<div class="pt-6 border-t border-border/60 w-full max-w-3xl text-left">

@@ -243,6 +243,7 @@ $render_pagination = static function ( $query ) use ( $paged, $pagination_base )
 				set_transient( $magazine_cache_key, $featured_post_ids, 6 * HOUR_IN_SECONDS );
 			}
 
+			$featured_query = null;
 			if ( ! empty( $featured_post_ids ) ) {
 				$featured_query = new WP_Query(
 					array_merge(
@@ -256,11 +257,11 @@ $render_pagination = static function ( $query ) use ( $paged, $pagination_base )
 						)
 					)
 				);
-			} else {
-				$featured_query = new WP_Query( array( 'post__in' => array( 0 ) ) );
 			}
 
-			$featured_ids = array_map( 'absint', wp_list_pluck( $featured_query->posts, 'ID' ) );
+			$featured_ids = ( $featured_query instanceof WP_Query && ! empty( $featured_query->posts ) )
+				? array_map( 'absint', wp_list_pluck( $featured_query->posts, 'ID' ) )
+				: array();
 
 			$list_query = new WP_Query(
 				array_merge(
@@ -274,7 +275,7 @@ $render_pagination = static function ( $query ) use ( $paged, $pagination_base )
 			);
 			?>
 			<section class="tc-preset-magazine">
-				<?php if ( $featured_query->have_posts() ) : ?>
+				<?php if ( $featured_query instanceof WP_Query && $featured_query->have_posts() ) : ?>
 					<div class="tc-magazine-featured-grid">
 						<?php
 						$feature_rank = 0;
