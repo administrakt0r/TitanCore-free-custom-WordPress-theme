@@ -102,6 +102,49 @@ function titancore_get_top_tags( $limit = 5 ) {
 }
 
 /**
+ * Cache popular categories used in content-none / empty state templates.
+ */
+function titancore_get_popular_categories( $limit = 6 ) {
+	$limit = absint( $limit );
+
+	static $runtime_cache = array();
+	if ( isset( $runtime_cache[ $limit ] ) ) {
+		return $runtime_cache[ $limit ];
+	}
+
+	$cache_key = sprintf(
+		'titancore_popular_cats_%1$d_v%2$s',
+		$limit,
+		titancore_get_cache_version()
+	);
+
+	$cached_cats = get_transient( $cache_key );
+	if ( false !== $cached_cats && is_array( $cached_cats ) ) {
+		$runtime_cache[ $limit ] = $cached_cats;
+		return $cached_cats;
+	}
+
+	$args = array(
+		'orderby'    => 'count',
+		'order'      => 'DESC',
+		'hide_empty' => true,
+	);
+
+	if ( $limit > 0 ) {
+		$args['number'] = $limit;
+	}
+
+	$categories = get_categories( $args );
+	if ( ! is_array( $categories ) ) {
+		$categories = array();
+	}
+
+	set_transient( $cache_key, $categories, 6 * HOUR_IN_SECONDS );
+	$runtime_cache[ $limit ] = $categories;
+	return $categories;
+}
+
+/**
  * Cache published post count used in home/front tag headers.
  */
 function titancore_get_published_posts_count() {
@@ -273,8 +316,9 @@ function titancore_get_related_posts( $post_id = 0, $limit = 3 ) {
 
 	$query            = new WP_Query( $args );
 	$related_post_ids = is_array( $query->posts ) ? array_map( 'absint', $query->posts ) : array();
+	$has_constraints  = ! empty( $categories ) || ! empty( $tags );
 
-	if ( count( $related_post_ids ) < $limit ) {
+	if ( $has_constraints && count( $related_post_ids ) < $limit ) {
 		$fallback_args = array(
 			'post_type'           => $post_type,
 			'post_status'         => 'publish',

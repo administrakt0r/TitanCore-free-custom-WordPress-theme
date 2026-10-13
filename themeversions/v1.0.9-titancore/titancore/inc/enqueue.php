@@ -221,7 +221,11 @@ function titancore_generate_theme_variables_css() {
 	$dark_background  = sanitize_hex_color( get_theme_mod( 'page_background_color_dark', '#09090b' ) ) ?: '#09090b';
 	$dark_foreground  = sanitize_hex_color( get_theme_mod( 'page_foreground_color_dark', '#fafafa' ) ) ?: '#fafafa';
 
-	$cache_key = 'tc_css_vars_' . md5( $primary_color . $accent_color . $light_background . $light_foreground . $dark_background . $dark_foreground );
+	$cache_key = sprintf(
+		'tc_css_vars_%1$s_v%2$s',
+		md5( $primary_color . $accent_color . $light_background . $light_foreground . $dark_background . $dark_foreground ),
+		titancore_get_cache_version()
+	);
 	$cached    = get_transient( $cache_key );
 
 	if ( false !== $cached && is_string( $cached ) ) {
