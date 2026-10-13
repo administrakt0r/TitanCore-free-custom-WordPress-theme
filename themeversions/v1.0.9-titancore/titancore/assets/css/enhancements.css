@@ -508,10 +508,13 @@ header nav ul li.current_page_item > a {
 .site-footer__back-top {
     color: var(--muted-foreground);
     font-weight: 700;
+    border-radius: calc(var(--radius) - 2px);
 }
 
 .site-footer__nav a:hover,
-.site-footer__back-top:hover {
+.site-footer__back-top:hover,
+.site-footer__nav a:focus-visible,
+.site-footer__back-top:focus-visible {
     color: var(--foreground);
     text-decoration: underline;
     text-underline-offset: 0.18em;

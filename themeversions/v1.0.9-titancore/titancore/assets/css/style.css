@@ -1084,9 +1084,12 @@ nav ul {
     padding-right: 0.75rem;
 }
 
-.secondary-nav li.menu-item a:hover {
+.secondary-nav li.menu-item a:hover,
+.secondary-nav li.menu-item a:focus-visible {
     background-color: var(--accent);
     color: var(--accent-foreground);
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
 }
 
 header nav ul.flex li.menu-item a {
@@ -1099,19 +1102,13 @@ header nav ul.flex li.menu-item a {
     font-weight: 500;
     transition-property: color, background-color;
     transition-duration: 150ms;
-    color: rgba(9, 9, 11, 0.6);
+    color: var(--muted-foreground);
 }
 
-.dark header nav ul.flex li.menu-item a {
-    color: rgba(250, 250, 250, 0.6);
-}
-
-header nav ul.flex li.menu-item a:hover {
+header nav ul.flex li.menu-item a:hover,
+header nav ul.flex li.menu-item a:focus-visible {
     background-color: var(--accent);
-    color: rgba(9, 9, 11, 0.8);
-}
-
-.dark header nav ul.flex li.menu-item a:hover {
-    background-color: var(--accent);
-    color: rgba(250, 250, 250, 0.8);
+    color: var(--foreground);
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
 }
