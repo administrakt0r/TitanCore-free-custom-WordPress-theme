@@ -1,0 +1,26 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": [
+    "AGENTS.md",
+    "AGENTARDS/README.md",
+    "AGENTARDS/AGENTICUS-MAXIMUS.md",
+    "AGENTARDS/AGENTICUS-LOGICUS.md"
+  ],
+  "mcp": {
+    "wordpress": {
+      "type": "local",
+      "command": ["npx", "-y", "@automattic/mcp-wordpress-remote@latest"],
+      "enabled": true,
+      "environment": {
+        "WP_API_URL": "http://localhost:8889/wp-json/mcp/mcp-adapter-default-server",
+        "WP_API_USERNAME": "admin",
+        "WP_API_PASSWORD": "{file:./.mcp/wp-app-password}"
+      }
+    },
+    "playwright": {
+      "type": "local",
+      "command": ["npx", "-y", "@playwright/mcp@latest"],
+      "enabled": true
+    }
+  }
+}

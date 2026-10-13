@@ -7,11 +7,22 @@
 !/.gitattributes
 !/README.md
 !/CHANGELOG.md
+!/RELEASING.md
+!/TODO.md
+!/start-guide.md
+!/AGENTS.md
 !/AGENTARDS/
+!/docs/
+!/bin/
+!/.wp-env.json
+!/opencode.json
 !/themeversions/
 
 # Runtime pointer, machine-local — not versioned
 themeversions/current
+
+# Agent + local secrets
+.mcp/
 
 # Local env / tooling / OS junk (already covered by the whitelist, kept for safety)
 .wp-env/
