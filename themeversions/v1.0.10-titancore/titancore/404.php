@@ -35,6 +35,7 @@ get_header(); ?>
       'ignore_sticky_posts'    => true,
       'no_found_rows'          => true,
       'update_post_term_cache' => false,
+      'update_post_meta_cache' => false,
     ) );
     if ( ! empty( $recent_posts ) ) : ?>
       <div class="relative z-10 w-full max-w-3xl mx-auto mt-12">
