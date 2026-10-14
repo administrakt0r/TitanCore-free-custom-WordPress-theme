@@ -48,7 +48,10 @@
         <a href="https://wpineu.com" title="<?php esc_attr_e( 'WordPress Hosting in Europe', 'titancore' ); ?>" target="_blank" rel="noopener noreferrer" class="font-medium hover:underline text-foreground"><?php esc_html_e( 'WPinEU.com', 'titancore' ); ?></a>
         <?php esc_html_e( '— WordPress Hosting in Europe', 'titancore' ); ?>
       </p>
-      <a class="site-footer__back-top" href="#main-content"><?php esc_html_e( 'Back to top', 'titancore' ); ?></a>
+      <a class="site-footer__back-top" href="#main-content">
+        <?php echo titancore_get_icon( 'arrow-up', 'w-4 h-4' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+        <span><?php esc_html_e( 'Back to top', 'titancore' ); ?></span>
+      </a>
     </div>
   </div>
   <?php
