@@ -11,7 +11,19 @@ while ( have_posts() ) :
     $categories = get_the_category();
     $reading_time = function_exists( 'titancore_get_estimated_reading_time' ) ? titancore_get_estimated_reading_time() : 1;
     $author_description = get_the_author_meta( 'description' );
-    $related_ids = function_exists( 'titancore_get_related_posts' ) ? titancore_get_related_posts( get_the_ID(), 3 ) : array();
+    $related_ids         = function_exists( 'titancore_get_related_posts' ) ? titancore_get_related_posts( get_the_ID(), 3 ) : array();
+    if ( ! empty( $related_ids ) ) {
+      if ( function_exists( '_prime_post_caches' ) ) {
+        _prime_post_caches( $related_ids, true, true );
+      } else {
+        get_posts( array(
+          'post__in'            => $related_ids,
+          'posts_per_page'      => count( $related_ids ),
+          'ignore_sticky_posts' => true,
+          'no_found_rows'       => true,
+        ) );
+      }
+    }
 ?>
 
 <div class="tc-single min-h-screen bg-background relative">
