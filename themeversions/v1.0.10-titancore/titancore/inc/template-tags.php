@@ -175,12 +175,14 @@ function titancore_get_recent_posts( $limit = 3 ) {
 	}
 
 	$query = new WP_Query( array(
-		'post_type'           => 'post',
-		'post_status'         => 'publish',
-		'posts_per_page'      => $limit,
-		'ignore_sticky_posts' => true,
-		'no_found_rows'       => true,
-		'fields'              => 'ids',
+		'post_type'              => 'post',
+		'post_status'            => 'publish',
+		'posts_per_page'         => $limit,
+		'ignore_sticky_posts'    => true,
+		'no_found_rows'          => true,
+		'fields'                 => 'ids',
+		'update_post_term_cache' => false,
+		'update_post_meta_cache' => false,
 	) );
 
 	$recent_ids = is_array( $query->posts ) ? array_map( 'absint', $query->posts ) : array();
@@ -345,13 +347,15 @@ function titancore_get_related_posts( $post_id = 0, $limit = 3 ) {
 	$tags       = wp_get_post_tags( $post_id, array( 'fields' => 'ids' ) );
 
 	$args = array(
-		'post_type'           => $post_type,
-		'post_status'         => 'publish',
-		'posts_per_page'      => $limit,
-		'post__not_in'        => array( $post_id ),
-		'ignore_sticky_posts' => true,
-		'no_found_rows'       => true,
-		'fields'              => 'ids',
+		'post_type'              => $post_type,
+		'post_status'            => 'publish',
+		'posts_per_page'         => $limit,
+		'post__not_in'           => array( $post_id ),
+		'ignore_sticky_posts'    => true,
+		'no_found_rows'          => true,
+		'fields'                 => 'ids',
+		'update_post_term_cache' => false,
+		'update_post_meta_cache' => false,
 	);
 
 	if ( ! empty( $categories ) ) {
@@ -366,13 +370,15 @@ function titancore_get_related_posts( $post_id = 0, $limit = 3 ) {
 
 	if ( $has_constraints && count( $related_post_ids ) < $limit ) {
 		$fallback_args = array(
-			'post_type'           => $post_type,
-			'post_status'         => 'publish',
-			'posts_per_page'      => $limit - count( $related_post_ids ),
-			'post__not_in'        => array_merge( array( $post_id ), $related_post_ids ),
-			'ignore_sticky_posts' => true,
-			'no_found_rows'       => true,
-			'fields'              => 'ids',
+			'post_type'              => $post_type,
+			'post_status'            => 'publish',
+			'posts_per_page'         => $limit - count( $related_post_ids ),
+			'post__not_in'           => array_merge( array( $post_id ), $related_post_ids ),
+			'ignore_sticky_posts'    => true,
+			'no_found_rows'          => true,
+			'fields'                 => 'ids',
+			'update_post_term_cache' => false,
+			'update_post_meta_cache' => false,
 		);
 		$fallback_query   = new WP_Query( $fallback_args );
 		$fallback_ids     = is_array( $fallback_query->posts ) ? array_map( 'absint', $fallback_query->posts ) : array();

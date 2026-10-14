@@ -26,19 +26,30 @@ get_header(); ?>
     </div>
   </div>
   <?php
-  $recent = new WP_Query( array( 'posts_per_page' => 3, 'ignore_sticky_posts' => true, 'no_found_rows' => true ) );
-  if ( $recent->have_posts() ) : ?>
-    <div class="relative z-10 w-full max-w-3xl mx-auto mt-12">
-      <h3 class="text-sm font-semibold tracking-widest uppercase text-muted-foreground text-center mb-4"><?php esc_html_e( 'Recent articles', 'titancore' ); ?></h3>
-      <div class="grid sm:grid-cols-3 gap-3 text-left">
-        <?php while ( $recent->have_posts() ) : $recent->the_post(); ?>
-          <a href="<?php the_permalink(); ?>" class="group block rounded-lg border border-border bg-card p-4 hover:bg-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-            <span class="block text-sm font-semibold leading-snug group-hover:text-foreground line-clamp-2"><?php the_title(); ?></span>
-            <span class="block text-xs text-muted-foreground mt-1"><?php echo esc_html( get_the_date() ); ?></span>
-          </a>
-        <?php endwhile; wp_reset_postdata(); ?>
+  $recent_post_ids = titancore_get_recent_posts( 3 );
+  if ( ! empty( $recent_post_ids ) ) :
+    $recent_posts = get_posts( array(
+      'post__in'               => $recent_post_ids,
+      'orderby'                => 'post__in',
+      'posts_per_page'         => count( $recent_post_ids ),
+      'ignore_sticky_posts'    => true,
+      'no_found_rows'          => true,
+      'update_post_term_cache' => false,
+      'update_post_meta_cache' => false,
+    ) );
+    if ( ! empty( $recent_posts ) ) : ?>
+      <div class="relative z-10 w-full max-w-3xl mx-auto mt-12">
+        <h3 class="text-sm font-semibold tracking-widest uppercase text-muted-foreground text-center mb-4"><?php esc_html_e( 'Recent articles', 'titancore' ); ?></h3>
+        <div class="grid sm:grid-cols-3 gap-3 text-left">
+          <?php foreach ( $recent_posts as $recent_post ) : ?>
+            <a href="<?php echo esc_url( get_permalink( $recent_post->ID ) ); ?>" class="group block rounded-lg border border-border bg-card p-4 hover:bg-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+              <span class="block text-sm font-semibold leading-snug group-hover:text-foreground line-clamp-2"><?php echo esc_html( get_the_title( $recent_post->ID ) ); ?></span>
+              <span class="block text-xs text-muted-foreground mt-1"><?php echo esc_html( get_the_date( '', $recent_post->ID ) ); ?></span>
+            </a>
+          <?php endforeach; ?>
+        </div>
       </div>
-    </div>
+    <?php endif; ?>
   <?php endif; ?>
 </main>
 
