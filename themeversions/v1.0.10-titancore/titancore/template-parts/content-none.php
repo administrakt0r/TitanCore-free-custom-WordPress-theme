@@ -66,15 +66,10 @@ $icon_name        = $is_search_query ? 'search-x' : 'inbox';
 	<?php
 	$recent_post_ids = titancore_get_recent_posts( 3 );
 	if ( ! empty( $recent_post_ids ) ) :
-		$recent_posts = get_posts( array(
-			'post__in'               => $recent_post_ids,
-			'orderby'                => 'post__in',
-			'posts_per_page'         => count( $recent_post_ids ),
-			'ignore_sticky_posts'    => true,
-			'no_found_rows'          => true,
-			'update_post_term_cache' => false,
-			'update_post_meta_cache' => false,
-		) );
+		if ( function_exists( '_prime_post_caches' ) ) {
+			_prime_post_caches( $recent_post_ids, false, false );
+		}
+		$recent_posts = array_values( array_filter( array_map( 'get_post', $recent_post_ids ) ) );
 		if ( ! empty( $recent_posts ) ) : ?>
 			<div class="pt-6 border-t border-border/60 w-full max-w-3xl text-left">
 				<h3 class="text-xs font-semibold uppercase tracking-wider text-muted-foreground text-center mb-4"><?php esc_html_e( 'Recent Articles', 'titancore' ); ?></h3>

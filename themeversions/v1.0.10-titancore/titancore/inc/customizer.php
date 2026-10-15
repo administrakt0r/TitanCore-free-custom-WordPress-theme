@@ -423,20 +423,31 @@ function titancore_sanitize_custom_footer_code( $input, $setting = null ) {
 }
 
 /**
- * Get custom code output for frontend rendering.
+ * Get custom code output for frontend rendering with static runtime caching.
  */
 function titancore_get_custom_code_output( $slot ) {
-    $slot = ( 'footer' === $slot ) ? 'footer' : 'header';
-    $setting_id = ( 'footer' === $slot ) ? 'custom_footer_code' : 'custom_header_code';
-    $code = (string) get_theme_mod( $setting_id, '' );
+	$slot = ( 'footer' === $slot ) ? 'footer' : 'header';
 
-    if ( '' === trim( $code ) ) {
-        return '';
-    }
+	static $runtime_cache = array();
+	if ( isset( $runtime_cache[ $slot ] ) ) {
+		return $runtime_cache[ $slot ];
+	}
 
-    if ( titancore_is_custom_code_raw_mode_enabled( $slot ) ) {
-        return $code;
-    }
+	$setting_id = ( 'footer' === $slot ) ? 'custom_footer_code' : 'custom_header_code';
+	$code       = (string) get_theme_mod( $setting_id, '' );
 
-    return wp_kses( $code, titancore_get_custom_code_allowed_tags( $slot ) );
+	if ( '' === trim( $code ) ) {
+		$runtime_cache[ $slot ] = '';
+		return '';
+	}
+
+	if ( titancore_is_custom_code_raw_mode_enabled( $slot ) ) {
+		$runtime_cache[ $slot ] = $code;
+		return $code;
+	}
+
+	$output                 = wp_kses( $code, titancore_get_custom_code_allowed_tags( $slot ) );
+	$runtime_cache[ $slot ] = $output;
+
+	return $output;
 }
