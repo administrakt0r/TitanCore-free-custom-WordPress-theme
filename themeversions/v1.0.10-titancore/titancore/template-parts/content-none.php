@@ -68,6 +68,15 @@ $icon_name        = $is_search_query ? 'search-x' : 'inbox';
 	if ( ! empty( $recent_post_ids ) ) :
 		if ( function_exists( '_prime_post_caches' ) ) {
 			_prime_post_caches( $recent_post_ids, false, false );
+		} else {
+			get_posts( array(
+				'post__in'               => $recent_post_ids,
+				'posts_per_page'         => count( $recent_post_ids ),
+				'ignore_sticky_posts'    => true,
+				'no_found_rows'          => true,
+				'update_post_term_cache' => false,
+				'update_post_meta_cache' => false,
+			) );
 		}
 		$recent_posts = array_values( array_filter( array_map( 'get_post', $recent_post_ids ) ) );
 		if ( ! empty( $recent_posts ) ) : ?>

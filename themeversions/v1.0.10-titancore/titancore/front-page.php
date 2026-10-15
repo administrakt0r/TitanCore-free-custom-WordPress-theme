@@ -72,6 +72,15 @@ $render_pagination = static function ( $query ) use ( $paged, $pagination_base )
 			if ( ! empty( $headline_post_ids ) ) {
 				if ( function_exists( '_prime_post_caches' ) ) {
 					_prime_post_caches( $headline_post_ids, true, true );
+				} else {
+					get_posts(
+						array(
+							'post__in'            => $headline_post_ids,
+							'posts_per_page'      => count( $headline_post_ids ),
+							'ignore_sticky_posts' => true,
+							'no_found_rows'       => true,
+						)
+					);
 				}
 				$headline_posts = array_values( array_filter( array_map( 'get_post', $headline_post_ids ) ) );
 			} else {
@@ -241,6 +250,18 @@ $render_pagination = static function ( $query ) use ( $paged, $pagination_base )
 			if ( ! empty( $featured_post_ids ) ) {
 				if ( function_exists( '_prime_post_caches' ) ) {
 					_prime_post_caches( $featured_post_ids, true, true );
+				} else {
+					get_posts(
+						array_merge(
+							$base_query_args,
+							array(
+								'post__in'            => $featured_post_ids,
+								'posts_per_page'      => count( $featured_post_ids ),
+								'no_found_rows'       => true,
+								'ignore_sticky_posts' => true,
+							)
+						)
+					);
 				}
 				$featured_posts = array_values( array_filter( array_map( 'get_post', $featured_post_ids ) ) );
 			} else {
