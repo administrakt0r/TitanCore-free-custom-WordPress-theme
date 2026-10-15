@@ -52,13 +52,7 @@ $reading_time = function_exists( 'titancore_get_estimated_reading_time' ) ? tita
         </h2>
 
         <p class="tc-post-card__excerpt">
-            <?php
-            if ( has_excerpt() ) {
-                echo esc_html( wp_trim_words( wp_strip_all_tags( get_the_excerpt() ), 24 ) );
-            } else {
-                echo esc_html( wp_trim_words( wp_strip_all_tags( get_the_content() ), 24 ) );
-            }
-            ?>
+            <?php echo esc_html( wp_trim_words( wp_strip_all_tags( get_the_excerpt() ), 24 ) ); ?>
         </p>
 
         <div class="tc-post-card__footer">

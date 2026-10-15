@@ -97,28 +97,37 @@ function titancore_output_robots_meta() {
 add_action( 'wp_head', 'titancore_output_robots_meta', 2 );
 
 /**
- * Build the canonical link for a date archive (day, month, or year).
+ * Build the canonical link for a date archive (day, month, or year) with static runtime caching.
  *
  * @return string Date archive URL, or empty string when no date is queried.
  */
 function titancore_get_date_archive_link() {
-    $year  = absint( get_query_var( 'year' ) );
-    $month = absint( get_query_var( 'monthnum' ) );
-    $day   = absint( get_query_var( 'day' ) );
+	static $runtime_cache = null;
+	if ( null !== $runtime_cache ) {
+		return $runtime_cache;
+	}
 
-    if ( $year > 0 && $month > 0 && $day > 0 ) {
-        return get_day_link( $year, $month, $day );
-    }
+	$year  = absint( get_query_var( 'year' ) );
+	$month = absint( get_query_var( 'monthnum' ) );
+	$day   = absint( get_query_var( 'day' ) );
 
-    if ( $year > 0 && $month > 0 ) {
-        return get_month_link( $year, $month );
-    }
+	if ( $year > 0 && $month > 0 && $day > 0 ) {
+		$runtime_cache = get_day_link( $year, $month, $day );
+		return $runtime_cache;
+	}
 
-    if ( $year > 0 ) {
-        return get_year_link( $year );
-    }
+	if ( $year > 0 && $month > 0 ) {
+		$runtime_cache = get_month_link( $year, $month );
+		return $runtime_cache;
+	}
 
-    return '';
+	if ( $year > 0 ) {
+		$runtime_cache = get_year_link( $year );
+		return $runtime_cache;
+	}
+
+	$runtime_cache = '';
+	return $runtime_cache;
 }
 
 /**
