@@ -12,9 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function titancore_modify_home_query( $query ) {
 	if ( ! is_admin() && $query->is_main_query() ) {
-		// Front-page template uses dedicated loops, so skip expensive row-count work on main query.
+		// Front-page template uses dedicated loops, so skip expensive row-count, term, and meta work on main query.
 		if ( is_front_page() ) {
 			$query->set( 'no_found_rows', true );
+			$query->set( 'update_post_term_cache', false );
+			$query->set( 'update_post_meta_cache', false );
 		}
 
 		if ( is_home() || is_front_page() || is_archive() || is_search() ) {
@@ -49,7 +51,7 @@ function titancore_bump_cache_version( $object_id = 0 ) {
 		return;
 	}
 
-	update_option( 'titancore_cache_version', (string) time(), false );
+	update_option( 'titancore_cache_version', (string) time(), true );
 }
 add_action( 'save_post', 'titancore_bump_cache_version' );
 add_action( 'deleted_post', 'titancore_bump_cache_version' );
@@ -404,6 +406,19 @@ function titancore_get_estimated_reading_time( $post_id = 0 ) {
 		return $runtime_cache[ $post_id ];
 	}
 
+	$cache_key = sprintf(
+		'titancore_read_time_%1$d_v%2$s',
+		$post_id,
+		titancore_get_cache_version()
+	);
+
+	$cached = get_transient( $cache_key );
+	if ( false !== $cached ) {
+		$reading_time              = absint( $cached );
+		$runtime_cache[ $post_id ] = $reading_time;
+		return $reading_time;
+	}
+
 	$content = get_post_field( 'post_content', $post_id );
 	$content = wp_strip_all_tags( strip_shortcodes( (string) $content ) );
 	$count   = str_word_count( $content );
@@ -414,6 +429,8 @@ function titancore_get_estimated_reading_time( $post_id = 0 ) {
 	}
 
 	$reading_time = max( 1, (int) ceil( $count / 220 ) );
+
+	set_transient( $cache_key, $reading_time, 6 * HOUR_IN_SECONDS );
 	$runtime_cache[ $post_id ] = $reading_time;
 
 	return $reading_time;
