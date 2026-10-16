@@ -355,6 +355,12 @@ header nav ul li.current_page_item > a {
 
 .tc-single__sidebar-card {
     box-shadow: 0 12px 32px color-mix(in srgb, var(--foreground) 8%, transparent);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tc-single__author-card:hover {
+    border-color: color-mix(in srgb, var(--border) 50%, var(--foreground));
+    box-shadow: 0 16px 36px color-mix(in srgb, var(--foreground) 10%, transparent);
 }
 
 .tc-single__related {

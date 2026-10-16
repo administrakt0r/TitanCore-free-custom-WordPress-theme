@@ -195,17 +195,25 @@ while ( have_posts() ) :
     <aside class="hidden lg:block w-[350px] flex-shrink-0 p-6 lg:p-10 bg-muted/60 dark:bg-muted/20">
       <div class="sticky top-20 space-y-8">
 
-        <div class="tc-single__sidebar-card flex flex-col gap-4 border border-border rounded-lg p-6 bg-card">
+        <div class="tc-single__sidebar-card tc-single__author-card flex flex-col gap-4 border border-border rounded-lg p-6 bg-card">
           <div class="flex items-center gap-4">
-            <?php echo get_avatar( get_the_author_meta( 'ID' ), 48, '', '', array( 'class' => 'rounded-full' ) ); ?>
-            <div>
-              <p class="font-medium"><?php echo esc_html( get_the_author() ); ?></p>
-              <p class="text-sm text-muted-foreground"><?php esc_html_e( 'Author', 'titancore' ); ?></p>
+            <a href="<?php echo esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ); ?>" class="shrink-0 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+              <?php echo get_avatar( get_the_author_meta( 'ID' ), 48, '', '', array( 'class' => 'rounded-full border border-border transition-transform duration-200 hover:scale-105' ) ); ?>
+            </a>
+            <div class="min-w-0">
+              <a href="<?php echo esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ); ?>" class="font-semibold text-foreground hover:text-primary transition-colors block truncate focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm">
+                <?php echo esc_html( get_the_author() ); ?>
+              </a>
+              <p class="text-xs font-medium uppercase tracking-wider text-muted-foreground"><?php esc_html_e( 'Author', 'titancore' ); ?></p>
             </div>
           </div>
           <?php if ( '' !== trim( $author_description ) ) : ?>
-            <p class="text-sm text-muted-foreground"><?php echo esc_html( $author_description ); ?></p>
+            <p class="text-sm text-muted-foreground leading-relaxed"><?php echo esc_html( $author_description ); ?></p>
           <?php endif; ?>
+          <a href="<?php echo esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ); ?>" class="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm w-fit pt-1">
+            <span><?php esc_html_e( 'View author articles', 'titancore' ); ?></span>
+            <?php echo titancore_get_icon( 'chevron-right', 'w-3.5 h-3.5' ); ?>
+          </a>
         </div>
 
         <div class="tc-single__sidebar-card border border-border rounded-lg p-6 bg-card">
