@@ -60,6 +60,9 @@ No. TitanCore's frontend JavaScript is vanilla ES6. jQuery remains registered fo
 * Performance: Added static per-request runtime caching to `titancore_has_external_seo_plugin()` and `titancore_should_keep_core_block_assets()` to prevent redundant check evaluations.
 * Performance: Added `titancore_get_top_categories()` and `titancore_get_recent_posts()` with transient and runtime caching for empty states in `content-none.php`.
 * Performance: Optimized single post breadcrumbs and Magazine front-page preset query execution for reduced CPU and database load.
+* Performance: Optimized post cache pre-warming using `_prime_post_caches()` with fallback across `front-page.php`, `404.php`, and `content-none.php`.
+* Performance: Added static per-request runtime caching to `titancore_get_custom_code_output()` and `titancore_get_date_archive_link()`.
+* Performance: Streamlined excerpt extraction in `content.php` using standard `get_the_excerpt()`.
 * Accessibility: Standardized navigation colors with semantic CSS tokens and added focus-visible outlines across navigation menus and footer links.
 * Visual: Enhanced table of contents active section styling, comment reply link subtle hover elevation, and comment form input focus states.
 
