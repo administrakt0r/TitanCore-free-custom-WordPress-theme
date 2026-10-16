@@ -147,13 +147,6 @@ function titancore_get_top_categories( $limit = 6 ) {
 }
 
 /**
- * Alias for titancore_get_top_categories for backward compatibility.
- */
-function titancore_get_popular_categories( $limit = 6 ) {
-	return titancore_get_top_categories( $limit );
-}
-
-/**
  * Cache recent post IDs list used in empty states.
  */
 function titancore_get_recent_posts( $limit = 3 ) {
