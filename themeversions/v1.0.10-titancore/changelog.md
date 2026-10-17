@@ -2,6 +2,8 @@
 ### Added
 - `inc/template-tags.php`: Added `titancore_get_top_categories()` (with `titancore_get_popular_categories()` compatibility alias) with static runtime and 6-hour transient caching.
 - `inc/template-tags.php`: Added `titancore_get_recent_posts()` with static runtime and transient caching (`fields => 'ids'`, `no_found_rows => true`).
+- `single.php` & `assets/css/enhancements.css`: Single post author card aesthetic and interaction polish with linked avatar, author archive URL, focus-visible accessibility rings, and "View author articles" link with icon.
+- `assets/css/enhancements.css`: Footer bottom layout separation, responsive flex alignment, focus-visible outline rings for brand title and footer links, and back-to-top button icon hover transition.
 - `assets/css/enhancements.css`: Single post table of contents active section indicator left border and accent background, comment reply link subtle hover elevation, and comment form inputs focus-visible styling.
 - `assets/css/style.css` & `assets/css/enhancements.css`: Standardized navigation tokens (`var(--muted-foreground)`, `var(--foreground)`) and added explicit 2px focus-visible rings across header navigation, secondary navigation, and footer links.
 

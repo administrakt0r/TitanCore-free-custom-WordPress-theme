@@ -63,7 +63,9 @@ No. TitanCore's frontend JavaScript is vanilla ES6. jQuery remains registered fo
 * Performance: Optimized post cache pre-warming using `_prime_post_caches()` with fallback across `front-page.php`, `404.php`, and `content-none.php`.
 * Performance: Added static per-request runtime caching to `titancore_get_custom_code_output()` and `titancore_get_date_archive_link()`.
 * Performance: Streamlined excerpt extraction in `content.php` using standard `get_the_excerpt()`.
-* Accessibility: Standardized navigation colors with semantic CSS tokens and added focus-visible outlines across navigation menus and footer links.
+* Accessibility: Standardized navigation colors with semantic CSS tokens and added focus-visible outlines across navigation menus, author cards, and footer links.
+* Visual: Single post author card visual and interaction polish with linked avatar, author archive URL, hover elevation, and 'View author articles' link.
+* Visual: Footer bottom section separation, layout alignment, brand focus rings, and back-to-top button icon hover animation.
 * Visual: Enhanced table of contents active section styling, comment reply link subtle hover elevation, and comment form input focus states.
 
 = 1.0.9 =
