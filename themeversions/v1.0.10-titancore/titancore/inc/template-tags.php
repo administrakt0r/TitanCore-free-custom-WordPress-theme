@@ -147,6 +147,18 @@ function titancore_get_top_categories( $limit = 6 ) {
 }
 
 /**
+ * Alias for titancore_get_top_categories for backward compatibility.
+ *
+ * @deprecated 1.0.10 Use titancore_get_top_categories() instead.
+ */
+function titancore_get_popular_categories( $limit = 6 ) {
+	if ( function_exists( '_deprecated_function' ) ) {
+		_deprecated_function( __FUNCTION__, '1.0.10', 'titancore_get_top_categories' );
+	}
+	return titancore_get_top_categories( $limit );
+}
+
+/**
  * Cache recent post IDs list used in empty states.
  */
 function titancore_get_recent_posts( $limit = 3 ) {
