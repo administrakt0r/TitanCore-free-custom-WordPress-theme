@@ -28,6 +28,30 @@ $has_primary_menu = has_nav_menu( 'primary' );
 $header_controls_classes = $has_primary_menu
 	? 'flex flex-1 w-full justify-end md:justify-between items-center md:ml-6'
 	: 'flex flex-1 w-full justify-end items-center';
+
+$primary_menu_desktop = '';
+$primary_menu_mobile  = '';
+
+if ( $has_primary_menu ) {
+	$primary_menu_desktop = wp_nav_menu(
+		array(
+			'theme_location' => 'primary',
+			'container'      => false,
+			'menu_class'     => 'flex items-center space-x-6 list-none m-0 p-0',
+			'fallback_cb'    => false,
+			'depth'          => 1,
+			'echo'           => false,
+		)
+	);
+
+	if ( is_string( $primary_menu_desktop ) && '' !== $primary_menu_desktop ) {
+		$primary_menu_mobile = str_replace(
+			'class="flex items-center space-x-6 list-none m-0 p-0"',
+			'class="flex flex-col space-y-1 list-none m-0 p-0"',
+			$primary_menu_desktop
+		);
+	}
+}
 ?>
 
 <header class="<?php echo esc_attr( $sticky_class ); ?> w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -48,17 +72,9 @@ $header_controls_classes = $has_primary_menu
     </div>
 
     <div class="<?php echo esc_attr( $header_controls_classes ); ?>">
-      <?php if ( $has_primary_menu ) : ?>
+      <?php if ( $has_primary_menu && ! empty( $primary_menu_desktop ) ) : ?>
       <nav class="hidden md:flex items-center space-x-6 text-sm font-medium">
-        <?php
-        wp_nav_menu( array(
-            'theme_location' => 'primary',
-            'container'      => false,
-            'menu_class'     => 'flex items-center space-x-6 list-none m-0 p-0',
-            'fallback_cb'    => false,
-            'depth'          => 1,
-        ) );
-        ?>
+        <?php echo $primary_menu_desktop; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
       </nav>
       <?php endif; ?>
 
@@ -91,19 +107,11 @@ $header_controls_classes = $has_primary_menu
     </div>
   </div>
 
-  <?php if ( $has_primary_menu ) : ?>
+  <?php if ( $has_primary_menu && ! empty( $primary_menu_mobile ) ) : ?>
   <!-- Mobile Navigation Dropdown -->
   <div id="mobile-menu" class="hidden md:hidden border-t border-border/40 bg-background px-6 py-4 shadow-lg" role="dialog" aria-modal="true" aria-label="<?php esc_attr_e( 'Mobile navigation', 'titancore' ); ?>" aria-hidden="true">
     <nav class="flex flex-col space-y-1 text-sm font-medium" aria-label="<?php esc_attr_e( 'Primary', 'titancore' ); ?>">
-      <?php
-      wp_nav_menu( array(
-          'theme_location' => 'primary',
-          'container'      => false,
-          'menu_class'     => 'flex flex-col space-y-1 list-none m-0 p-0',
-          'fallback_cb'    => false,
-          'depth'          => 1,
-      ) );
-      ?>
+      <?php echo $primary_menu_mobile; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
     </nav>
   </div>
   <div id="mobile-menu-backdrop" class="hidden md:hidden fixed inset-0 <?php echo get_theme_mod( 'sticky_header', true ) ? 'top-14' : 'top-0'; ?> bg-black/40 backdrop-blur-sm z-10" aria-hidden="true"></div>

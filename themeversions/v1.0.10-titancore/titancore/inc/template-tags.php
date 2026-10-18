@@ -85,8 +85,9 @@ function titancore_get_top_tags( $limit = 5 ) {
 	}
 
 	$args = array(
-		'orderby' => 'count',
-		'order'   => 'DESC',
+		'orderby'                => 'count',
+		'order'                  => 'DESC',
+		'update_term_meta_cache' => false,
 	);
 
 	if ( $limit > 0 ) {
@@ -127,9 +128,10 @@ function titancore_get_top_categories( $limit = 6 ) {
 	}
 
 	$args = array(
-		'orderby'    => 'count',
-		'order'      => 'DESC',
-		'hide_empty' => true,
+		'orderby'                => 'count',
+		'order'                  => 'DESC',
+		'hide_empty'             => true,
+		'update_term_meta_cache' => false,
 	);
 
 	if ( $limit > 0 ) {
