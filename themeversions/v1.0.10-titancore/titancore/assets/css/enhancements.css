@@ -435,11 +435,52 @@ header nav ul li.current_page_item > a {
 .comment-metadata a {
     color: var(--muted-foreground);
     text-decoration: none;
+    border-radius: calc(var(--radius) - 4px);
+    transition: color 0.15s ease;
 }
 
 .comment-metadata a:hover {
     color: var(--foreground);
     text-decoration: underline;
+}
+
+.comment-metadata a:focus-visible {
+    color: var(--foreground);
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+}
+
+.bypostauthor > .comment-body {
+    border-color: color-mix(in srgb, var(--primary) 40%, var(--border));
+    background: color-mix(in srgb, var(--primary) 3%, var(--card));
+}
+
+.bypostauthor .comment-author .fn::after {
+    content: "Author";
+    display: inline-flex;
+    align-items: center;
+    margin-left: 0.5rem;
+    padding: 0.125rem 0.5rem;
+    border-radius: 9999px;
+    background: color-mix(in srgb, var(--primary) 15%, transparent);
+    color: var(--primary);
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.2;
+    vertical-align: middle;
+}
+
+.comment-awaiting-moderation {
+    display: block;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: calc(var(--radius) - 2px);
+    border: 1px solid color-mix(in srgb, var(--primary) 30%, var(--border));
+    background: color-mix(in srgb, var(--primary) 8%, var(--background));
+    color: var(--foreground);
+    font-size: 0.8125rem;
+    font-style: italic;
 }
 
 .comment-content {
@@ -451,8 +492,9 @@ header nav ul li.current_page_item > a {
 #cancel-comment-reply-link {
     display: inline-flex;
     align-items: center;
-    min-height: 36px;
-    padding: 0.25rem 0.75rem;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0.5rem 1rem;
     border-radius: calc(var(--radius) - 2px);
     border: 1px solid var(--border);
     background: var(--background);
@@ -464,14 +506,22 @@ header nav ul li.current_page_item > a {
 }
 
 .comment-reply-link:hover,
-.comment-reply-link:focus-visible,
-#cancel-comment-reply-link:hover,
-#cancel-comment-reply-link:focus-visible {
+#cancel-comment-reply-link:hover {
     background: var(--accent);
-    border-color: var(--foreground);
+    border-color: color-mix(in srgb, var(--border) 50%, var(--foreground));
     color: var(--accent-foreground);
     text-decoration: none;
     box-shadow: 0 1px 4px color-mix(in srgb, var(--foreground) 8%, transparent);
+}
+
+.comment-reply-link:focus-visible,
+#cancel-comment-reply-link:focus-visible {
+    background: var(--accent);
+    border-color: var(--ring);
+    color: var(--accent-foreground);
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    text-decoration: none;
 }
 
 .site-footer {
@@ -867,6 +917,8 @@ header nav ul li.current_page_item > a {
 .comment-form input[type="url"]:focus-visible,
 .comment-form textarea:focus-visible {
     border-color: var(--ring);
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
     box-shadow: 0 0 0 1px var(--ring);
 }
 
