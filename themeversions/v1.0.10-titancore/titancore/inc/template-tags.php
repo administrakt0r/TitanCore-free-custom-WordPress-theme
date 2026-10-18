@@ -302,6 +302,33 @@ function titancore_mix_hex_colors( $base_hex, $mix_hex, $ratio = 0.5 ) {
 }
 
 /**
+ * Prime post thumbnail attachment caches in a single SQL query for a list of post IDs.
+ *
+ * @param array|int $post_ids Post ID or array of post IDs.
+ */
+function titancore_prime_post_thumbnail_cache( $post_ids ) {
+	if ( empty( $post_ids ) || ! function_exists( 'update_post_thumbnail_cache' ) ) {
+		return;
+	}
+
+	$ids = array_filter( array_map( 'absint', (array) $post_ids ) );
+	if ( empty( $ids ) ) {
+		return;
+	}
+
+	$posts = array_filter( array_map( 'get_post', $ids ) );
+	if ( empty( $posts ) ) {
+		return;
+	}
+
+	$query             = new WP_Query();
+	$query->posts      = array_values( $posts );
+	$query->post_count = count( $query->posts );
+
+	update_post_thumbnail_cache( $query );
+}
+
+/**
  * Responsive image size map for Core Web Vitals-friendly outputs.
  */
 function titancore_get_image_sizes( $context = 'default' ) {
@@ -348,11 +375,12 @@ function titancore_get_related_posts( $post_id = 0, $limit = 3 ) {
 	$cached = get_transient( $cache_key );
 	if ( false !== $cached && is_array( $cached ) ) {
 		$runtime_cache[ $runtime_id ] = $cached;
+		titancore_prime_post_thumbnail_cache( $cached );
 		return $cached;
 	}
 
 	$post_type  = get_post_type( $post_id ) ?: 'post';
-	$categories = wp_get_post_categories( $post_id );
+	$categories = wp_get_post_categories( $post_id, array( 'fields' => 'ids' ) );
 	$tags       = wp_get_post_tags( $post_id, array( 'fields' => 'ids' ) );
 
 	$args = array(
@@ -396,6 +424,7 @@ function titancore_get_related_posts( $post_id = 0, $limit = 3 ) {
 
 	set_transient( $cache_key, $related_post_ids, 6 * HOUR_IN_SECONDS );
 	$runtime_cache[ $runtime_id ] = $related_post_ids;
+	titancore_prime_post_thumbnail_cache( $related_post_ids );
 	return $related_post_ids;
 }
 

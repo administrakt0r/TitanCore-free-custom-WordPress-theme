@@ -78,6 +78,9 @@ $render_pagination = static function ( $query ) use ( $paged, $pagination_base )
 			if ( ! empty( $headline_post_ids ) ) {
 				if ( function_exists( '_prime_post_caches' ) ) {
 					_prime_post_caches( $headline_post_ids, true, true );
+					if ( function_exists( 'titancore_prime_post_thumbnail_cache' ) ) {
+						titancore_prime_post_thumbnail_cache( $headline_post_ids );
+					}
 					$headline_posts = array_values( array_filter( array_map( 'get_post', $headline_post_ids ) ) );
 				} else {
 					$headline_posts = get_posts(
@@ -263,6 +266,9 @@ $render_pagination = static function ( $query ) use ( $paged, $pagination_base )
 			if ( ! empty( $featured_post_ids ) ) {
 				if ( function_exists( '_prime_post_caches' ) ) {
 					_prime_post_caches( $featured_post_ids, true, true );
+					if ( function_exists( 'titancore_prime_post_thumbnail_cache' ) ) {
+						titancore_prime_post_thumbnail_cache( $featured_post_ids );
+					}
 					$featured_posts = array_values( array_filter( array_map( 'get_post', $featured_post_ids ) ) );
 				} else {
 					$featured_posts = get_posts(

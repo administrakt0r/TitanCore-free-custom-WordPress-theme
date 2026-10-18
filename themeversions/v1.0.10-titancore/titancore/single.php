@@ -9,12 +9,16 @@ while ( have_posts() ) :
 	the_post();
     $posts_page_url = titancore_get_posts_page_url();
     $categories = get_the_category();
+    $show_toc = (bool) get_theme_mod( 'show_toc', true );
     $reading_time = function_exists( 'titancore_get_estimated_reading_time' ) ? titancore_get_estimated_reading_time() : 1;
     $author_description = get_the_author_meta( 'description' );
     $related_ids         = function_exists( 'titancore_get_related_posts' ) ? titancore_get_related_posts( get_the_ID(), 3 ) : array();
     if ( ! empty( $related_ids ) ) {
       if ( function_exists( '_prime_post_caches' ) ) {
         _prime_post_caches( $related_ids, true, true );
+        if ( function_exists( 'titancore_prime_post_thumbnail_cache' ) ) {
+          titancore_prime_post_thumbnail_cache( $related_ids );
+        }
       } else {
         get_posts( array(
           'post__in'            => $related_ids,
@@ -95,7 +99,7 @@ while ( have_posts() ) :
         </div>
       <?php endif; ?>
 
-      <?php if ( get_theme_mod( 'show_toc', true ) ) : ?>
+      <?php if ( $show_toc ) : ?>
       <div class="lg:hidden mx-6 mt-6 rounded-lg border border-border bg-card p-4">
         <details class="group">
           <summary class="flex cursor-pointer list-none items-center justify-between font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md px-1 py-1 -mx-1">
@@ -219,7 +223,7 @@ while ( have_posts() ) :
         <div class="tc-single__sidebar-card border border-border rounded-lg p-6 bg-card">
           <h3 class="font-medium mb-4"><?php esc_html_e( 'Table of Contents', 'titancore' ); ?></h3>
           <?php
-            if ( get_theme_mod( 'show_toc', true ) ) {
+            if ( $show_toc ) {
                 titancore_generate_toc();
             } else {
                 echo '<p class="text-sm text-muted-foreground italic">' . esc_html__( 'Table of Contents is disabled in Customizer.', 'titancore' ) . '</p>';
