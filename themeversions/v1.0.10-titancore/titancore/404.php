@@ -30,6 +30,9 @@ get_header(); ?>
   if ( ! empty( $recent_post_ids ) ) :
     if ( function_exists( '_prime_post_caches' ) ) {
       _prime_post_caches( $recent_post_ids, false, false );
+      if ( function_exists( 'titancore_prime_post_thumbnail_cache' ) ) {
+        titancore_prime_post_thumbnail_cache( $recent_post_ids );
+      }
     } else {
       get_posts( array(
         'post__in'               => $recent_post_ids,

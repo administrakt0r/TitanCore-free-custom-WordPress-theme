@@ -23,7 +23,8 @@
 <a class="skip-link" href="#main-content"><?php esc_html_e( 'Skip to content', 'titancore' ); ?></a>
 
 <?php
-$sticky_class = get_theme_mod( 'sticky_header', true ) ? 'sticky top-0 z-20' : '';
+$is_sticky_header = (bool) get_theme_mod( 'sticky_header', true );
+$sticky_class     = $is_sticky_header ? 'sticky top-0 z-20' : '';
 $has_primary_menu = has_nav_menu( 'primary' );
 $header_controls_classes = $has_primary_menu
 	? 'flex flex-1 w-full justify-end md:justify-between items-center md:ml-6'
@@ -114,7 +115,7 @@ if ( $has_primary_menu ) {
       <?php echo $primary_menu_mobile; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
     </nav>
   </div>
-  <div id="mobile-menu-backdrop" class="hidden md:hidden fixed inset-0 <?php echo get_theme_mod( 'sticky_header', true ) ? 'top-14' : 'top-0'; ?> bg-black/40 backdrop-blur-sm z-10" aria-hidden="true"></div>
+  <div id="mobile-menu-backdrop" class="hidden md:hidden fixed inset-0 <?php echo $is_sticky_header ? 'top-14' : 'top-0'; ?> bg-black/40 backdrop-blur-sm z-10" aria-hidden="true"></div>
   <?php endif; ?>
   <?php
   $custom_header_code = titancore_get_custom_code_output( 'header' );
