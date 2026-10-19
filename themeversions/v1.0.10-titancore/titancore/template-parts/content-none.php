@@ -87,7 +87,7 @@ $icon_name        = $is_search_query ? 'search-x' : 'inbox';
 				<h3 class="text-xs font-semibold uppercase tracking-wider text-muted-foreground text-center mb-4"><?php esc_html_e( 'Recent Articles', 'titancore' ); ?></h3>
 				<div class="grid sm:grid-cols-3 gap-3">
 					<?php foreach ( $recent_posts as $recent_post ) : ?>
-						<a href="<?php echo esc_url( get_permalink( $recent_post->ID ) ); ?>" class="group block rounded-lg border border-border bg-card p-4 hover:bg-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+						<a href="<?php echo esc_url( get_permalink( $recent_post->ID ) ); ?>" class="tc-empty-state__recent-card group block rounded-lg border border-border bg-card p-4 hover:bg-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
 							<span class="block text-sm font-semibold leading-snug group-hover:text-foreground line-clamp-2"><?php echo esc_html( get_the_title( $recent_post->ID ) ); ?></span>
 							<span class="block text-xs text-muted-foreground mt-2"><?php echo esc_html( get_the_date( '', $recent_post->ID ) ); ?></span>
 						</a>
@@ -98,7 +98,7 @@ $icon_name        = $is_search_query ? 'search-x' : 'inbox';
 	<?php endif; ?>
 
 	<div class="pt-2">
-		<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="inline-flex h-10 items-center justify-center rounded-lg bg-primary px-5 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+		<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="inline-flex min-h-[44px] items-center justify-center rounded-lg bg-primary px-5 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
 			<?php esc_html_e( 'Back to Home', 'titancore' ); ?>
 		</a>
 	</div>
