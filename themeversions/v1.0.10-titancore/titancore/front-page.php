@@ -63,9 +63,11 @@ $render_pagination = static function ( $query ) use ( $paged, $pagination_base )
 						array_merge(
 							$base_query_args,
 							array(
-								'posts_per_page' => 5,
-								'no_found_rows'  => true,
-								'fields'         => 'ids',
+								'posts_per_page'         => 5,
+								'no_found_rows'          => true,
+								'fields'                 => 'ids',
+								'update_post_term_cache' => false,
+								'update_post_meta_cache' => false,
 							)
 						)
 					);
@@ -251,9 +253,11 @@ $render_pagination = static function ( $query ) use ( $paged, $pagination_base )
 						array_merge(
 							$base_query_args,
 							array(
-								'posts_per_page' => 2,
-								'no_found_rows'  => true,
-								'fields'         => 'ids',
+								'posts_per_page'         => 2,
+								'no_found_rows'          => true,
+								'fields'                 => 'ids',
+								'update_post_term_cache' => false,
+								'update_post_meta_cache' => false,
 							)
 						)
 					);

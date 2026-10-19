@@ -51,6 +51,11 @@ function titancore_bump_cache_version( $object_id = 0 ) {
 		return;
 	}
 
+	if ( $object_id ) {
+		delete_post_meta( $object_id, '_titancore_reading_time' );
+		delete_post_meta( $object_id, '_titancore_toc_data' );
+	}
+
 	update_option( 'titancore_cache_version', (string) time(), true );
 }
 add_action( 'save_post', 'titancore_bump_cache_version' );
@@ -380,8 +385,14 @@ function titancore_get_related_posts( $post_id = 0, $limit = 3 ) {
 	}
 
 	$post_type  = get_post_type( $post_id ) ?: 'post';
-	$categories = wp_get_post_categories( $post_id, array( 'fields' => 'ids' ) );
-	$tags       = wp_get_post_tags( $post_id, array( 'fields' => 'ids' ) );
+	$categories = wp_get_post_terms( $post_id, 'category', array( 'fields' => 'ids' ) );
+	$tags       = wp_get_post_terms( $post_id, 'post_tag', array( 'fields' => 'ids' ) );
+	if ( is_wp_error( $categories ) ) {
+		$categories = array();
+	}
+	if ( is_wp_error( $tags ) ) {
+		$tags = array();
+	}
 
 	$args = array(
 		'post_type'              => $post_type,
@@ -442,15 +453,9 @@ function titancore_get_estimated_reading_time( $post_id = 0 ) {
 		return $runtime_cache[ $post_id ];
 	}
 
-	$cache_key = sprintf(
-		'titancore_read_time_%1$d_v%2$s',
-		$post_id,
-		titancore_get_cache_version()
-	);
-
-	$cached = get_transient( $cache_key );
-	if ( false !== $cached ) {
-		$reading_time              = absint( $cached );
+	$meta_value = get_post_meta( $post_id, '_titancore_reading_time', true );
+	if ( '' !== $meta_value && false !== $meta_value ) {
+		$reading_time              = absint( $meta_value );
 		$runtime_cache[ $post_id ] = $reading_time;
 		return $reading_time;
 	}
@@ -466,14 +471,14 @@ function titancore_get_estimated_reading_time( $post_id = 0 ) {
 
 	$reading_time = max( 1, (int) ceil( $count / 220 ) );
 
-	set_transient( $cache_key, $reading_time, 6 * HOUR_IN_SECONDS );
+	update_post_meta( $post_id, '_titancore_reading_time', $reading_time );
 	$runtime_cache[ $post_id ] = $reading_time;
 
 	return $reading_time;
 }
 
 /**
- * Parse post content once and cache generated heading IDs + TOC structure.
+ * Parse post content once and cache generated heading IDs + TOC structure in postmeta.
  */
 function titancore_parse_toc_data( $post_id, $content ) {
 	$post_id = absint( $post_id );
@@ -494,19 +499,19 @@ function titancore_parse_toc_data( $post_id, $content ) {
 		return $runtime_cache[ $runtime_id ];
 	}
 
-	$transient_key = 'titancore_toc_' . $post_id . '_' . substr( $cache_hash, 0, 12 );
-	$cached_data   = get_transient( $transient_key );
-
+	$cached_meta = get_post_meta( $post_id, '_titancore_toc_data', true );
 	if (
-		is_array( $cached_data ) &&
-		isset( $cached_data['content'], $cached_data['headings'] ) &&
-		is_array( $cached_data['headings'] )
+		is_array( $cached_meta ) &&
+		isset( $cached_meta['hash'], $cached_meta['content'], $cached_meta['headings'] ) &&
+		$cached_meta['hash'] === $cache_hash &&
+		is_array( $cached_meta['headings'] )
 	) {
-		$runtime_cache[ $runtime_id ] = $cached_data;
-		return $cached_data;
+		$runtime_cache[ $runtime_id ] = $cached_meta;
+		return $cached_meta;
 	}
 
 	$result = array(
+		'hash'     => $cache_hash,
 		'content'  => $content,
 		'headings' => array(),
 	);
@@ -582,7 +587,7 @@ function titancore_parse_toc_data( $post_id, $content ) {
 		}
 	}
 
-	set_transient( $transient_key, $result, DAY_IN_SECONDS );
+	update_post_meta( $post_id, '_titancore_toc_data', $result );
 	$runtime_cache[ $runtime_id ] = $result;
 
 	return $result;
