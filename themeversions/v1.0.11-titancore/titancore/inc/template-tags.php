@@ -75,9 +75,6 @@ function titancore_get_top_tags( $limit = 5 ) {
 
 	static $runtime_cache = array();
 	if ( isset( $runtime_cache[ $limit ] ) ) {
-		if ( function_exists( '_prime_post_caches' ) && ! empty( $runtime_cache[ $limit ] ) ) {
-			_prime_post_caches( $runtime_cache[ $limit ], false, false );
-		}
 		return $runtime_cache[ $limit ];
 	}
 
@@ -133,9 +130,6 @@ function titancore_get_top_categories( $limit = 6 ) {
 	$cached = get_transient( $cache_key );
 	if ( false !== $cached && is_array( $cached ) ) {
 		$runtime_cache[ $limit ] = $cached;
-		if ( function_exists( '_prime_post_caches' ) && ! empty( $cached ) ) {
-			_prime_post_caches( $cached, false, false );
-		}
 		return $cached;
 	}
 
@@ -192,6 +186,9 @@ function titancore_get_recent_posts( $limit = 3 ) {
 	$cached = get_transient( $cache_key );
 	if ( false !== $cached && is_array( $cached ) ) {
 		$runtime_cache[ $limit ] = $cached;
+		if ( function_exists( '_prime_post_caches' ) && ! empty( $cached ) ) {
+			_prime_post_caches( $cached, false, false );
+		}
 		return $cached;
 	}
 
@@ -319,21 +316,27 @@ function titancore_mix_hex_colors( $base_hex, $mix_hex, $ratio = 0.5 ) {
 }
 
 /**
- * Prime post thumbnail attachment caches in a single SQL query for a list of post IDs.
+ * Prime post thumbnail attachment caches in a single SQL query for a list of post IDs or WP_Post objects.
  *
- * @param array|int $post_ids Post ID or array of post IDs.
+ * @param array|int|WP_Post $post_ids Post ID, WP_Post object, or array of post IDs/objects.
  */
 function titancore_prime_post_thumbnail_cache( $post_ids ) {
 	if ( empty( $post_ids ) || ! function_exists( 'update_post_thumbnail_cache' ) ) {
 		return;
 	}
 
-	$ids = array_filter( array_map( 'absint', (array) $post_ids ) );
-	if ( empty( $ids ) ) {
-		return;
+	$posts = array();
+	foreach ( (array) $post_ids as $item ) {
+		if ( $item instanceof WP_Post ) {
+			$posts[ $item->ID ] = $item;
+		} elseif ( is_numeric( $item ) && (int) $item > 0 ) {
+			$post = get_post( (int) $item );
+			if ( $post instanceof WP_Post ) {
+				$posts[ $post->ID ] = $post;
+			}
+		}
 	}
 
-	$posts = array_filter( array_map( 'get_post', $ids ) );
 	if ( empty( $posts ) ) {
 		return;
 	}

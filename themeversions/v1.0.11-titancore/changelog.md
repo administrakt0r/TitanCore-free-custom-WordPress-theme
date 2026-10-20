@@ -5,3 +5,4 @@
 - `inc/template-tags.php`: Switched `titancore_get_related_posts()` to use `get_the_terms()` (reading from the in-memory post term cache) before falling back to `wp_get_post_terms()`, avoiding redundant database queries.
 - `inc/template-tags.php`: Encapsulated `_prime_post_caches()` and `titancore_prime_post_thumbnail_cache()` execution directly inside `titancore_get_related_posts()` and `titancore_get_recent_posts()`.
 - `single.php`, `404.php`, and `template-parts/content-none.php`: Streamlined template priming logic by delegating post/thumbnail cache priming to helper functions.
+
