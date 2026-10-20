@@ -45,13 +45,16 @@ function titancore_get_cache_version() {
 
 /**
  * Bump cache version whenever content/taxonomy changes.
+ *
+ * @param mixed $object_id Optional post ID, term ID, or manager object.
  */
 function titancore_bump_cache_version( $object_id = 0 ) {
-	if ( $object_id && function_exists( 'wp_is_post_revision' ) && wp_is_post_revision( $object_id ) ) {
+	$post_id = ( is_numeric( $object_id ) && (int) $object_id > 0 ) ? (int) $object_id : 0;
+
+	if ( $post_id > 0 && function_exists( 'wp_is_post_revision' ) && wp_is_post_revision( $post_id ) ) {
 		return;
 	}
 
-	$post_id = absint( $object_id );
 	if ( $post_id > 0 && function_exists( 'current_filter' ) && in_array( current_filter(), array( 'save_post', 'deleted_post', 'edit_post' ), true ) ) {
 		delete_post_meta( $post_id, '_titancore_reading_time' );
 		delete_post_meta( $post_id, '_titancore_toc_data' );
