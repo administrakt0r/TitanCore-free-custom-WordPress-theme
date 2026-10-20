@@ -45,15 +45,21 @@ function titancore_get_cache_version() {
 
 /**
  * Bump cache version whenever content/taxonomy changes.
+ *
+ * @param mixed $object_id Optional post ID, term ID, or manager object.
  */
 function titancore_bump_cache_version( $object_id = 0 ) {
-	if ( $object_id && function_exists( 'wp_is_post_revision' ) && wp_is_post_revision( $object_id ) ) {
-		return;
-	}
+	if ( is_numeric( $object_id ) && $object_id > 0 ) {
+		$post_id = (int) $object_id;
+		if ( function_exists( 'wp_is_post_revision' ) && wp_is_post_revision( $post_id ) ) {
+			return;
+		}
 
-	if ( $object_id ) {
-		delete_post_meta( $object_id, '_titancore_reading_time' );
-		delete_post_meta( $object_id, '_titancore_toc_data' );
+		$current_hook = current_action();
+		if ( empty( $current_hook ) || in_array( $current_hook, array( 'save_post', 'deleted_post' ), true ) ) {
+			delete_post_meta( $post_id, '_titancore_reading_time' );
+			delete_post_meta( $post_id, '_titancore_toc_data' );
+		}
 	}
 
 	update_option( 'titancore_cache_version', (string) time(), true );
@@ -471,7 +477,9 @@ function titancore_get_estimated_reading_time( $post_id = 0 ) {
 
 	$reading_time = max( 1, (int) ceil( $count / 220 ) );
 
-	update_post_meta( $post_id, '_titancore_reading_time', $reading_time );
+	if ( get_post( $post_id ) ) {
+		update_post_meta( $post_id, '_titancore_reading_time', $reading_time );
+	}
 	$runtime_cache[ $post_id ] = $reading_time;
 
 	return $reading_time;
@@ -587,7 +595,9 @@ function titancore_parse_toc_data( $post_id, $content ) {
 		}
 	}
 
-	update_post_meta( $post_id, '_titancore_toc_data', $result );
+	if ( get_post( $post_id ) ) {
+		update_post_meta( $post_id, '_titancore_toc_data', $result );
+	}
 	$runtime_cache[ $runtime_id ] = $result;
 
 	return $result;
