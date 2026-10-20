@@ -51,9 +51,10 @@ function titancore_bump_cache_version( $object_id = 0 ) {
 		return;
 	}
 
-	if ( $object_id ) {
-		delete_post_meta( $object_id, '_titancore_reading_time' );
-		delete_post_meta( $object_id, '_titancore_toc_data' );
+	$post_id = absint( $object_id );
+	if ( $post_id > 0 && function_exists( 'current_filter' ) && in_array( current_filter(), array( 'save_post', 'deleted_post', 'edit_post' ), true ) ) {
+		delete_post_meta( $post_id, '_titancore_reading_time' );
+		delete_post_meta( $post_id, '_titancore_toc_data' );
 	}
 
 	update_option( 'titancore_cache_version', (string) time(), true );
@@ -499,7 +500,7 @@ function titancore_parse_toc_data( $post_id, $content ) {
 		return $runtime_cache[ $runtime_id ];
 	}
 
-	$cached_meta = get_post_meta( $post_id, '_titancore_toc_data', true );
+	$cached_meta = $post_id > 0 ? get_post_meta( $post_id, '_titancore_toc_data', true ) : false;
 	if (
 		is_array( $cached_meta ) &&
 		isset( $cached_meta['hash'], $cached_meta['content'], $cached_meta['headings'] ) &&
@@ -587,7 +588,9 @@ function titancore_parse_toc_data( $post_id, $content ) {
 		}
 	}
 
-	update_post_meta( $post_id, '_titancore_toc_data', $result );
+	if ( $post_id > 0 ) {
+		update_post_meta( $post_id, '_titancore_toc_data', $result );
+	}
 	$runtime_cache[ $runtime_id ] = $result;
 
 	return $result;
