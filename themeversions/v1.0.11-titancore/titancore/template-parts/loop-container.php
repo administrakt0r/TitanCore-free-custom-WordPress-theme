@@ -3,13 +3,10 @@
  * Template part for displaying a unified post grid and pagination
  */
 
-global $wp_query;
-if ( $wp_query instanceof WP_Query && ! empty( $wp_query->posts ) ) {
-	if ( function_exists( 'titancore_prime_post_thumbnail_cache' ) ) {
+if ( function_exists( 'titancore_prime_post_thumbnail_cache' ) ) {
+	global $wp_query;
+	if ( $wp_query instanceof WP_Query && ! empty( $wp_query->posts ) ) {
 		titancore_prime_post_thumbnail_cache( $wp_query->posts );
-	}
-	if ( function_exists( 'titancore_prime_post_author_cache' ) ) {
-		titancore_prime_post_author_cache( $wp_query->posts );
 	}
 }
 ?>

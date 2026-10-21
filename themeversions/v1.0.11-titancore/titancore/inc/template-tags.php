@@ -352,35 +352,6 @@ function titancore_prime_post_thumbnail_cache( $post_ids ) {
 }
 
 /**
- * Prime post author user object caches in a single SQL query for a list of post IDs or WP_Post objects.
- *
- * @param array|int|WP_Post $post_ids Post ID, WP_Post object, or array of post IDs/objects.
- */
-function titancore_prime_post_author_cache( $post_ids ) {
-	if ( empty( $post_ids ) || ! function_exists( 'update_post_author_caches' ) ) {
-		return;
-	}
-
-	$posts = array();
-	foreach ( (array) $post_ids as $item ) {
-		if ( $item instanceof WP_Post ) {
-			$posts[ $item->ID ] = $item;
-		} elseif ( is_numeric( $item ) && (int) $item > 0 ) {
-			$post = get_post( (int) $item );
-			if ( $post instanceof WP_Post ) {
-				$posts[ $post->ID ] = $post;
-			}
-		}
-	}
-
-	if ( empty( $posts ) ) {
-		return;
-	}
-
-	update_post_author_caches( array_values( $posts ) );
-}
-
-/**
  * Responsive image size map for Core Web Vitals-friendly outputs.
  */
 function titancore_get_image_sizes( $context = 'default' ) {
@@ -419,7 +390,6 @@ function titancore_get_related_posts( $post_id = 0, $limit = 3 ) {
 				_prime_post_caches( $runtime_cache[ $runtime_id ], true, true );
 			}
 			titancore_prime_post_thumbnail_cache( $runtime_cache[ $runtime_id ] );
-			titancore_prime_post_author_cache( $runtime_cache[ $runtime_id ] );
 		}
 		return $runtime_cache[ $runtime_id ];
 	}
@@ -439,7 +409,6 @@ function titancore_get_related_posts( $post_id = 0, $limit = 3 ) {
 				_prime_post_caches( $cached, true, true );
 			}
 			titancore_prime_post_thumbnail_cache( $cached );
-			titancore_prime_post_author_cache( $cached );
 		}
 		return $cached;
 	}
@@ -511,7 +480,6 @@ function titancore_get_related_posts( $post_id = 0, $limit = 3 ) {
 			_prime_post_caches( $related_post_ids, true, true );
 		}
 		titancore_prime_post_thumbnail_cache( $related_post_ids );
-		titancore_prime_post_author_cache( $related_post_ids );
 	}
 
 	return $related_post_ids;

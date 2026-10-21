@@ -83,9 +83,6 @@ $render_pagination = static function ( $query ) use ( $paged, $pagination_base )
 					if ( function_exists( 'titancore_prime_post_thumbnail_cache' ) ) {
 						titancore_prime_post_thumbnail_cache( $headline_post_ids );
 					}
-					if ( function_exists( 'titancore_prime_post_author_cache' ) ) {
-						titancore_prime_post_author_cache( $headline_post_ids );
-					}
 					$headline_posts = array_values( array_filter( array_map( 'get_post', $headline_post_ids ) ) );
 				} else {
 					$headline_posts = get_posts(
@@ -118,9 +115,6 @@ $render_pagination = static function ( $query ) use ( $paged, $pagination_base )
 			);
 			if ( function_exists( 'titancore_prime_post_thumbnail_cache' ) && ! empty( $grid_query->posts ) ) {
 				titancore_prime_post_thumbnail_cache( $grid_query->posts );
-			}
-			if ( function_exists( 'titancore_prime_post_author_cache' ) && ! empty( $grid_query->posts ) ) {
-				titancore_prime_post_author_cache( $grid_query->posts );
 			}
 			?>
 			<section class="tc-preset-news">
@@ -282,9 +276,6 @@ $render_pagination = static function ( $query ) use ( $paged, $pagination_base )
 					if ( function_exists( 'titancore_prime_post_thumbnail_cache' ) ) {
 						titancore_prime_post_thumbnail_cache( $featured_post_ids );
 					}
-					if ( function_exists( 'titancore_prime_post_author_cache' ) ) {
-						titancore_prime_post_author_cache( $featured_post_ids );
-					}
 					$featured_posts = array_values( array_filter( array_map( 'get_post', $featured_post_ids ) ) );
 				} else {
 					$featured_posts = get_posts(
@@ -318,9 +309,6 @@ $render_pagination = static function ( $query ) use ( $paged, $pagination_base )
 			);
 			if ( function_exists( 'titancore_prime_post_thumbnail_cache' ) && ! empty( $list_query->posts ) ) {
 				titancore_prime_post_thumbnail_cache( $list_query->posts );
-			}
-			if ( function_exists( 'titancore_prime_post_author_cache' ) && ! empty( $list_query->posts ) ) {
-				titancore_prime_post_author_cache( $list_query->posts );
 			}
 			?>
 			<section class="tc-preset-magazine">
@@ -436,9 +424,6 @@ $render_pagination = static function ( $query ) use ( $paged, $pagination_base )
 			);
 			if ( function_exists( 'titancore_prime_post_thumbnail_cache' ) && ! empty( $blog_query->posts ) ) {
 				titancore_prime_post_thumbnail_cache( $blog_query->posts );
-			}
-			if ( function_exists( 'titancore_prime_post_author_cache' ) && ! empty( $blog_query->posts ) ) {
-				titancore_prime_post_author_cache( $blog_query->posts );
 			}
 			?>
 			<?php if ( $blog_query->have_posts() ) : ?>
