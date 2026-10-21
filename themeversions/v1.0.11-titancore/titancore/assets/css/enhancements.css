@@ -395,6 +395,60 @@ header nav ul li.current_page_item > a {
     }
 }
 
+.comment-navigation,
+.navigation.comment-navigation {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.comment-navigation .nav-links,
+.navigation.comment-navigation .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.comment-navigation .nav-previous a,
+.comment-navigation .nav-next a,
+.navigation.comment-navigation .nav-previous a,
+.navigation.comment-navigation .nav-next a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--card);
+    color: var(--foreground);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.comment-navigation .nav-previous a:hover,
+.comment-navigation .nav-next a:hover,
+.navigation.comment-navigation .nav-previous a:hover,
+.navigation.comment-navigation .nav-next a:hover {
+    background: var(--accent);
+    border-color: color-mix(in srgb, var(--border) 50%, var(--foreground));
+    color: var(--accent-foreground);
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--foreground) 6%, transparent);
+}
+
+.comment-navigation .nav-previous a:focus-visible,
+.comment-navigation .nav-next a:focus-visible,
+.navigation.comment-navigation .nav-previous a:focus-visible,
+.navigation.comment-navigation .nav-next a:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    background: var(--accent);
+    color: var(--accent-foreground);
+}
+
 .comment-body {
     border: 1px solid var(--border);
     border-radius: var(--radius);
@@ -405,7 +459,7 @@ header nav ul li.current_page_item > a {
 
 .comment-body:hover {
     border-color: color-mix(in srgb, var(--border) 60%, var(--foreground));
-    box-shadow: 0 2px 12px color-mix(in srgb, var(--foreground) 4%, transparent);
+    box-shadow: 0 4px 16px color-mix(in srgb, var(--foreground) 5%, transparent);
 }
 
 .comment-author {
@@ -417,7 +471,7 @@ header nav ul li.current_page_item > a {
 
 .comment-author .avatar {
     border-radius: 9999px;
-    border: 1px solid var(--border);
+    border: 1px solid color-mix(in srgb, var(--border) 80%, var(--foreground));
 }
 
 .comment-author .fn {
@@ -452,7 +506,7 @@ header nav ul li.current_page_item > a {
 
 .bypostauthor > .comment-body {
     border-color: color-mix(in srgb, var(--primary) 40%, var(--border));
-    background: color-mix(in srgb, var(--primary) 3%, var(--card));
+    background: color-mix(in srgb, var(--primary) 4%, var(--card));
 }
 
 .bypostauthor .comment-author .fn::after {
@@ -462,11 +516,12 @@ header nav ul li.current_page_item > a {
     margin-left: 0.5rem;
     padding: 0.125rem 0.5rem;
     border-radius: 9999px;
-    border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
-    background: color-mix(in srgb, var(--primary) 12%, var(--card));
+    border: 1px solid color-mix(in srgb, var(--primary) 35%, transparent);
+    background: color-mix(in srgb, var(--primary) 15%, var(--card));
     color: var(--primary);
-    font-size: 0.75rem;
-    font-weight: 600;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
     line-height: 1.2;
     vertical-align: middle;
 }
