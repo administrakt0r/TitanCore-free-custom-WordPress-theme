@@ -90,6 +90,9 @@ function titancore_get_top_tags( $limit = 5 ) {
 	$cached_tags = get_transient( $cache_key );
 	if ( false !== $cached_tags && is_array( $cached_tags ) ) {
 		$runtime_cache[ $limit ] = $cached_tags;
+		if ( function_exists( '_prime_term_caches' ) && ! empty( $cached_tags ) ) {
+			_prime_term_caches( $cached_tags );
+		}
 		return $cached_tags;
 	}
 
@@ -133,6 +136,9 @@ function titancore_get_top_categories( $limit = 6 ) {
 	$cached = get_transient( $cache_key );
 	if ( false !== $cached && is_array( $cached ) ) {
 		$runtime_cache[ $limit ] = $cached;
+		if ( function_exists( '_prime_term_caches' ) && ! empty( $cached ) ) {
+			_prime_term_caches( $cached );
+		}
 		return $cached;
 	}
 
