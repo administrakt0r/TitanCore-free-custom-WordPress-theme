@@ -90,6 +90,9 @@ function titancore_get_top_tags( $limit = 5 ) {
 	$cached_tags = get_transient( $cache_key );
 	if ( false !== $cached_tags && is_array( $cached_tags ) ) {
 		$runtime_cache[ $limit ] = $cached_tags;
+		if ( function_exists( 'titancore_prime_term_cache' ) && ! empty( $cached_tags ) ) {
+			titancore_prime_term_cache( $cached_tags );
+		}
 		return $cached_tags;
 	}
 
@@ -133,6 +136,9 @@ function titancore_get_top_categories( $limit = 6 ) {
 	$cached = get_transient( $cache_key );
 	if ( false !== $cached && is_array( $cached ) ) {
 		$runtime_cache[ $limit ] = $cached;
+		if ( function_exists( 'titancore_prime_term_cache' ) && ! empty( $cached ) ) {
+			titancore_prime_term_cache( $cached );
+		}
 		return $cached;
 	}
 
@@ -378,6 +384,34 @@ function titancore_prime_post_author_cache( $post_ids ) {
 	}
 
 	update_post_author_caches( array_values( $posts ) );
+}
+
+/**
+ * Prime term and term meta caches in a single operation for a list of term IDs or WP_Term objects.
+ *
+ * @param array|int|WP_Term $terms Term ID, WP_Term object, or array of term IDs/objects.
+ */
+function titancore_prime_term_cache( $terms ) {
+	if ( empty( $terms ) || ! function_exists( '_prime_term_caches' ) ) {
+		return;
+	}
+
+	$term_ids = array();
+	foreach ( (array) $terms as $item ) {
+		if ( $item instanceof WP_Term ) {
+			$term_ids[] = (int) $item->term_id;
+		} elseif ( is_object( $item ) && isset( $item->term_id ) ) {
+			$term_ids[] = (int) $item->term_id;
+		} elseif ( is_numeric( $item ) && (int) $item > 0 ) {
+			$term_ids[] = (int) $item;
+		}
+	}
+
+	$term_ids = array_filter( array_unique( $term_ids ) );
+
+	if ( ! empty( $term_ids ) ) {
+		_prime_term_caches( $term_ids );
+	}
 }
 
 /**
