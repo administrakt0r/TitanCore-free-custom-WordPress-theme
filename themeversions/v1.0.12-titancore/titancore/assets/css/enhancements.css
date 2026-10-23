@@ -453,13 +453,14 @@ header nav ul li.current_page_item > a {
     border: 1px solid var(--border);
     border-radius: var(--radius);
     background: var(--card);
-    padding: 1.25rem;
-    transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+    padding: 1.25rem 1.5rem;
+    box-shadow: 0 1px 3px color-mix(in srgb, var(--foreground) 3%, transparent);
+    transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
 }
 
 .comment-body:hover {
-    border-color: color-mix(in srgb, var(--border) 60%, var(--foreground));
-    box-shadow: 0 4px 16px color-mix(in srgb, var(--foreground) 5%, transparent);
+    border-color: color-mix(in srgb, var(--border) 50%, var(--foreground));
+    box-shadow: 0 6px 20px color-mix(in srgb, var(--foreground) 6%, transparent);
 }
 
 .comment-author {
@@ -472,6 +473,12 @@ header nav ul li.current_page_item > a {
 .comment-author .avatar {
     border-radius: 9999px;
     border: 1px solid color-mix(in srgb, var(--border) 80%, var(--foreground));
+    box-shadow: 0 1px 3px color-mix(in srgb, var(--foreground) 8%, transparent);
+    transition: transform 0.15s ease;
+}
+
+.comment-body:hover .comment-author .avatar {
+    transform: scale(1.04);
 }
 
 .comment-author .fn {
@@ -482,6 +489,9 @@ header nav ul li.current_page_item > a {
 
 .comment-meta,
 .comment-metadata {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     color: var(--muted-foreground);
     font-size: 0.8125rem;
 }
@@ -496,12 +506,17 @@ header nav ul li.current_page_item > a {
 .comment-metadata a:hover {
     color: var(--foreground);
     text-decoration: underline;
+    text-underline-offset: 0.18em;
 }
 
 .comment-metadata a:focus-visible {
     color: var(--foreground);
     outline: 2px solid var(--ring);
     outline-offset: 2px;
+}
+
+.comment-body .reply {
+    margin-top: 1rem;
 }
 
 .bypostauthor > .comment-body {
