@@ -1013,6 +1013,42 @@ header nav ul li.current_page_item > a {
     box-shadow: 0 0 0 1px var(--ring);
 }
 
+.comment-form-cookies-consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.comment-form-cookies-consent input[type="checkbox"] {
+    margin-top: 0.2rem;
+    width: 1.125rem;
+    height: 1.125rem;
+    accent-color: var(--primary);
+    cursor: pointer;
+    border-radius: calc(var(--radius) - 4px);
+    border: 1px solid var(--border);
+}
+
+.comment-form-cookies-consent input[type="checkbox"]:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+}
+
+.comment-form-cookies-consent label {
+    font-size: 0.8125rem;
+    color: var(--muted-foreground);
+    line-height: 1.45;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.15s ease;
+}
+
+.comment-form-cookies-consent label:hover {
+    color: var(--foreground);
+}
+
 @media (min-width: 640px) {
     .sm\:flex-row {
         flex-direction: row;
