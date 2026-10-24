@@ -334,8 +334,20 @@ function titancore_prime_post_thumbnail_cache( $post_ids ) {
 		return;
 	}
 
+	$items       = (array) $post_ids;
+	$numeric_ids = array();
+	foreach ( $items as $item ) {
+		if ( is_numeric( $item ) && (int) $item > 0 ) {
+			$numeric_ids[] = (int) $item;
+		}
+	}
+
+	if ( ! empty( $numeric_ids ) && function_exists( '_prime_post_caches' ) ) {
+		_prime_post_caches( $numeric_ids, false, false );
+	}
+
 	$posts = array();
-	foreach ( (array) $post_ids as $item ) {
+	foreach ( $items as $item ) {
 		if ( $item instanceof WP_Post ) {
 			$posts[ $item->ID ] = $item;
 		} elseif ( is_numeric( $item ) && (int) $item > 0 ) {
@@ -367,8 +379,20 @@ function titancore_prime_post_author_cache( $post_ids ) {
 		return;
 	}
 
+	$items       = (array) $post_ids;
+	$numeric_ids = array();
+	foreach ( $items as $item ) {
+		if ( is_numeric( $item ) && (int) $item > 0 ) {
+			$numeric_ids[] = (int) $item;
+		}
+	}
+
+	if ( ! empty( $numeric_ids ) && function_exists( '_prime_post_caches' ) ) {
+		_prime_post_caches( $numeric_ids, false, false );
+	}
+
 	$posts = array();
-	foreach ( (array) $post_ids as $item ) {
+	foreach ( $items as $item ) {
 		if ( $item instanceof WP_Post ) {
 			$posts[ $item->ID ] = $item;
 		} elseif ( is_numeric( $item ) && (int) $item > 0 ) {
@@ -392,13 +416,19 @@ function titancore_prime_post_author_cache( $post_ids ) {
  * @param array|int|WP_Term $terms Term ID, WP_Term object, or array of term IDs/objects.
  */
 function titancore_prime_term_cache( $terms ) {
-	if ( empty( $terms ) || ! function_exists( '_prime_term_caches' ) ) {
+	if ( empty( $terms ) ) {
 		return;
 	}
 
 	$term_ids = array();
 	foreach ( (array) $terms as $item ) {
 		if ( $item instanceof WP_Term ) {
+			if ( function_exists( 'wp_cache_add' ) ) {
+				wp_cache_add( $item->term_id, $item, 'terms' );
+				if ( isset( $item->term_taxonomy_id ) && $item->term_taxonomy_id > 0 ) {
+					wp_cache_add( $item->term_taxonomy_id, $item->term_id, 'term_taxonomy_id' );
+				}
+			}
 			$term_ids[] = (int) $item->term_id;
 		} elseif ( is_object( $item ) && isset( $item->term_id ) ) {
 			$term_ids[] = (int) $item->term_id;
@@ -409,7 +439,7 @@ function titancore_prime_term_cache( $terms ) {
 
 	$term_ids = array_filter( array_unique( $term_ids ) );
 
-	if ( ! empty( $term_ids ) ) {
+	if ( ! empty( $term_ids ) && function_exists( '_prime_term_caches' ) ) {
 		_prime_term_caches( $term_ids );
 	}
 }
@@ -481,15 +511,23 @@ function titancore_get_related_posts( $post_id = 0, $limit = 3 ) {
 	$post_type  = get_post_type( $post_id ) ?: 'post';
 
 	// Prefer in-memory post term cache via get_the_terms() before querying database terms.
-	$cat_terms  = get_the_terms( $post_id, 'category' );
-	$categories = ( ! empty( $cat_terms ) && ! is_wp_error( $cat_terms ) )
-		? wp_list_pluck( $cat_terms, 'term_id' )
-		: wp_get_post_terms( $post_id, 'category', array( 'fields' => 'ids' ) );
+	$cat_terms = get_the_terms( $post_id, 'category' );
+	if ( is_array( $cat_terms ) ) {
+		$categories = wp_list_pluck( $cat_terms, 'term_id' );
+	} elseif ( function_exists( 'get_object_term_cache' ) && false !== get_object_term_cache( $post_id, 'category' ) ) {
+		$categories = array();
+	} else {
+		$categories = wp_get_post_terms( $post_id, 'category', array( 'fields' => 'ids' ) );
+	}
 
 	$tag_terms = get_the_terms( $post_id, 'post_tag' );
-	$tags      = ( ! empty( $tag_terms ) && ! is_wp_error( $tag_terms ) )
-		? wp_list_pluck( $tag_terms, 'term_id' )
-		: wp_get_post_terms( $post_id, 'post_tag', array( 'fields' => 'ids' ) );
+	if ( is_array( $tag_terms ) ) {
+		$tags = wp_list_pluck( $tag_terms, 'term_id' );
+	} elseif ( function_exists( 'get_object_term_cache' ) && false !== get_object_term_cache( $post_id, 'post_tag' ) ) {
+		$tags = array();
+	} else {
+		$tags = wp_get_post_terms( $post_id, 'post_tag', array( 'fields' => 'ids' ) );
+	}
 
 	if ( is_wp_error( $categories ) ) {
 		$categories = array();
