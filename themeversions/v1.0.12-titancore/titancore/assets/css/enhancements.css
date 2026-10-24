@@ -1025,6 +1025,8 @@ header nav ul li.current_page_item > a {
 
     .comment-notes,
     .comment-form-notes,
+    .logged-in-as,
+    .must-log-in,
     .comment-form-comment,
     .comment-form-url,
     .comment-form-cookies-consent,
