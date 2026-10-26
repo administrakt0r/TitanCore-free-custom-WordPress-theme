@@ -18,12 +18,13 @@ if ( $is_first_visible_card ) {
     $image_attributes['fetchpriority'] = 'high';
 }
 
-$categories = get_the_category();
+$permalink    = get_permalink();
+$categories   = get_the_category();
 $reading_time = function_exists( 'titancore_get_estimated_reading_time' ) ? titancore_get_estimated_reading_time() : 1;
 ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'tc-post-card group block relative before:absolute before:-left-0.5 before:top-0 before:z-10 before:h-screen before:w-px before:bg-border before:content-[\'\'] after:absolute after:-top-0.5 after:left-0 after:z-0 after:h-px after:w-screen after:bg-border after:content-[\'\'] md:border-r border-border border-b-0' ); ?>>
     <?php if ( has_post_thumbnail() ) : ?>
-    <a href="<?php echo esc_url( get_permalink() ); ?>" class="tc-post-card__media" aria-label="<?php echo esc_attr( sprintf( __( 'Read %s', 'titancore' ), wp_strip_all_tags( get_the_title() ) ) ); ?>">
+    <a href="<?php echo esc_url( $permalink ); ?>" class="tc-post-card__media" aria-label="<?php echo esc_attr( sprintf( __( 'Read %s', 'titancore' ), wp_strip_all_tags( get_the_title() ) ) ); ?>">
         <?php the_post_thumbnail( 'titancore-card', $image_attributes ); ?>
     </a>
     <?php endif; ?>
@@ -46,7 +47,7 @@ $reading_time = function_exists( 'titancore_get_estimated_reading_time' ) ? tita
         </div>
 
         <h2 class="tc-post-card__title">
-            <a href="<?php echo esc_url( get_permalink() ); ?>">
+            <a href="<?php echo esc_url( $permalink ); ?>">
                 <?php the_title(); ?>
             </a>
         </h2>
@@ -65,7 +66,7 @@ $reading_time = function_exists( 'titancore_get_estimated_reading_time' ) ? tita
                 );
                 ?>
             </span>
-            <a href="<?php echo esc_url( get_permalink() ); ?>" class="tc-post-card__read-more">
+            <a href="<?php echo esc_url( $permalink ); ?>" class="tc-post-card__read-more">
                 <?php esc_html_e( 'Read article', 'titancore' ); ?>
                 <?php echo titancore_get_icon( 'chevron-right', 'w-4 h-4' ); ?>
             </a>

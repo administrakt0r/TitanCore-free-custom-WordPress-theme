@@ -7,12 +7,15 @@ get_header();
 
 while ( have_posts() ) :
 	the_post();
-    $posts_page_url = titancore_get_posts_page_url();
-    $categories = get_the_category();
-    $show_toc = (bool) get_theme_mod( 'show_toc', true );
-    $reading_time = function_exists( 'titancore_get_estimated_reading_time' ) ? titancore_get_estimated_reading_time() : 1;
+    $posts_page_url     = titancore_get_posts_page_url();
+    $categories         = get_the_category();
+    $show_toc           = (bool) get_theme_mod( 'show_toc', true );
+    $reading_time       = function_exists( 'titancore_get_estimated_reading_time' ) ? titancore_get_estimated_reading_time() : 1;
+    $author_id          = get_the_author_meta( 'ID' );
+    $author_url         = get_author_posts_url( $author_id );
+    $author_name        = get_the_author();
     $author_description = get_the_author_meta( 'description' );
-    $related_ids = function_exists( 'titancore_get_related_posts' ) ? titancore_get_related_posts( get_the_ID(), 3 ) : array();
+    $related_ids        = function_exists( 'titancore_get_related_posts' ) ? titancore_get_related_posts( get_the_ID(), 3 ) : array();
 ?>
 
 <div class="tc-single min-h-screen bg-background relative">
@@ -186,12 +189,12 @@ while ( have_posts() ) :
 
         <div class="tc-single__sidebar-card tc-single__author-card flex flex-col gap-4 border border-border rounded-lg p-6 bg-card">
           <div class="flex items-center gap-4">
-            <a href="<?php echo esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ); ?>" class="shrink-0 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-              <?php echo get_avatar( get_the_author_meta( 'ID' ), 48, '', '', array( 'class' => 'rounded-full border border-border transition-transform duration-200 hover:scale-105' ) ); ?>
+            <a href="<?php echo esc_url( $author_url ); ?>" class="shrink-0 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+              <?php echo get_avatar( $author_id, 48, '', '', array( 'class' => 'rounded-full border border-border transition-transform duration-200 hover:scale-105' ) ); ?>
             </a>
             <div class="min-w-0">
-              <a href="<?php echo esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ); ?>" class="font-semibold text-foreground hover:text-primary transition-colors block truncate focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm">
-                <?php echo esc_html( get_the_author() ); ?>
+              <a href="<?php echo esc_url( $author_url ); ?>" class="font-semibold text-foreground hover:text-primary transition-colors block truncate focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm">
+                <?php echo esc_html( $author_name ); ?>
               </a>
               <p class="text-xs font-medium uppercase tracking-wider text-muted-foreground"><?php esc_html_e( 'Author', 'titancore' ); ?></p>
             </div>
@@ -199,7 +202,7 @@ while ( have_posts() ) :
           <?php if ( '' !== trim( $author_description ) ) : ?>
             <p class="text-sm text-muted-foreground leading-relaxed"><?php echo esc_html( $author_description ); ?></p>
           <?php endif; ?>
-          <a href="<?php echo esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ); ?>" class="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm w-fit pt-1">
+          <a href="<?php echo esc_url( $author_url ); ?>" class="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm w-fit pt-1">
             <span><?php esc_html_e( 'View author articles', 'titancore' ); ?></span>
             <?php echo titancore_get_icon( 'chevron-right', 'w-3.5 h-3.5' ); ?>
           </a>
@@ -270,7 +273,7 @@ if ( ! function_exists( 'titancore_has_external_seo_plugin' ) || ! titancore_has
         'dateModified'     => get_the_modified_date( 'c' ),
         'author'           => array(
             '@type' => 'Person',
-            'name'  => wp_strip_all_tags( get_the_author() ),
+            'name'  => wp_strip_all_tags( $author_name ),
         ),
     );
     if ( has_post_thumbnail() ) {

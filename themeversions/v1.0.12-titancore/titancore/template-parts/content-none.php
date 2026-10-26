@@ -71,10 +71,14 @@ $icon_name        = $is_search_query ? 'search-x' : 'inbox';
 			<div class="pt-6 border-t border-border/60 w-full max-w-3xl text-left">
 				<h3 class="text-xs font-semibold uppercase tracking-wider text-muted-foreground text-center mb-4"><?php esc_html_e( 'Recent Articles', 'titancore' ); ?></h3>
 				<div class="grid sm:grid-cols-3 gap-3">
-					<?php foreach ( $recent_posts as $recent_post ) : ?>
-						<a href="<?php echo esc_url( get_permalink( $recent_post->ID ) ); ?>" class="tc-empty-state__recent-card group block rounded-lg border border-border bg-card p-4 hover:bg-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-							<span class="block text-sm font-semibold leading-snug group-hover:text-foreground line-clamp-2"><?php echo esc_html( get_the_title( $recent_post->ID ) ); ?></span>
-							<span class="block text-xs text-muted-foreground mt-2"><?php echo esc_html( get_the_date( '', $recent_post->ID ) ); ?></span>
+					<?php foreach ( $recent_posts as $recent_post ) :
+						$recent_url   = get_permalink( $recent_post->ID );
+						$recent_title = get_the_title( $recent_post->ID );
+						$recent_date  = get_the_date( '', $recent_post->ID );
+					?>
+						<a href="<?php echo esc_url( $recent_url ); ?>" class="tc-empty-state__recent-card group block rounded-lg border border-border bg-card p-4 hover:bg-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+							<span class="block text-sm font-semibold leading-snug group-hover:text-foreground line-clamp-2"><?php echo esc_html( $recent_title ); ?></span>
+							<span class="block text-xs text-muted-foreground mt-2"><?php echo esc_html( $recent_date ); ?></span>
 						</a>
 					<?php endforeach; ?>
 				</div>
