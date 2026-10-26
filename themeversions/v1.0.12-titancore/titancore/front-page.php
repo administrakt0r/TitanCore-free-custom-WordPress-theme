@@ -131,9 +131,10 @@ $render_pagination = static function ( $query ) use ( $paged, $pagination_base )
 							global $post;
 							$post = $hero_post;
 							setup_postdata( $post );
+							$hero_permalink = get_permalink();
 							?>
 								<article class="tc-featured-card">
-									<a class="tc-featured-media" href="<?php echo esc_url( get_permalink() ); ?>">
+									<a class="tc-featured-media" href="<?php echo esc_url( $hero_permalink ); ?>">
 										<?php if ( has_post_thumbnail() ) : ?>
 											<?php
 											the_post_thumbnail(
@@ -160,7 +161,7 @@ $render_pagination = static function ( $query ) use ( $paged, $pagination_base )
 										<?php endif; ?>
 
 										<h2 class="tc-featured-title">
-											<a href="<?php echo esc_url( get_permalink() ); ?>"><?php the_title(); ?></a>
+											<a href="<?php echo esc_url( $hero_permalink ); ?>"><?php the_title(); ?></a>
 										</h2>
 										<p class="tc-featured-excerpt">
 											<?php echo esc_html( wp_trim_words( wp_strip_all_tags( get_the_excerpt() ), 38 ) ); ?>
@@ -208,9 +209,12 @@ $render_pagination = static function ( $query ) use ( $paged, $pagination_base )
 				<?php if ( $grid_query->have_posts() ) : ?>
 					<div class="tc-news-grid">
 						<?php while ( $grid_query->have_posts() ) : ?>
-							<?php $grid_query->the_post(); ?>
+							<?php
+							$grid_query->the_post();
+							$card_permalink = get_permalink();
+							?>
 							<article class="tc-post-card">
-								<a class="tc-post-media" href="<?php echo esc_url( get_permalink() ); ?>">
+								<a class="tc-post-media" href="<?php echo esc_url( $card_permalink ); ?>">
 									<?php if ( has_post_thumbnail() ) : ?>
 										<?php
 										the_post_thumbnail(
@@ -234,7 +238,7 @@ $render_pagination = static function ( $query ) use ( $paged, $pagination_base )
 										?>
 										<span class="tc-card-category"><?php echo esc_html( $grid_categories[0]->name ); ?></span>
 									<?php endif; ?>
-									<h3 class="tc-post-title"><a href="<?php echo esc_url( get_permalink() ); ?>"><?php the_title(); ?></a></h3>
+									<h3 class="tc-post-title"><a href="<?php echo esc_url( $card_permalink ); ?>"><?php the_title(); ?></a></h3>
 									<p class="tc-post-excerpt"><?php echo esc_html( wp_trim_words( wp_strip_all_tags( get_the_excerpt() ), 22 ) ); ?></p>
 									<time class="tc-post-time" datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>"><?php echo esc_html( get_the_date() ); ?></time>
 								</div>
@@ -343,8 +347,9 @@ $render_pagination = static function ( $query ) use ( $paged, $pagination_base )
 								$feature_image_attrs['fetchpriority'] = 'high';
 							}
 							?>
+							<?php $card_permalink = get_permalink(); ?>
 							<article class="tc-mag-featured-card">
-								<a class="tc-mag-featured-media" href="<?php echo esc_url( get_permalink() ); ?>">
+								<a class="tc-mag-featured-media" href="<?php echo esc_url( $card_permalink ); ?>">
 									<?php if ( has_post_thumbnail() ) : ?>
 										<?php
 										the_post_thumbnail(
@@ -364,7 +369,7 @@ $render_pagination = static function ( $query ) use ( $paged, $pagination_base )
 										?>
 										<span class="tc-category-pill tc-category-pill--on-dark"><?php echo esc_html( $feature_categories[0]->name ); ?></span>
 									<?php endif; ?>
-									<h2 class="tc-mag-featured-title"><a href="<?php echo esc_url( get_permalink() ); ?>"><?php the_title(); ?></a></h2>
+									<h2 class="tc-mag-featured-title"><a href="<?php echo esc_url( $card_permalink ); ?>"><?php the_title(); ?></a></h2>
 									<div class="tc-mag-featured-meta">
 										<span><?php echo esc_html( get_the_author() ); ?></span>
 										<span class="tc-meta-dot">&bull;</span>
@@ -379,9 +384,12 @@ $render_pagination = static function ( $query ) use ( $paged, $pagination_base )
 				<?php if ( $list_query->have_posts() ) : ?>
 					<div class="tc-magazine-list">
 						<?php while ( $list_query->have_posts() ) : ?>
-							<?php $list_query->the_post(); ?>
+							<?php
+							$list_query->the_post();
+							$card_permalink = get_permalink();
+							?>
 							<article class="tc-mag-row-card">
-								<a class="tc-mag-row-media" href="<?php echo esc_url( get_permalink() ); ?>">
+								<a class="tc-mag-row-media" href="<?php echo esc_url( $card_permalink ); ?>">
 									<?php if ( has_post_thumbnail() ) : ?>
 										<?php
 										the_post_thumbnail(
@@ -405,7 +413,7 @@ $render_pagination = static function ( $query ) use ( $paged, $pagination_base )
 										?>
 										<span class="tc-card-category"><?php echo esc_html( $list_categories[0]->name ); ?></span>
 									<?php endif; ?>
-									<h3 class="tc-mag-row-title"><a href="<?php echo esc_url( get_permalink() ); ?>"><?php the_title(); ?></a></h3>
+									<h3 class="tc-mag-row-title"><a href="<?php echo esc_url( $card_permalink ); ?>"><?php the_title(); ?></a></h3>
 									<p class="tc-mag-row-excerpt"><?php echo esc_html( wp_trim_words( wp_strip_all_tags( get_the_excerpt() ), 26 ) ); ?></p>
 									<div class="tc-meta-row">
 										<span><?php echo esc_html( get_the_author() ); ?></span>
@@ -446,9 +454,10 @@ $render_pagination = static function ( $query ) use ( $paged, $pagination_base )
 					<div class="tc-news-grid">
 						<?php $blog_rank = 0; ?>
 						<?php while ( $blog_query->have_posts() ) : ?>
-							<?php $blog_query->the_post(); ?>
-							<?php $blog_rank++; ?>
 							<?php
+							$blog_query->the_post();
+							$blog_rank++;
+							$card_permalink   = get_permalink();
 							$blog_image_attrs = array(
 								'class'    => 'tc-post-image',
 								'loading'  => ( 1 === $blog_rank ) ? 'eager' : 'lazy',
@@ -460,7 +469,7 @@ $render_pagination = static function ( $query ) use ( $paged, $pagination_base )
 							}
 							?>
 							<article class="tc-post-card">
-								<a class="tc-post-media" href="<?php echo esc_url( get_permalink() ); ?>">
+								<a class="tc-post-media" href="<?php echo esc_url( $card_permalink ); ?>">
 									<?php if ( has_post_thumbnail() ) : ?>
 										<?php
 										the_post_thumbnail(
@@ -479,7 +488,7 @@ $render_pagination = static function ( $query ) use ( $paged, $pagination_base )
 										?>
 										<span class="tc-card-category"><?php echo esc_html( $grid_categories[0]->name ); ?></span>
 									<?php endif; ?>
-									<h3 class="tc-post-title"><a href="<?php echo esc_url( get_permalink() ); ?>"><?php the_title(); ?></a></h3>
+									<h3 class="tc-post-title"><a href="<?php echo esc_url( $card_permalink ); ?>"><?php the_title(); ?></a></h3>
 									<p class="tc-post-excerpt"><?php echo esc_html( wp_trim_words( wp_strip_all_tags( get_the_excerpt() ), 22 ) ); ?></p>
 									<time class="tc-post-time" datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>"><?php echo esc_html( get_the_date() ); ?></time>
 								</div>
