@@ -255,9 +255,9 @@ while ( have_posts() ) :
 <?php
 if ( ! function_exists( 'titancore_has_external_seo_plugin' ) || ! titancore_has_external_seo_plugin() ) {
     // Output Article schema only when no dedicated SEO plugin is handling it.
-    $article_description = has_excerpt()
-        ? get_the_excerpt()
-        : wp_trim_words( wp_strip_all_tags( get_the_content() ), 30, '' );
+    $article_description = function_exists( 'titancore_get_meta_description' )
+        ? titancore_get_meta_description()
+        : ( has_excerpt() ? get_the_excerpt() : wp_trim_words( wp_strip_all_tags( get_the_content() ), 30, '' ) );
 
     $article_schema = array(
         '@context'         => 'https://schema.org',
