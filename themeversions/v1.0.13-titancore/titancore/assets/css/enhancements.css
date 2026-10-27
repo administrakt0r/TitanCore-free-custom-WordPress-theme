@@ -387,7 +387,7 @@ header nav ul li.current_page_item > a {
     list-style: none;
     margin-top: 1rem;
     padding-left: 1rem;
-    border-left: 2px solid color-mix(in srgb, var(--border) 80%, var(--foreground));
+    border-left: 2px solid color-mix(in srgb, var(--primary) 30%, var(--border));
 }
 
 @media (min-width: 640px) {
@@ -533,12 +533,12 @@ header nav ul li.current_page_item > a {
     margin-left: 0.5rem;
     padding: 0.15rem 0.55rem;
     border-radius: 9999px;
-    border: 1px solid color-mix(in srgb, var(--primary) 40%, transparent);
-    background: color-mix(in srgb, var(--primary) 15%, var(--card));
+    border: 1px solid color-mix(in srgb, var(--primary) 45%, var(--border));
+    background: color-mix(in srgb, var(--primary) 12%, var(--card));
     color: var(--primary);
     font-size: 0.72rem;
     font-weight: 700;
-    letter-spacing: 0.03em;
+    letter-spacing: 0.04em;
     line-height: 1.2;
     vertical-align: middle;
 }
