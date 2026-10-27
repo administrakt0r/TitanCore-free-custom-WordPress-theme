@@ -297,6 +297,12 @@ function titancore_output_website_schema() {
         return;
     }
 
+    static $already_output = false;
+    if ( $already_output ) {
+        return;
+    }
+    $already_output = true;
+
     $schema = array(
         '@context' => 'https://schema.org',
         '@type'    => 'WebSite',
@@ -330,6 +336,12 @@ function titancore_output_organization_schema() {
     if ( ! is_front_page() ) {
         return;
     }
+
+    static $already_output = false;
+    if ( $already_output ) {
+        return;
+    }
+    $already_output = true;
 
     $schema = array(
         '@context'    => 'https://schema.org',

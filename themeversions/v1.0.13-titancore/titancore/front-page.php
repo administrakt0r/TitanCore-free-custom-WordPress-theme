@@ -434,6 +434,46 @@ $render_pagination = static function ( $query ) use ( $paged, $pagination_base )
 
 		<?php else : ?>
 			<?php
+			if ( 1 === $paged ) {
+				static $runtime_blog_ids = null;
+				if ( null !== $runtime_blog_ids ) {
+					$top_blog_ids = $runtime_blog_ids;
+				} else {
+					$blog_cache_key = sprintf( 'titancore_frontpage_blog_ids_%1$d_v%2$s', $posts_per_page, titancore_get_cache_version() );
+					$top_blog_ids   = get_transient( $blog_cache_key );
+
+					if ( false === $top_blog_ids || ! is_array( $top_blog_ids ) ) {
+						$blog_ids_query = new WP_Query(
+							array_merge(
+								$base_query_args,
+								array(
+									'posts_per_page'         => $posts_per_page,
+									'no_found_rows'          => true,
+									'fields'                 => 'ids',
+									'update_post_term_cache' => false,
+									'update_post_meta_cache' => false,
+								)
+							)
+						);
+						$top_blog_ids = is_array( $blog_ids_query->posts ) ? $blog_ids_query->posts : array();
+						set_transient( $blog_cache_key, $top_blog_ids, 6 * HOUR_IN_SECONDS );
+					}
+					$runtime_blog_ids = $top_blog_ids;
+				}
+
+				if ( ! empty( $top_blog_ids ) ) {
+					if ( function_exists( '_prime_post_caches' ) ) {
+						_prime_post_caches( $top_blog_ids, true, true );
+					}
+					if ( function_exists( 'titancore_prime_post_thumbnail_cache' ) ) {
+						titancore_prime_post_thumbnail_cache( $top_blog_ids );
+					}
+					if ( function_exists( 'titancore_prime_post_author_cache' ) ) {
+						titancore_prime_post_author_cache( $top_blog_ids );
+					}
+				}
+			}
+
 			$blog_query = new WP_Query(
 				array_merge(
 					$base_query_args,

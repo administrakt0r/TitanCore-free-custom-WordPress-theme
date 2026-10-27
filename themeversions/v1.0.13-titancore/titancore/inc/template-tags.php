@@ -17,9 +17,8 @@ function titancore_modify_home_query( $query ) {
 			$query->set( 'no_found_rows', true );
 			$query->set( 'update_post_term_cache', false );
 			$query->set( 'update_post_meta_cache', false );
-		}
-
-		if ( is_home() || is_front_page() || is_archive() || is_search() ) {
+			$query->set( 'posts_per_page', 1 );
+		} elseif ( is_home() || is_archive() || is_search() ) {
 			$limit = get_theme_mod( 'home_post_limit', 10 );
 			if ( $limit > 0 ) {
 				$query->set( 'posts_per_page', $limit );
@@ -55,7 +54,7 @@ function titancore_bump_cache_version( $object_id = 0 ) {
 		return;
 	}
 
-	if ( $post_id > 0 && function_exists( 'current_filter' ) && in_array( current_filter(), array( 'save_post', 'deleted_post', 'edit_post' ), true ) ) {
+	if ( $post_id > 0 && function_exists( 'current_filter' ) && in_array( current_filter(), array( 'save_post', 'deleted_post', 'edit_post', 'trash_post', 'untrash_post' ), true ) ) {
 		delete_post_meta( $post_id, '_titancore_reading_time' );
 		delete_post_meta( $post_id, '_titancore_toc_data' );
 	}
@@ -64,11 +63,14 @@ function titancore_bump_cache_version( $object_id = 0 ) {
 }
 add_action( 'save_post', 'titancore_bump_cache_version' );
 add_action( 'deleted_post', 'titancore_bump_cache_version' );
+add_action( 'trash_post', 'titancore_bump_cache_version' );
+add_action( 'untrash_post', 'titancore_bump_cache_version' );
 add_action( 'set_object_terms', 'titancore_bump_cache_version' );
 add_action( 'created_term', 'titancore_bump_cache_version' );
 add_action( 'edited_term', 'titancore_bump_cache_version' );
 add_action( 'delete_term', 'titancore_bump_cache_version' );
 add_action( 'customize_save_after', 'titancore_bump_cache_version' );
+add_action( 'switch_theme', 'titancore_bump_cache_version' );
 
 /**
  * Cache top tags list used in home/front headers.

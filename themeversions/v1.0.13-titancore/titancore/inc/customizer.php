@@ -446,7 +446,19 @@ function titancore_get_custom_code_output( $slot ) {
 		return $code;
 	}
 
+	$cache_key = sprintf(
+		'tc_code_out_%1$s_v%2$s',
+		$slot,
+		function_exists( 'titancore_get_cache_version' ) ? titancore_get_cache_version() : '1'
+	);
+	$cached    = get_transient( $cache_key );
+	if ( false !== $cached && is_string( $cached ) ) {
+		$runtime_cache[ $slot ] = $cached;
+		return $cached;
+	}
+
 	$output                 = wp_kses( $code, titancore_get_custom_code_allowed_tags( $slot ) );
+	set_transient( $cache_key, $output, 12 * HOUR_IN_SECONDS );
 	$runtime_cache[ $slot ] = $output;
 
 	return $output;
