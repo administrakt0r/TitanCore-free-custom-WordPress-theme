@@ -39,8 +39,18 @@ function titancore_get_meta_description() {
         if ( has_excerpt() ) {
             $description = get_the_excerpt();
         } else {
-            $post_content = get_post_field( 'post_content', get_queried_object_id() );
-            $description  = wp_trim_words( wp_strip_all_tags( strip_shortcodes( $post_content ) ), 28, '' );
+            $post_id    = get_queried_object_id();
+            $meta_value = $post_id > 0 ? get_post_meta( $post_id, '_titancore_meta_description', true ) : '';
+
+            if ( is_string( $meta_value ) && '' !== trim( $meta_value ) ) {
+                $description = $meta_value;
+            } else {
+                $post_content = get_post_field( 'post_content', $post_id );
+                $description  = wp_trim_words( wp_strip_all_tags( strip_shortcodes( $post_content ) ), 28, '' );
+                if ( $post_id > 0 && '' !== trim( $description ) ) {
+                    update_post_meta( $post_id, '_titancore_meta_description', $description );
+                }
+            }
         }
     } elseif ( is_home() || is_front_page() ) {
         $description = get_bloginfo( 'description' );

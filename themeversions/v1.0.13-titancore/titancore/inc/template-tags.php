@@ -12,13 +12,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function titancore_modify_home_query( $query ) {
 	if ( ! is_admin() && $query->is_main_query() ) {
-		// Front-page template uses dedicated loops, so skip expensive row-count, term, and meta work on unpaged front page main query.
-		if ( is_front_page() && ! is_paged() ) {
+		// Front-page template uses dedicated loops for all preset presets, so skip expensive row-count, term, and meta work on the unused main query.
+		if ( is_front_page() ) {
 			$query->set( 'no_found_rows', true );
 			$query->set( 'update_post_term_cache', false );
 			$query->set( 'update_post_meta_cache', false );
 			$query->set( 'posts_per_page', 1 );
-		} elseif ( is_home() || is_front_page() || is_archive() || is_search() ) {
+		} elseif ( is_home() || is_archive() || is_search() ) {
 			$limit = get_theme_mod( 'home_post_limit', 10 );
 			if ( $limit > 0 ) {
 				$query->set( 'posts_per_page', $limit );
@@ -57,6 +57,7 @@ function titancore_bump_cache_version( $object_id = 0 ) {
 	if ( $post_id > 0 && function_exists( 'current_filter' ) && in_array( current_filter(), array( 'save_post', 'deleted_post', 'edit_post', 'trash_post', 'untrash_post' ), true ) ) {
 		delete_post_meta( $post_id, '_titancore_reading_time' );
 		delete_post_meta( $post_id, '_titancore_toc_data' );
+		delete_post_meta( $post_id, '_titancore_meta_description' );
 	}
 
 	update_option( 'titancore_cache_version', (string) time(), true );
@@ -114,6 +115,9 @@ function titancore_get_top_tags( $limit = 5 ) {
 	}
 
 	set_transient( $cache_key, $tags, 6 * HOUR_IN_SECONDS );
+	if ( function_exists( 'titancore_prime_term_cache' ) && ! empty( $tags ) ) {
+		titancore_prime_term_cache( $tags );
+	}
 	$runtime_cache[ $limit ] = $tags;
 	return $tags;
 }
@@ -161,6 +165,9 @@ function titancore_get_top_categories( $limit = 6 ) {
 	}
 
 	set_transient( $cache_key, $categories, 6 * HOUR_IN_SECONDS );
+	if ( function_exists( 'titancore_prime_term_cache' ) && ! empty( $categories ) ) {
+		titancore_prime_term_cache( $categories );
+	}
 	$runtime_cache[ $limit ] = $categories;
 	return $categories;
 }
