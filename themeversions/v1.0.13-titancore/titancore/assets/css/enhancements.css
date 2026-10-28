@@ -456,12 +456,13 @@ header nav ul li.current_page_item > a {
     background: var(--card);
     padding: 1.25rem 1.5rem;
     box-shadow: 0 1px 3px color-mix(in srgb, var(--foreground) 4%, transparent);
-    transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease, transform 0.18s ease;
 }
 
 .comment-body:hover {
     border-color: color-mix(in srgb, var(--border) 50%, var(--foreground));
     box-shadow: 0 8px 24px color-mix(in srgb, var(--foreground) 7%, transparent);
+    transform: translateY(-1px);
 }
 
 .comment-author {
@@ -475,11 +476,11 @@ header nav ul li.current_page_item > a {
     border-radius: 9999px;
     border: 1px solid color-mix(in srgb, var(--border) 70%, var(--foreground));
     box-shadow: 0 1px 4px color-mix(in srgb, var(--foreground) 10%, transparent);
-    transition: transform 0.15s ease, border-color 0.15s ease;
+    transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.18s ease;
 }
 
 .comment-body:hover .comment-author .avatar {
-    transform: scale(1.05);
+    transform: scale(1.06);
     border-color: var(--foreground);
 }
 
@@ -522,8 +523,8 @@ header nav ul li.current_page_item > a {
 }
 
 .bypostauthor > .comment-body {
-    border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
-    background: color-mix(in srgb, var(--primary) 5%, var(--card));
+    border-color: color-mix(in srgb, var(--primary) 55%, var(--border));
+    background: color-mix(in srgb, var(--primary) 6%, var(--card));
 }
 
 .bypostauthor .comment-author .fn::after {
@@ -531,10 +532,10 @@ header nav ul li.current_page_item > a {
     display: inline-flex;
     align-items: center;
     margin-left: 0.5rem;
-    padding: 0.15rem 0.55rem;
+    padding: 0.18rem 0.6rem;
     border-radius: 9999px;
-    border: 1px solid color-mix(in srgb, var(--primary) 45%, var(--border));
-    background: color-mix(in srgb, var(--primary) 12%, var(--card));
+    border: 1px solid color-mix(in srgb, var(--primary) 60%, var(--border));
+    background: color-mix(in srgb, var(--primary) 15%, var(--card));
     color: var(--primary);
     font-size: 0.72rem;
     font-weight: 700;
@@ -544,13 +545,15 @@ header nav ul li.current_page_item > a {
 }
 
 .comment-awaiting-moderation {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     margin-top: 0.625rem;
     margin-bottom: 0.625rem;
     padding: 0.625rem 0.875rem;
     border-radius: calc(var(--radius) - 2px);
-    border: 1px solid color-mix(in srgb, var(--primary) 35%, var(--border));
-    background: color-mix(in srgb, var(--primary) 10%, var(--background));
+    border: 1px solid color-mix(in srgb, var(--primary) 40%, var(--border));
+    background: color-mix(in srgb, var(--primary) 12%, var(--background));
     color: var(--foreground);
     font-size: 0.8125rem;
     font-weight: 500;
@@ -568,7 +571,7 @@ header nav ul li.current_page_item > a {
     align-items: center;
     justify-content: center;
     min-height: 44px;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 1.125rem;
     border-radius: calc(var(--radius) - 2px);
     border: 1px solid var(--border);
     background: var(--background);
@@ -585,12 +588,13 @@ header nav ul li.current_page_item > a {
     border-color: color-mix(in srgb, var(--border) 50%, var(--foreground));
     color: var(--accent-foreground);
     text-decoration: none;
-    box-shadow: 0 1px 4px color-mix(in srgb, var(--foreground) 8%, transparent);
+    box-shadow: 0 2px 6px color-mix(in srgb, var(--foreground) 8%, transparent);
+    transform: translateY(-1px);
 }
 
 .comment-reply-link:active,
 #cancel-comment-reply-link:active {
-    transform: translateY(1px);
+    transform: translateY(0);
 }
 
 .comment-reply-link:focus-visible,
