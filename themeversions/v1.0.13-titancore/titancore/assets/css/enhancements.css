@@ -534,8 +534,8 @@ header nav ul li.current_page_item > a {
     margin-left: 0.5rem;
     padding: 0.18rem 0.6rem;
     border-radius: 9999px;
-    border: 1px solid color-mix(in srgb, var(--primary) 60%, var(--border));
-    background: color-mix(in srgb, var(--primary) 15%, var(--card));
+    border: 1px solid color-mix(in srgb, var(--primary) 70%, var(--border));
+    background: color-mix(in srgb, var(--primary) 20%, var(--card));
     color: var(--primary);
     font-size: 0.72rem;
     font-weight: 700;
@@ -552,11 +552,11 @@ header nav ul li.current_page_item > a {
     margin-bottom: 0.625rem;
     padding: 0.625rem 0.875rem;
     border-radius: calc(var(--radius) - 2px);
-    border: 1px solid color-mix(in srgb, var(--primary) 40%, var(--border));
-    background: color-mix(in srgb, var(--primary) 12%, var(--background));
+    border: 1px solid color-mix(in srgb, var(--primary) 50%, var(--border));
+    background: color-mix(in srgb, var(--primary) 15%, var(--background));
     color: var(--foreground);
     font-size: 0.8125rem;
-    font-weight: 500;
+    font-weight: 600;
     font-style: italic;
 }
 
