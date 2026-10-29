@@ -60,7 +60,7 @@ if ( $has_primary_menu ) {
     <div class="mr-4 flex min-w-0">
       <?php
       $show_text = get_theme_mod( 'nav_brand_text', true );
-      if ( has_custom_logo() && ! $show_text ) {
+      if ( ! $show_text && has_custom_logo() ) {
           the_custom_logo();
       } else {
           ?>
