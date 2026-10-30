@@ -63,6 +63,7 @@ function titancore_bump_cache_version( $object_id = 0 ) {
 	update_option( 'titancore_cache_version', (string) time(), true );
 }
 add_action( 'save_post', 'titancore_bump_cache_version' );
+add_action( 'edit_post', 'titancore_bump_cache_version' );
 add_action( 'deleted_post', 'titancore_bump_cache_version' );
 add_action( 'trash_post', 'titancore_bump_cache_version' );
 add_action( 'untrash_post', 'titancore_bump_cache_version' );
@@ -519,24 +520,12 @@ function titancore_get_related_posts( $post_id = 0, $limit = 3 ) {
 
 	$post_type  = get_post_type( $post_id ) ?: 'post';
 
-	// Prefer in-memory post term cache via get_the_terms() before querying database terms.
-	$cat_terms = get_the_terms( $post_id, 'category' );
-	if ( is_array( $cat_terms ) ) {
-		$categories = wp_list_pluck( $cat_terms, 'term_id' );
-	} elseif ( function_exists( 'get_object_term_cache' ) && false !== get_object_term_cache( $post_id, 'category' ) ) {
-		$categories = array();
-	} else {
-		$categories = wp_get_post_terms( $post_id, 'category', array( 'fields' => 'ids' ) );
-	}
+	// Prefer in-memory post term cache via get_the_terms() without issuing redundant uncached SQL term queries.
+	$cat_terms  = get_the_terms( $post_id, 'category' );
+	$categories = is_array( $cat_terms ) ? wp_list_pluck( $cat_terms, 'term_id' ) : array();
 
 	$tag_terms = get_the_terms( $post_id, 'post_tag' );
-	if ( is_array( $tag_terms ) ) {
-		$tags = wp_list_pluck( $tag_terms, 'term_id' );
-	} elseif ( function_exists( 'get_object_term_cache' ) && false !== get_object_term_cache( $post_id, 'post_tag' ) ) {
-		$tags = array();
-	} else {
-		$tags = wp_get_post_terms( $post_id, 'post_tag', array( 'fields' => 'ids' ) );
-	}
+	$tags      = is_array( $tag_terms ) ? wp_list_pluck( $tag_terms, 'term_id' ) : array();
 
 	if ( is_wp_error( $categories ) ) {
 		$categories = array();
