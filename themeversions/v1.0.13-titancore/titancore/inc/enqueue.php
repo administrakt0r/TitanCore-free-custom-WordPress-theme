@@ -12,21 +12,23 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function titancore_scripts() {
 	// Setup version using filemtime for cache busting
-	$css_min = get_template_directory() . '/assets/css/style.min.css';
+	$css_min      = get_template_directory() . '/assets/css/style.min.css';
 	$css_fallback = get_template_directory() . '/assets/css/style.css';
-	$css_file = file_exists( $css_min ) ? $css_min : $css_fallback;
-	$css_uri = file_exists( $css_min )
+	$has_css_min  = file_exists( $css_min );
+	$css_file     = $has_css_min ? $css_min : $css_fallback;
+	$css_uri      = $has_css_min
 		? get_template_directory_uri() . '/assets/css/style.min.css'
 		: get_template_directory_uri() . '/assets/css/style.css';
-	$css_version = file_exists( $css_file ) ? filemtime( $css_file ) : false;
+	$css_version  = file_exists( $css_file ) ? filemtime( $css_file ) : false;
 
-	$enhancements_min = get_template_directory() . '/assets/css/enhancements.min.css';
+	$enhancements_min      = get_template_directory() . '/assets/css/enhancements.min.css';
 	$enhancements_fallback = get_template_directory() . '/assets/css/enhancements.css';
-	$enhancements_file = file_exists( $enhancements_min ) ? $enhancements_min : $enhancements_fallback;
-	$enhancements_uri = file_exists( $enhancements_min )
+	$has_enhancements_min  = file_exists( $enhancements_min );
+	$enhancements_file     = $has_enhancements_min ? $enhancements_min : $enhancements_fallback;
+	$enhancements_uri      = $has_enhancements_min
 		? get_template_directory_uri() . '/assets/css/enhancements.min.css'
 		: get_template_directory_uri() . '/assets/css/enhancements.css';
-	$enhancements_version = file_exists( $enhancements_file ) ? filemtime( $enhancements_file ) : false;
+	$enhancements_version  = file_exists( $enhancements_file ) ? filemtime( $enhancements_file ) : false;
 
 	// Enqueue main utility CSS, preferring the minified asset when present.
 	wp_enqueue_style( 'titancore-style', $css_uri, array(), $css_version );
@@ -35,13 +37,14 @@ function titancore_scripts() {
 	// Front page preset CSS.
 	// Keep this scoped to the actual front page template to avoid dead CSS on blog index pages.
 	if ( is_front_page() ) {
-		$presets_min = get_template_directory() . '/assets/css/frontpage-presets.min.css';
+		$presets_min      = get_template_directory() . '/assets/css/frontpage-presets.min.css';
 		$presets_fallback = get_template_directory() . '/assets/css/frontpage-presets.css';
-		$presets_file = file_exists( $presets_min ) ? $presets_min : $presets_fallback;
-		$presets_uri = file_exists( $presets_min )
+		$has_presets_min  = file_exists( $presets_min );
+		$presets_file     = $has_presets_min ? $presets_min : $presets_fallback;
+		$presets_uri      = $has_presets_min
 			? get_template_directory_uri() . '/assets/css/frontpage-presets.min.css'
 			: get_template_directory_uri() . '/assets/css/frontpage-presets.css';
-		$presets_version = file_exists( $presets_file ) ? filemtime( $presets_file ) : false;
+		$presets_version  = file_exists( $presets_file ) ? filemtime( $presets_file ) : false;
 		wp_enqueue_style( 'titancore-frontpage-presets', $presets_uri, array( 'titancore-enhancements' ), $presets_version );
 	}
 
@@ -57,13 +60,14 @@ function titancore_scripts() {
 
 	if ( $should_load_navigation ) {
 		// Navigation/theme-toggle JS (use minified if available).
-		$js_min = get_template_directory() . '/assets/js/navigation.min.js';
+		$js_min      = get_template_directory() . '/assets/js/navigation.min.js';
 		$js_fallback = get_template_directory() . '/assets/js/navigation.js';
-		$js_file = file_exists( $js_min ) ? $js_min : $js_fallback;
-		$js_uri = file_exists( $js_min )
+		$has_js_min  = file_exists( $js_min );
+		$js_file     = $has_js_min ? $js_min : $js_fallback;
+		$js_uri      = $has_js_min
 			? get_template_directory_uri() . '/assets/js/navigation.min.js'
 			: get_template_directory_uri() . '/assets/js/navigation.js';
-		$js_version = file_exists( $js_file ) ? filemtime( $js_file ) : false;
+		$js_version  = file_exists( $js_file ) ? filemtime( $js_file ) : false;
 
 		wp_enqueue_script( 'titancore-navigation', $js_uri, array(), $js_version, array(
 			'in_footer' => true,
