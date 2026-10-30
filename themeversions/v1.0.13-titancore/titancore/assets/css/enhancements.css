@@ -386,8 +386,8 @@ header nav ul li.current_page_item > a {
 .comment-list .children {
     list-style: none;
     margin-top: 1rem;
-    padding-left: 1rem;
-    border-left: 2px solid color-mix(in srgb, var(--primary) 30%, var(--border));
+    padding-left: 0.875rem;
+    border-left: 2px solid color-mix(in srgb, var(--primary) 40%, var(--border));
 }
 
 @media (min-width: 640px) {
@@ -490,6 +490,28 @@ header nav ul li.current_page_item > a {
     color: var(--foreground);
 }
 
+.comment-author .fn a,
+.comment-author a {
+    color: var(--foreground);
+    text-decoration: none;
+    border-radius: calc(var(--radius) - 4px);
+    transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+
+.comment-author .fn a:hover,
+.comment-author a:hover {
+    color: var(--primary);
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+}
+
+.comment-author .fn a:focus-visible,
+.comment-author a:focus-visible {
+    color: var(--foreground);
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+}
+
 .comment-meta,
 .comment-metadata {
     display: flex;
@@ -534,9 +556,9 @@ header nav ul li.current_page_item > a {
     margin-left: 0.5rem;
     padding: 0.18rem 0.6rem;
     border-radius: 9999px;
-    border: 1px solid color-mix(in srgb, var(--primary) 70%, var(--border));
-    background: color-mix(in srgb, var(--primary) 20%, var(--card));
-    color: var(--primary);
+    border: 1px solid var(--primary);
+    background: var(--primary);
+    color: var(--primary-foreground);
     font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.04em;
@@ -552,8 +574,8 @@ header nav ul li.current_page_item > a {
     margin-bottom: 0.625rem;
     padding: 0.625rem 0.875rem;
     border-radius: calc(var(--radius) - 2px);
-    border: 1px solid color-mix(in srgb, var(--primary) 50%, var(--border));
-    background: color-mix(in srgb, var(--primary) 15%, var(--background));
+    border: 1px solid color-mix(in srgb, var(--primary) 60%, var(--border));
+    background: color-mix(in srgb, var(--primary) 12%, var(--card));
     color: var(--foreground);
     font-size: 0.8125rem;
     font-weight: 600;
