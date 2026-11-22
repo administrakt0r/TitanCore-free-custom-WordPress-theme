@@ -1150,3 +1150,5 @@ header nav ul li.current_page_item > a {
         transition-duration: 0.01ms !important;
     }
 }
+
+.alignleft{float:left;margin:0 1.5em 1em 0}.alignright{float:right;margin:0 0 1em 1.5em}.aligncenter{display:block;margin-left:auto;margin-right:auto;clear:both}.wp-caption{max-width:100%}.wp-caption-text,.gallery-caption{font-size:.875rem;color:inherit;opacity:.75}

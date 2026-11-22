@@ -61,6 +61,8 @@ No. TitanCore's frontend JavaScript is vanilla ES6. jQuery remains registered fo
 * Security: Escaped related-post thumbnails (`wp_kses_post`) and comment count output.
 * i18n: Added `translators:` comments for all placeholder strings.
 * Changed: Pagination markup filter no longer declares unused parameters; tag loops no longer overwrite the `$tag` global.
+* Removed: `wp_head` cleanup (plugin territory per Theme Review Handbook).
+* Added: `Requires at least`/`Tested up to`/`Requires PHP` in style.css, copyright notice, alignment and caption CSS classes.
 * Added: `phpcs.xml.dist` and agent documentation (skills, WordPress.org standards) in the repository.
 
 = 1.0.13 =

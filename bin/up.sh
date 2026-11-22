@@ -7,7 +7,8 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
-PORT=8889
+PORT="${WP_ENV_PORT:-8889}"
+export WP_ENV_PORT="$PORT"
 
 command -v wp-env >/dev/null 2>&1 || {
 	echo "ERROR: wp-env not found. Install it with: npm -g install @wordpress/env" >&2

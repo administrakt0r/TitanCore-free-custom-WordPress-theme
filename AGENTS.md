@@ -137,7 +137,7 @@ Version-sensitive WordPress API questions: check Context7 or developer.wordpress
 
 - Do not add yet another "audit pass" row to `CUSTODIAN_LOG.md` unless something was actually removed or a *new* finding exists. Automated no-op log PRs are closed, not merged.
 - Edit source in `themeversions/current/titancore/`; a published version folder is immutable — bump version via `RELEASING.md` instead of silently changing a released zip.
-- Port 8889 may be held by another wp-env project (check `docker ps`); never stop other projects' containers — use `WP_ENV_PORT=NNNN` and verify the served theme version. `verify.sh` needs `wp-env` on PATH; if wp-cli steps fail while lint/HTTP pass, report it as an environment failure.
+- Port 8889 may be held by another wp-env project (check `docker ps`); never stop other projects' containers — use `WP_ENV_PORT=NNNN` (verify.sh now checks the served version). `verify.sh` needs `wp-env` on PATH; if wp-cli steps fail while lint/HTTP pass, report it as an environment failure.
 
 ## Relevant docs
 

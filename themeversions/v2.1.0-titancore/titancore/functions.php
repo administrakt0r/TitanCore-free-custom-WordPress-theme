@@ -87,20 +87,6 @@ function titancore_widgets_init() {
 add_action( 'widgets_init', 'titancore_widgets_init' );
 
 /**
- * Performance: Remove unnecessary head clutter.
- */
-function titancore_cleanup_head() {
-	remove_action( 'wp_head', 'wp_generator' );              // Remove WP version meta
-	remove_action( 'wp_head', 'wlwmanifest_link' );           // Remove Windows Live Writer
-	remove_action( 'wp_head', 'rsd_link' );                   // Remove RSD link
-	remove_action( 'wp_head', 'wp_shortlink_wp_head' );       // Remove shortlink
-	remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10 ); // Remove prev/next post links
-	remove_action( 'wp_head', 'wp_oembed_add_discovery_links' ); // Remove oEmbed discovery links
-	remove_action( 'wp_head', 'wp_oembed_add_host_js' ); // Remove oEmbed host JS loader
-}
-add_action( 'after_setup_theme', 'titancore_cleanup_head' );
-
-/**
  * Performance: Disable WordPress emoji scripts and styles.
  * Saves ~2 HTTP requests and ~15KB on every page.
  */

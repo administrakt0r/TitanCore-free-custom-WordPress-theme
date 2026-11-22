@@ -10,7 +10,8 @@ set -uo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
-PORT=8889
+PORT="${WP_ENV_PORT:-8889}"
+export WP_ENV_PORT="$PORT"
 SLUG="titancore"
 THEME_DIR="themeversions/current/${SLUG}"
 
@@ -78,6 +79,11 @@ step "5/6 Version sync"
 # ---------------------------------------------------------------
 CSS_VERSION="$(grep -m1 '^Version:' "$THEME_DIR/style.css" | sed 's/^Version:[[:space:]]*//' | tr -d '\r')"
 README_VERSION="$(grep -m1 '^Stable tag:' "$THEME_DIR/readme.txt" | sed 's/^Stable tag:[[:space:]]*//' | tr -d '\r')"
+
+ACTIVE_VERSION="$(wp-env run cli wp eval 'echo wp_get_theme()->get( "Version" );' --allow-root 2>/dev/null | tr -d '[:space:]' | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1 || true)"
+if [ "$ACTIVE_VERSION" != "$CSS_VERSION" ]; then
+	fail "env serves theme version '${ACTIVE_VERSION}' but source is ${CSS_VERSION} (wrong env/port? run ./bin/down.sh && ./bin/up.sh)"
+fi
 
 if [ "$CSS_VERSION" = "$README_VERSION" ]; then
 	echo "OK: version $CSS_VERSION (style.css = readme.txt)"
