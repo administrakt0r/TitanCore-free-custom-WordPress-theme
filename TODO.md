@@ -1,6 +1,15 @@
 # TitanCore Verified Backlog
 
-Last reconciled: 2026-03-17
+## WordPress.org upload blockers (2026-11-22 audit)
+- [x] Replace `screenshot.png` (1000x667) with 1200x900. (v2.1.0)
+- [x] Released v2.1.0 with escaping/i18n/coding-standards fixes.
+- [x] Inter (OFL) already declared in `readme.txt` Credits.
+- [ ] Bump `Tested up to` in `readme.txt` after a real test pass; run official Theme Check plugin.
+- [x] PHPCS WordPress-Extra clean via `phpcs.xml.dist` (v2.1.0).
+- [ ] `bin/verify.sh`/`up.sh`/`.wp-env.json` hardcode port 8889, which collides with other wp-env projects (sidrena plugin held it; verify then hit the wrong site). Make port configurable via `WP_ENV_PORT` and have verify check `wp theme list` version.
+- [x] Closed log-only PRs #113-#120.
+
+Last reconciled: 2026-11-22
 
 ## Security and hardening
 - [x] Harden `custom_header_code` and `custom_footer_code` with `wp_kses` safe mode, raw-mode sanitization, and `unfiltered_html` gating in [`inc/customizer.php`](c:\Users\Da\Desktop\umjetnai-wp-theme-final\inc\customizer.php).

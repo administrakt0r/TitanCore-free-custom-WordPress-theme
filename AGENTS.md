@@ -107,6 +107,38 @@ Use `AGENTARDS/AGENTICUS-MAXIMUS.md` for general autonomous development tasks (b
 - **Releases are append-only:** do not edit or delete a published `releases/titancore-*/` folder; new version = new folder. Each folder is self-contained (zip + changelog per `releases/README.md`).
 - **Minified assets must stay in sync:** `assets/css/*.min.css` and `assets/js/navigation.min.js` are what WordPress loads; commit source + min together with `filemtime()` busting.
 
+## Agent skills — use these BEFORE editing
+
+Discover installed skills first (they vary per harness; `~/.agents/skills/`, plugin skills). A missing skill is "unavailable", never silently skipped. Preferred for this repo:
+
+| Task | Skill |
+|---|---|
+| Entry point / routing | `wordpress`, `wordpress-router`, `wp-project-triage` |
+| Classic theme work (templates, hierarchy, child themes) | `wordpress-theme-development` |
+| theme.json / editor styles | `wp-block-themes` |
+| Patterns | `wp-patterns` |
+| Performance (queries, autoload, caching) | `wp-performance` |
+| CSS bloat / !important / breakpoints | `wp-css-audit` |
+| Static analysis | `wp-phpstan` |
+| WP-CLI / ops | `wp-wpcli-and-ops`, `wp-env` |
+| Directory/license rules before submission | `wp-plugin-directory-guidelines` (GPL/licensing parts), Theme Review Handbook |
+| SEO output | `seo-optimization` |
+
+Version-sensitive WordPress API questions: check Context7 or developer.wordpress.org before relying on memory.
+
+## WordPress.org theme standards (must hold before any release)
+
+- Theme Check / Theme Review Handbook clean: GPLv2+ license on everything shipped (bundled Inter font is OFL — document in `readme.txt` "Resources"), no plugin-territory functionality, `screenshot.png` 1200x900 (done in 2.1.0), `readme.txt` complete, `wp_head`/`wp_footer`/`wp_body_open`, `body_class`/`post_class`, `wp_link_pages`, `comments.php`.
+- Escape late (`esc_*`, `wp_kses_post`), sanitize input, nonces on any form handling, `/* translators: */` comment before every placeholder string, text domain `titancore` only.
+- Run `phpcs --standard=WordPress-Extra` (and `WordPress-Docs`) on `themeversions/current/titancore`; known false positive: `titancore_get_icon()` returns trusted inline SVG. Report fixes, never weaken rules.
+- Check tool availability with `command -v phpcs php docker wp-env`; unavailable != passed.
+
+## Agent hygiene
+
+- Do not add yet another "audit pass" row to `CUSTODIAN_LOG.md` unless something was actually removed or a *new* finding exists. Automated no-op log PRs are closed, not merged.
+- Edit source in `themeversions/current/titancore/`; a published version folder is immutable — bump version via `RELEASING.md` instead of silently changing a released zip.
+- Port 8889 may be held by another wp-env project (check `docker ps`); never stop other projects' containers — use `WP_ENV_PORT=NNNN` and verify the served theme version. `verify.sh` needs `wp-env` on PATH; if wp-cli steps fail while lint/HTTP pass, report it as an environment failure.
+
 ## Relevant docs
 
 - `README.md` — full feature list, filters, file structure, release notes
